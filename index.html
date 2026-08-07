@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My YouTube Channel</title>
+  <title>DreamyFPS - YouTube Stats</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
     body { background: #0f0f0f; color: #fff; text-align: center; }
@@ -35,6 +35,112 @@
       align-items: center;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #ff0000;
+    }
+
+    .divider {
+      width: 1px;
+      height: 40px;
+      background: #2e2e2e;
+    }
+
+    /* Video Section */
+    .content-area { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    iframe { width: 100%; aspect-ratio: 16/9; border: none; border-radius: 12px; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="videos.html">Videos</a>
+  </nav>
+
+  <!-- Header Section -->
+  <header>
+    <h1>Welcome to DreamyFPS</h1>
+    <p>Check out my latest content and live channel numbers below!</p>
+    <a class="btn" href="https://www.youtube.com/@DreamyFPSRoblox" target="_blank">Subscribe on YouTube</a>
+  </header>
+
+  <!-- Rounded Live Counts Card -->
+  <div class="stats-card">
+    <div class="stat-item">
+      <span class="stat-label">Subscribers</span>
+      <span class="stat-value" id="sub-count">--</span>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="stat-item">
+      <span class="stat-label">Total Views</span>
+      <span class="stat-value" id="view-count">--</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="stat-item">
+      <span class="stat-label">Videos</span>
+      <span class="stat-value" id="video-count">--</span>
+    </div>
+  </div>
+
+  <!-- Featured Video Section -->
+  <div class="content-area">
+    <h2>Featured Content</h2>
+    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+  </div>
+
+  <!-- Live Counts JavaScript -->
+  <script>
+    const API_KEY = 'AIzaSyAwN0dhY_9NRLqv-YpRT-joqbMWYkj8MZk';
+    const CHANNEL_HANDLE = '@DreamyFPSRoblox';
+
+    async function loadStats() {
+      const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=${encodeURIComponent(CHANNEL_HANDLE)}&key=${API_KEY}`;
+      
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.items && data.items.length > 0) {
+          const stats = data.items[0].statistics;
+          
+          document.getElementById('sub-count').innerText = Number(stats.subscriberCount).toLocaleString();
+          document.getElementById('view-count').innerText = Number(stats.viewCount).toLocaleString();
+          document.getElementById('video-count').innerText = Number(stats.videoCount).toLocaleString();
+        } else {
+          document.getElementById('sub-count').innerText = 'N/A';
+        }
+      } catch (err) {
+        console.error("Could not fetch YouTube stats:", err);
+      }
+    }
+
+    loadStats();
+  </script>
+
+</body>
+</html>    }
 
     .stat-item {
       display: flex;
