@@ -6,17 +6,47 @@
   <title>About - DreamyFPS</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
-    body { background: #0f0f0f; color: #fff; text-align: center; }
+    body { background: #0f0f0f; color: #fff; text-align: center; min-height: 100vh; }
     
     /* Navigation Bar */
     nav { padding: 1.5rem; background: #1f1f1f; display: flex; justify-content: center; gap: 20px; }
     nav a { color: #fff; text-decoration: none; font-weight: bold; }
     nav a:hover { color: #ff0000; }
 
-    /* Content Area */
-    .container { max-width: 800px; margin: 3rem auto; padding: 0 1rem; text-align: left; line-height: 1.6; }
-    h1 { font-size: 2.5rem; margin-bottom: 1rem; color: #ff0000; text-align: center; }
-    p { color: #ccc; margin-bottom: 1rem; font-size: 1.1rem; }
+    /* Main Container */
+    .container {
+      max-width: 800px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: #181818;
+      border: 1px solid #2e2e2e;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: #ff0000; }
+    .username { color: #888; margin-bottom: 2rem; font-weight: bold; }
+
+    /* 3D Avatar Card */
+    .avatar-wrapper {
+      width: 100%;
+      max-width: 350px;
+      height: 400px;
+      margin: 0 auto 2rem auto;
+      background: #0f0f0f;
+      border: 1px solid #2e2e2e;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .avatar-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    p { color: #ccc; margin-bottom: 1rem; font-size: 1.1rem; line-height: 1.6; }
   </style>
 </head>
 <body>
@@ -28,11 +58,18 @@
     <a href="videos.html">Videos</a>
   </nav>
 
-  <!-- About Content -->
+  <!-- About Section -->
   <div class="container">
     <h1>About DreamyFPS</h1>
-    <p>Welcome to the official website for DreamyFPS!</p>
-    <p>I create Roblox gameplay, shorts, and highlights. Thanks for visiting the channel site and following along with the live updates!</p>
+    <p class="username">@amliteralynotcheats</p>
+
+    <!-- 3D Roblox Avatar Box -->
+    <div class="avatar-wrapper">
+      <iframe src="https://roblox-avatar-3d.vercel.app/embed?username=amliteralynotcheats" title="Roblox 3D Avatar"></iframe>
+    </div>
+
+    <p>Welcome to the official home of DreamyFPS!</p>
+    <p>I post Roblox gameplay, FPS clips, and Shorts. Check out the home page to see live subscriber counters and my newest video uploads!</p>
   </div>
 
 </body>
