@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DreamyFPS - Official Home</title>
+  <!-- FontAwesome for Social Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     /* Rise Client Color Palette & Reset */
     :root {
@@ -45,6 +47,12 @@
       z-index: 100;
     }
 
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
     .nav-logo {
       font-size: 1.4rem;
       font-weight: 800;
@@ -56,9 +64,38 @@
 
     .nav-logo span { color: var(--accent-red); }
 
-    .nav-center { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    /* Navbar Social Icons Group */
+    .nav-socials {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
 
-    .nav-center a {
+    .social-icon-btn {
+      width: 34px;
+      height: 34px;
+      background: #1c1c24;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+    }
+
+    .social-icon-btn:hover {
+      background: rgba(255, 42, 75, 0.15);
+      border-color: var(--accent-red);
+      color: var(--accent-red);
+      box-shadow: 0 0 15px rgba(255, 42, 75, 0.3);
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+
+    .nav-links a {
       color: var(--text-muted);
       text-decoration: none;
       font-weight: 600;
@@ -66,37 +103,8 @@
       transition: color 0.2s ease;
     }
 
-    .nav-center a:hover, .nav-center a.active {
+    .nav-links a:hover, .nav-links a.active {
       color: var(--text-main);
-    }
-
-    /* Navbar Socials Group */
-    .nav-socials {
-      display: flex;
-      gap: 0.8rem;
-      align-items: center;
-    }
-
-    .social-btn {
-      padding: 0.5rem 1rem;
-      background: #1c1c24;
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .social-btn:hover {
-      background: #252530;
-      border-color: var(--accent-red);
-      color: var(--text-main);
-      box-shadow: 0 0 15px rgba(255, 42, 75, 0.2);
     }
 
     /* Hero Section */
@@ -305,9 +313,9 @@
     }
 
     /* Responsive adjustments */
-    @media (max-width: 900px) {
+    @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; flex-direction: column; gap: 1rem; }
-      .nav-center { gap: 1.5rem; }
+      .nav-left { flex-direction: column; gap: 0.8rem; }
       .hero h1 { font-size: 2.5rem; }
       .btn-group { flex-direction: column; align-items: center; }
       .btn { width: 100%; max-width: 280px; text-align: center; }
@@ -317,21 +325,22 @@
 </head>
 <body>
 
-  <!-- Rise Style Navbar with Socials -->
+  <!-- Rise Style Navbar -->
   <nav>
-    <a href="index.html" class="nav-logo">Dreamy<span>FPS</span></a>
-    
-    <ul class="nav-center">
+    <div class="nav-left">
+      <a href="index.html" class="nav-logo">Dreamy<span>FPS</span></a>
+      <div class="nav-socials">
+        <a href="https://discord.gg/yourlink" target="_blank" class="social-icon-btn" title="Discord"><i class="fa-brands fa-discord"></i></a>
+        <a href="https://tiktok.com/@yourlink" target="_blank" class="social-icon-btn" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://youtube.com/@DreamyFPSRoblox" target="_blank" class="social-icon-btn" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <ul class="nav-links">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="videos.html">Videos</a></li>
     </ul>
-
-    <div class="nav-socials">
-      <a href="https://discord.gg/yourlink" target="_blank" class="social-btn">Discord</a>
-      <a href="https://tiktok.com/@yourlink" target="_blank" class="social-btn">TikTok</a>
-      <a href="https://youtube.com/@DreamyFPSRoblox" target="_blank" class="social-btn">YouTube</a>
-    </div>
   </nav>
 
   <!-- Hero Banner -->
