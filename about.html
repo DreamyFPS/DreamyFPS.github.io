@@ -27,7 +27,7 @@
     h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: #ff0000; }
     .username { color: #888; margin-bottom: 2rem; font-weight: bold; }
 
-    /* Avatar Box with Hover Effect */
+    /* Roblox Avatar Card */
     .avatar-card {
       width: 280px;
       height: 280px;
@@ -70,7 +70,7 @@
     <h1>About DreamyFPS</h1>
     <p class="username">@amliteralynotcheats</p>
 
-    <!-- Roblox Avatar Card -->
+    <!-- Roblox Avatar Display -->
     <div class="avatar-card">
       <img id="roblox-avatar" src="" alt="DreamyFPS Roblox Avatar">
     </div>
@@ -85,7 +85,6 @@
 
     async function loadAvatar() {
       try {
-        // Step 1: Get User ID from Username
         const userRes = await fetch('https://users.roblox.com/v1/usernames/users', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -96,7 +95,6 @@
         if (userData.data && userData.data.length > 0) {
           const userId = userData.data[0].id;
 
-          // Step 2: Fetch full-body avatar render
           const avatarRes = await fetch(`https://thumbnails.roblox.com/v1/users/avatar?userIds=${userId}&size=420x420&format=Png&isCircular=false`);
           const avatarData = await avatarRes.json();
 
