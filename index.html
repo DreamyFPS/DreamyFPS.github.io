@@ -494,9 +494,9 @@
       }
     }, 70);
 
-    // 2. Live YouTube Stats Script (Updates every 5 seconds)
-    const apiKey = 'YOUR_API_KEY';
-    const channelId = 'YOUR_CHANNEL_ID';
+    // 2. Live YouTube Stats Script using your API Key and Channel ID (Updates every 5 seconds)
+    const apiKey = 'AIzaSyD...your_actual_key_here...';
+    const channelId = 'UC...your_actual_channel_id_here...';
 
     async function fetchYouTubeStats() {
       try {
@@ -513,13 +513,13 @@
           document.getElementById('videoCount').innerText = 'N/A';
         }
       } catch (error) {
-        document.getElementById('subCount').innerText = 'Live Feed';
-        document.getElementById('viewCount').innerText = 'Live Feed';
-        document.getElementById('videoCount').innerText = 'Live Feed';
+        document.getElementById('subCount').innerText = 'Error';
+        document.getElementById('viewCount').innerText = 'Error';
+        document.getElementById('videoCount').innerText = 'Error';
       }
     }
 
-    // Run immediately when loaded, then every 5 seconds
+    // Run immediately when loaded, then update every 5 seconds
     fetchYouTubeStats();
     setInterval(fetchYouTubeStats, 5000);
   </script>
