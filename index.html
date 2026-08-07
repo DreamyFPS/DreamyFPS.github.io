@@ -6,7 +6,14 @@
   <title>DreamyFPS - YouTube Stats</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
-    body { background: #0f0f0f; color: #fff; text-align: center; }
+    
+    html, body {
+      background: #0f0f0f;
+      color: #fff;
+      text-align: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
     
     /* Navigation Bar */
     nav { padding: 1.5rem; background: #1f1f1f; display: flex; justify-content: center; gap: 20px; }
@@ -35,6 +42,155 @@
       border-radius: 12px;
       margin-bottom: 1rem;
     }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #00ff66;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00ff66;
+    }
+
+    /* Rounded Live Stats Box */
+    .stats-card {
+      background: #181818;
+      border: 1px solid #2e2e2e;
+      border-radius: 16px;
+      max-width: 600px;
+      margin: 1rem auto 2rem auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #ff0000;
+    }
+
+    .divider {
+      width: 1px;
+      height: 40px;
+      background: #2e2e2e;
+    }
+
+    /* Video Section */
+    .content-area { max-width: 800px; margin: 2rem auto 4rem auto; padding: 0 1rem; }
+    iframe { width: 100%; aspect-ratio: 16/9; border: none; border-radius: 12px; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="videos.html">Videos</a>
+  </nav>
+
+  <!-- Header Section -->
+  <header>
+    <h1>Welcome to DreamyFPS</h1>
+    <p>Check out my latest content and live channel numbers below!</p>
+    <a class="btn" href="https://www.youtube.com/@DreamyFPSRoblox" target="_blank">Subscribe on YouTube</a>
+  </header>
+
+  <!-- Live Updating Indicator -->
+  <div class="live-badge">
+    <div class="pulse-dot"></div>
+    <span>UPDATING LIVE (EVERY 5S)</span>
+  </div>
+
+  <!-- Rounded Live Counts Card -->
+  <div class="stats-card">
+    <div class="stat-item">
+      <span class="stat-label">Subscribers</span>
+      <span class="stat-value" id="sub-count">--</span>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="stat-item">
+      <span class="stat-label">Total Views</span>
+      <span class="stat-value" id="view-count">--</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="stat-item">
+      <span class="stat-label">Videos</span>
+      <span class="stat-value" id="video-count">--</span>
+    </div>
+  </div>
+
+  <!-- Featured Video Section -->
+  <div class="content-area">
+    <h2>Latest Upload</h2>
+    <iframe id="featured-video" src="" allowfullscreen></iframe>
+  </div>
+
+  <!-- Live Auto-Refreshing Script -->
+  <script>
+    const API_KEY = 'AIzaSyAwN0dhY_9NRLqv-YpRT-joqbMWYkj8MZk';
+    const CHANNEL_HANDLE = '@DreamyFPSRoblox';
+    let currentVideoId = '';
+
+    async function loadChannelData() {
+      const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics,contentDetails&forHandle=${encodeURIComponent(CHANNEL_HANDLE)}&key=${API_KEY}`;
+      
+      try {
+        const response = await fetch(channelUrl);
+        const data = await response.json();
+        
+        if (data.items && data.items.length > 0) {
+          const channel = data.items[0];
+          
+          const stats = channel.statistics;
+          document.getElementById('sub-count').innerText = Number(stats.subscriberCount).toLocaleString();
+          document.getElementById('view-count').innerText = Number(stats.viewCount).toLocaleString();
+          document.getElementById('video-count').innerText = Number(stats.videoCount).toLocaleString();
+
+          const uploadsPlaylistId = channel.contentDetails.relatedPlaylists.uploads;
+          const playlistUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=1&key=${API_KEY}`;
+          
+          const playlistResponse = await fetch(playlistUrl);
+          const playlistData = await playlistResponse.json();
+
+          if (playlistData.items && playlistData.items.length > 0) {
+            const latestVideoId = playlistData.items[0].snippet.resourceId.videoId;
+            
+            if (latestVideoId !== currentVideoId) {
+              currentVideoId = latestVideoId;
+              document.getElementById('featured-video').src = `https://www.youtube.com/embed/${latestVideoId}`;
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Live fetch failed:", err);
+      }
+    }
+
+    loadChannelData();
+    setInterval(loadChannelData, 5000);
+  </script>
+
+</body>
+</html>    }
     .pulse-dot {
       width: 8px;
       height: 8px;
