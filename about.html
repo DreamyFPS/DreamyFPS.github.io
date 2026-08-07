@@ -40,6 +40,7 @@
       justify-content: center;
       box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
     }
 
     .avatar-card:hover {
@@ -70,45 +71,14 @@
     <h1>About DreamyFPS</h1>
     <p class="username">@amliteralynotcheats</p>
 
-    <!-- Roblox Avatar Display -->
+    <!-- Direct Roblox Avatar Image -->
     <div class="avatar-card">
-      <img id="roblox-avatar" src="" alt="DreamyFPS Roblox Avatar">
+      <img src="https://tr.rbxcdn.com/30DAY-Avatar-420x420-Png/420/420/Avatar/Png/noFilter" alt="Roblox Avatar">
     </div>
 
     <p>Welcome to the official home of DreamyFPS!</p>
     <p>I post Roblox gameplay, FPS clips, and Shorts. Check out the home page to see live subscriber counters and my newest video uploads!</p>
   </div>
-
-  <!-- Dynamic Roblox Avatar Fetcher -->
-  <script>
-    const USERNAME = 'amliteralynotcheats';
-
-    async function loadAvatar() {
-      try {
-        const userRes = await fetch('https://users.roblox.com/v1/usernames/users', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ usernames: [USERNAME], excludeBannedUsers: false })
-        });
-        const userData = await userRes.json();
-
-        if (userData.data && userData.data.length > 0) {
-          const userId = userData.data[0].id;
-
-          const avatarRes = await fetch(`https://thumbnails.roblox.com/v1/users/avatar?userIds=${userId}&size=420x420&format=Png&isCircular=false`);
-          const avatarData = await avatarRes.json();
-
-          if (avatarData.data && avatarData.data.length > 0) {
-            document.getElementById('roblox-avatar').src = avatarData.data[0].imageUrl;
-          }
-        }
-      } catch (err) {
-        console.error("Could not load Roblox avatar:", err);
-      }
-    }
-
-    loadAvatar();
-  </script>
 
 </body>
 </html>
