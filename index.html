@@ -154,7 +154,7 @@
       transform: translateY(-2px);
     }
 
-    /* Cards Grid Section */
+    /* Features Grid Section */
     .features-grid {
       max-width: 1000px;
       margin: 4rem auto;
@@ -190,7 +190,7 @@
       line-height: 1.6;
     }
 
-    /* Live Counts Scroll Section */
+    /* Live Stats Section (Reveals on Scroll) */
     .stats-section {
       max-width: 1000px;
       margin: 6rem auto 5rem auto;
@@ -287,7 +287,7 @@
 </head>
 <body>
 
-  <!-- Rise Navbar -->
+  <!-- Rise Style Navbar -->
   <nav>
     <a href="index.html" class="nav-logo">Dreamy<span>FPS</span></a>
     <ul class="nav-links">
@@ -327,7 +327,7 @@
     </div>
   </section>
 
-  <!-- Live Counts Section (Reveals when scrolling down) -->
+  <!-- Live Counts Section -->
   <section class="stats-section">
     <h2 class="section-title">Live <span>Channel Stats</span></h2>
     <p class="section-subtitle">Real-time statistics updated directly from YouTube</p>
@@ -339,7 +339,7 @@
         <div class="stat-label">
           <span class="pulse-dot"></span> Live Subscribers
         </div>
-        <div class="stat-number" id="sub-count">---</div>
+        <div class="stat-number" id="sub-count">--</div>
         <p class="stat-subtext">Total Subscribers</p>
       </div>
 
@@ -348,53 +348,51 @@
         <div class="stat-label">
           <span class="pulse-dot"></span> Total Views
         </div>
-        <div class="stat-number" id="view-count">---</div>
+        <div class="stat-number" id="view-count">--</div>
         <p class="stat-subtext">Channel Views</p>
       </div>
 
-      <!-- Videos Uploaded Card -->
+      <!-- Videos Card -->
       <div class="stat-card">
         <div class="stat-label">
           <span class="pulse-dot"></span> Videos Uploaded
         </div>
-        <div class="stat-number" id="video-count">---</div>
+        <div class="stat-number" id="video-count">--</div>
         <p class="stat-subtext">Total Videos</p>
       </div>
 
     </div>
   </section>
 
+  <!-- Real-Time YouTube Stats Loader -->
   <script>
-    // YouTube Data API Fetch Script
-    // Replace 'YOUR_YOUTUBE_API_KEY' and 'YOUR_CHANNEL_ID' when ready to connect live API
-    const API_KEY = 'YOUR_YOUTUBE_API_KEY';
-    const CHANNEL_ID = 'YOUR_CHANNEL_ID';
+    const API_KEY = 'AIzaSyAwN0dhY_9NRLqv-YpRT-joqbMWYkj8MZk';
+    const CHANNEL_HANDLE = '@DreamyFPSRoblox';
 
     async function fetchLiveStats() {
-      if (API_KEY === 'YOUR_YOUTUBE_API_KEY') {
-        // Fallback display numbers until API Key is entered
-        document.getElementById('sub-count').innerText = '1,250+';
-        document.getElementById('view-count').innerText = '45,000+';
-        document.getElementById('video-count').innerText = '120+';
-        return;
-      }
-
+      const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=${encodeURIComponent(CHANNEL_HANDLE)}&key=${API_KEY}`;
+      
       try {
-        const response = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`);
+        const response = await fetch(url);
         const data = await response.json();
-        
+
         if (data.items && data.items.length > 0) {
           const stats = data.items[0].statistics;
+          
           document.getElementById('sub-count').innerText = Number(stats.subscriberCount).toLocaleString();
           document.getElementById('view-count').innerText = Number(stats.viewCount).toLocaleString();
           document.getElementById('video-count').innerText = Number(stats.videoCount).toLocaleString();
         }
       } catch (err) {
-        console.error("Error fetching live YouTube stats:", err);
+        console.error("Error fetching YouTube stats:", err);
       }
     }
 
+    // Initial fetch when page loads
     fetchLiveStats();
+
+    // Updates live stats every 2 seconds
+    setInterval(fetchLiveStats, 2000);
   </script>
 
 </body>
