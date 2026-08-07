@@ -32,9 +32,110 @@
     }
 
     h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: #ff0000; }
-    .username { color: #888; margin-bottom: 2rem; font-weight: bold; }
+    .username { color: #888; margin-bottom: 2.5rem; font-weight: bold; }
 
-    /* 3D Perspective Scene Container */
+    /* 3D Scene Container */
+    .avatar-scene {
+      width: 280px;
+      height: 320px;
+      margin: 0 auto 2rem auto;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    /* 3D Card Base */
+    .avatar-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      background: linear-gradient(145deg, #222222, #121212);
+      border: 2px solid #ff0000;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 0, 0, 0.3);
+      transform-style: preserve-3d;
+      transition: transform 0.1s ease-out, box-shadow 0.3s ease;
+    }
+
+    /* Glow effect on hover */
+    .avatar-scene:hover .avatar-card {
+      box-shadow: 0 25px 45px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 0, 0, 0.6);
+    }
+
+    /* Avatar Image - Pops out in 3D Space */
+    .avatar-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      /* Pushes the avatar forward in 3D space off the card */
+      transform: translateZ(80px) scale(1.15);
+      filter: drop-shadow(0 20px 15px rgba(0,0,0,0.8));
+      transition: transform 0.3s ease;
+    }
+
+    .avatar-scene:hover .avatar-card img {
+      transform: translateZ(110px) scale(1.25);
+    }
+
+    p { color: #ccc; margin-bottom: 1rem; font-size: 1.1rem; line-height: 1.6; }
+    .hint { font-size: 0.85rem; color: #ff4444; margin-top: -1.5rem; margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="videos.html">Videos</a>
+  </nav>
+
+  <!-- About Section -->
+  <div class="container">
+    <h1>About DreamyFPS</h1>
+    <p class="username">@amliteralynotcheats</p>
+
+    <!-- 3D Pop-Out Card Scene -->
+    <div class="avatar-scene" id="avatar-scene">
+      <div class="avatar-card" id="tilt-card">
+        <img src="avatar.webp" alt="DreamyFPS Roblox Avatar" draggable="false">
+      </div>
+    </div>
+    <p class="hint">✨ Hover your mouse over the card for the 3D pop-out effect!</p>
+
+    <p>Welcome to the official home of DreamyFPS!</p>
+    <p>I post Roblox gameplay, FPS clips, and Shorts. Check out the home page to see live subscriber counters and my newest video uploads!</p>
+  </div>
+
+  <script>
+    // Dynamic 3D tilt tracking
+    const scene = document.getElementById('avatar-scene');
+    const card = document.getElementById('tilt-card');
+
+    scene.addEventListener('mousemove', (e) => {
+      const sceneRect = scene.getBoundingClientRect();
+      const x = e.clientX - sceneRect.left;
+      const y = e.clientY - sceneRect.top;
+
+      const sceneCenterX = sceneRect.width / 2;
+      const sceneCenterY = sceneRect.height / 2;
+
+      const maxTilt = 25;
+      const tiltX = (sceneCenterY - y) / sceneCenterY * maxTilt;
+      const tiltY = (x - sceneCenterX) / sceneCenterX * maxTilt;
+
+      card.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+    });
+
+    scene.addEventListener('mouseleave', () => {
+      card.style.transform = 'rotateX(0deg) rotateY(0deg)';
+    });
+  </script>
+
+</body>
+</html>    /* 3D Perspective Scene Container */
     .avatar-scene {
       width: 280px;
       height: 280px;
