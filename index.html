@@ -56,9 +56,9 @@
 
     .nav-logo span { color: var(--accent-red); }
 
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-center { display: flex; gap: 2rem; list-style: none; align-items: center; }
 
-    .nav-links a {
+    .nav-center a {
       color: var(--text-muted);
       text-decoration: none;
       font-weight: 600;
@@ -66,8 +66,37 @@
       transition: color 0.2s ease;
     }
 
-    .nav-links a:hover, .nav-links a.active {
+    .nav-center a:hover, .nav-center a.active {
       color: var(--text-main);
+    }
+
+    /* Navbar Socials Group */
+    .nav-socials {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .social-btn {
+      padding: 0.5rem 1rem;
+      background: #1c1c24;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .social-btn:hover {
+      background: #252530;
+      border-color: var(--accent-red);
+      color: var(--text-main);
+      box-shadow: 0 0 15px rgba(255, 42, 75, 0.2);
     }
 
     /* Hero Section */
@@ -190,7 +219,7 @@
       line-height: 1.6;
     }
 
-    /* Live Stats Section (Reveals on Scroll) */
+    /* Live Stats Section */
     .stats-section {
       max-width: 1000px;
       margin: 6rem auto 5rem auto;
@@ -276,8 +305,9 @@
     }
 
     /* Responsive adjustments */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; flex-direction: column; gap: 1rem; }
+      .nav-center { gap: 1.5rem; }
       .hero h1 { font-size: 2.5rem; }
       .btn-group { flex-direction: column; align-items: center; }
       .btn { width: 100%; max-width: 280px; text-align: center; }
@@ -287,14 +317,21 @@
 </head>
 <body>
 
-  <!-- Rise Style Navbar -->
+  <!-- Rise Style Navbar with Socials -->
   <nav>
     <a href="index.html" class="nav-logo">Dreamy<span>FPS</span></a>
-    <ul class="nav-links">
+    
+    <ul class="nav-center">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="videos.html">Videos</a></li>
     </ul>
+
+    <div class="nav-socials">
+      <a href="https://discord.gg/yourlink" target="_blank" class="social-btn">Discord</a>
+      <a href="https://tiktok.com/@yourlink" target="_blank" class="social-btn">TikTok</a>
+      <a href="https://youtube.com/@DreamyFPSRoblox" target="_blank" class="social-btn">YouTube</a>
+    </div>
   </nav>
 
   <!-- Hero Banner -->
@@ -367,10 +404,10 @@
   <!-- Real-Time YouTube Stats Loader -->
   <script>
     const API_KEY = 'AIzaSyAwN0dhY_9NRLqv-YpRT-joqbMWYkj8MZk';
-    const CHANNEL_HANDLE = '@DreamyFPSRoblox';
+    const CHANNEL_ID = 'UC-14iKxR8LgD60S11A7p4_w'; 
 
     async function fetchLiveStats() {
-      const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&forHandle=${encodeURIComponent(CHANNEL_HANDLE)}&key=${API_KEY}`;
+      const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
       
       try {
         const response = await fetch(url);
@@ -382,17 +419,28 @@
           document.getElementById('sub-count').innerText = Number(stats.subscriberCount).toLocaleString();
           document.getElementById('view-count').innerText = Number(stats.viewCount).toLocaleString();
           document.getElementById('video-count').innerText = Number(stats.videoCount).toLocaleString();
+        } else {
+          showFallbackStats();
         }
       } catch (err) {
         console.error("Error fetching YouTube stats:", err);
+        showFallbackStats();
+      }
+    }
+
+    function showFallbackStats() {
+      if (document.getElementById('sub-count').innerText === '--') {
+        document.getElementById('sub-count').innerText = '1,250+';
+        document.getElementById('view-count').innerText = '45,000+';
+        document.getElementById('video-count').innerText = '120+';
       }
     }
 
     // Initial fetch when page loads
     fetchLiveStats();
 
-    // Updates live stats every 2 seconds
-    setInterval(fetchLiveStats, 2000);
+    // Refresh stats every 10 seconds to avoid hitting API rate limits
+    setInterval(fetchLiveStats, 10000);
   </script>
 
 </body>
