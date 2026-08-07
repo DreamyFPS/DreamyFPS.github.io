@@ -6,7 +6,149 @@
   <title>My YouTube Channel</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
+    body { background: #0f0f0f; color: #fff; text-align: cen<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My YouTube Channel</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, sans-serif; }
     body { background: #0f0f0f; color: #fff; text-align: center; }
+    
+    /* Navigation Bar */
+    nav { padding: 1.5rem; background: #1f1f1f; display: flex; justify-content: center; gap: 20px; }
+    nav a { color: #fff; text-decoration: none; font-weight: bold; }
+    nav a:hover { color: #ff0000; }
+
+    /* Main Banner */
+    header { padding: 3rem 1rem 1rem 1rem; }
+    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    p { color: #aaa; margin-bottom: 1.5rem; }
+
+    /* Subscribe Button */
+    .btn { display: inline-block; padding: 12px 24px; background: #ff0000; color: #fff; border-radius: 20px; text-decoration: none; font-weight: bold; }
+    .btn:hover { background: #cc0000; }
+
+    /* Rounded Live Stats Box */
+    .stats-card {
+      background: #181818;
+      border: 1px solid #2e2e2e;
+      border-radius: 16px; /* Smooth rounded corners */
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #ff0000;
+    }
+
+    .divider {
+      width: 1px;
+      height: 40px;
+      background: #2e2e2e;
+    }
+
+    /* Video Section */
+    .content-area { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    iframe { width: 100%; aspect-ratio: 16/9; border: none; border-radius: 12px; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="videos.html">Videos</a>
+  </nav>
+
+  <!-- Header Section -->
+  <header>
+    <h1>Welcome to My Channel</h1>
+    <p>Check out my latest content and live channel numbers below!</p>
+    <a class="btn" href="YOUR_YOUTUBE_CHANNEL_LINK" target="_blank">Subscribe on YouTube</a>
+  </header>
+
+  <!-- Rounded Live Counts Card -->
+  <div class="stats-card">
+    <div class="stat-item">
+      <span class="stat-label">Subscribers</span>
+      <span class="stat-value" id="sub-count">--</span>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="stat-item">
+      <span class="stat-label">Total Views</span>
+      <span class="stat-value" id="view-count">--</span>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="stat-item">
+      <span class="stat-label">Videos</span>
+      <span class="stat-value" id="video-count">--</span>
+    </div>
+  </div>
+
+  <!-- Featured Video Section -->
+  <div class="content-area">
+    <h2>Featured Video</h2>
+    <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+  </div>
+
+  <!-- Live Counts JavaScript -->
+  <script>
+    // Paste your Google API Key and YouTube Channel ID here
+    const API_KEY = 'YOUR_API_KEY_HERE';
+    const CHANNEL_ID = 'YOUR_CHANNEL_ID_HERE';
+
+    async function loadStats() {
+      const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
+      
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.items && data.items.length > 0) {
+          const stats = data.items[0].statistics;
+          
+          // Formats numbers cleanly (e.g. 10000 -> 10,000)
+          document.getElementById('sub-count').innerText = Number(stats.subscriberCount).toLocaleString();
+          document.getElementById('view-count').innerText = Number(stats.viewCount).toLocaleString();
+          document.getElementById('video-count').innerText = Number(stats.videoCount).toLocaleString();
+        }
+      } catch (err) {
+        console.error("Could not fetch YouTube stats:", err);
+      }
+    }
+
+    loadStats();
+  </script>
+
+</body>
+</html>ter; }
     
     /* Top Navigation Bar */
     nav { padding: 1.5rem; background: #1f1f1f; display: flex; justify-content: center; gap: 20px; }
