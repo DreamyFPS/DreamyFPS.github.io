@@ -27,23 +27,30 @@
     h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: #ff0000; }
     .username { color: #888; margin-bottom: 2rem; font-weight: bold; }
 
-    /* 3D Avatar Card */
-    .avatar-wrapper {
-      width: 100%;
-      max-width: 350px;
-      height: 400px;
+    /* Avatar Box with Hover Effect */
+    .avatar-card {
+      width: 280px;
+      height: 280px;
       margin: 0 auto 2rem auto;
-      background: #0f0f0f;
-      border: 1px solid #2e2e2e;
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
+      background: radial-gradient(circle, #2a2a2a 0%, #0f0f0f 100%);
+      border: 1px solid #333;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .avatar-wrapper iframe {
+    .avatar-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 0 35px rgba(255, 0, 0, 0.4);
+    }
+
+    .avatar-card img {
       width: 100%;
       height: 100%;
-      border: none;
+      object-fit: contain;
     }
 
     p { color: #ccc; margin-bottom: 1rem; font-size: 1.1rem; line-height: 1.6; }
@@ -63,14 +70,47 @@
     <h1>About DreamyFPS</h1>
     <p class="username">@amliteralynotcheats</p>
 
-    <!-- 3D Roblox Avatar Box -->
-    <div class="avatar-wrapper">
-      <iframe src="https://roblox-avatar-3d.vercel.app/embed?username=amliteralynotcheats" title="Roblox 3D Avatar"></iframe>
+    <!-- Roblox Avatar Card -->
+    <div class="avatar-card">
+      <img id="roblox-avatar" src="" alt="DreamyFPS Roblox Avatar">
     </div>
 
     <p>Welcome to the official home of DreamyFPS!</p>
     <p>I post Roblox gameplay, FPS clips, and Shorts. Check out the home page to see live subscriber counters and my newest video uploads!</p>
   </div>
+
+  <!-- Dynamic Roblox Avatar Fetcher -->
+  <script>
+    const USERNAME = 'amliteralynotcheats';
+
+    async function loadAvatar() {
+      try {
+        // Step 1: Get User ID from Username
+        const userRes = await fetch('https://users.roblox.com/v1/usernames/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ usernames: [USERNAME], excludeBannedUsers: false })
+        });
+        const userData = await userRes.json();
+
+        if (userData.data && userData.data.length > 0) {
+          const userId = userData.data[0].id;
+
+          // Step 2: Fetch full-body avatar render
+          const avatarRes = await fetch(`https://thumbnails.roblox.com/v1/users/avatar?userIds=${userId}&size=420x420&format=Png&isCircular=false`);
+          const avatarData = await avatarRes.json();
+
+          if (avatarData.data && avatarData.data.length > 0) {
+            document.getElementById('roblox-avatar').src = avatarData.data[0].imageUrl;
+          }
+        }
+      } catch (err) {
+        console.error("Could not load Roblox avatar:", err);
+      }
+    }
+
+    loadAvatar();
+  </script>
 
 </body>
 </html>
