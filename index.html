@@ -379,7 +379,7 @@
         <div class="stat-label">
           <span class="pulse-dot"></span> Live Subscribers
         </div>
-        <div class="stat-number" id="sub-count">--</div>
+        <div class="stat-number" id="sub-count">Loading...</div>
         <p class="stat-subtext">Total Subscribers</p>
       </div>
 
@@ -388,7 +388,7 @@
         <div class="stat-label">
           <span class="pulse-dot"></span> Total Views
         </div>
-        <div class="stat-number" id="view-count">--</div>
+        <div class="stat-number" id="view-count">Loading...</div>
         <p class="stat-subtext">Channel Views</p>
       </div>
 
@@ -397,7 +397,7 @@
         <div class="stat-label">
           <span class="pulse-dot"></span> Videos Uploaded
         </div>
-        <div class="stat-number" id="video-count">--</div>
+        <div class="stat-number" id="video-count">Loading...</div>
         <p class="stat-subtext">Total Videos</p>
       </div>
 
@@ -410,11 +410,14 @@
     const CHANNEL_ID = 'UC-14iKxR8LgD60S11A7p4_w'; 
 
     async function fetchLiveStats() {
-      const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
+      const apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
+      // Using a reliable public CORS proxy to ensure GitHub Pages doesn't block the request
+      const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
       
       try {
-        const response = await fetch(url);
-        const data = await response.json();
+        const response = await fetch(proxyUrl);
+        const wrappedData = await response.json();
+        const data = JSON.parse(wrappedData.contents);
 
         if (data.items && data.items.length > 0) {
           const stats = data.items[0].statistics;
@@ -423,27 +426,20 @@
           document.getElementById('view-count').innerText = Number(stats.viewCount).toLocaleString();
           document.getElementById('video-count').innerText = Number(stats.videoCount).toLocaleString();
         } else {
-          showFallbackStats();
+          document.getElementById('sub-count').innerText = 'Unavailable';
+          document.getElementById('view-count').innerText = 'Unavailable';
+          document.getElementById('video-count').innerText = 'Unavailable';
         }
       } catch (err) {
         console.error("Error fetching YouTube stats:", err);
-        showFallbackStats();
-      }
-    }
-
-    function showFallbackStats() {
-      if (document.getElementById('sub-count').innerText === '--') {
-        document.getElementById('sub-count').innerText = '1,250+';
-        document.getElementById('view-count').innerText = '45,000+';
-        document.getElementById('video-count').innerText = '120+';
+        document.getElementById('sub-count').innerText = 'Error';
+        document.getElementById('view-count').innerText = 'Error';
+        document.getElementById('video-count').innerText = 'Error';
       }
     }
 
     // Initial fetch when page loads
     fetchLiveStats();
-
-    // Refresh stats every 10 seconds to avoid hitting API rate limits
-    setInterval(fetchLiveStats, 10000);
   </script>
 
 </body>
