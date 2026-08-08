@@ -518,7 +518,7 @@
           <span class="pulse-dot"></span> Total Views
         </div>
         <div class="stat-number" id="view-count">--</div>
-        <p class="stat-subtext">Channel Views</p>
+        <p class="stat-subtext">Total Views</p>
       </div>
 
       <!-- Videos Card -->
@@ -614,7 +614,7 @@
       }
     }, 70);
 
-    // Live YouTube Stats Fetcher with Detailed Error Logging & Fallback
+    // Live YouTube Stats Fetcher using your exact key and channel ID
     const API_KEY = 'AIzaSyAwN0dhY_9NRLqv-YpRT-joqbMWYkj8MZk';
     const CHANNEL_ID = 'UCFnng7uZdChcVMH5H4PbRuQ'; 
 
@@ -627,7 +627,6 @@
 
         if (data.error) {
           console.error("YouTube API Error:", data.error.message);
-          showFallbackStats();
           return;
         }
 
@@ -639,25 +638,14 @@
           document.getElementById('video-count').innerText = Number(stats.videoCount).toLocaleString();
         } else {
           console.warn("No YouTube channel found with ID:", CHANNEL_ID);
-          showFallbackStats();
         }
       } catch (err) {
         console.error("Network or fetch error:", err);
-        showFallbackStats();
-      }
-    }
-
-    function showFallbackStats() {
-      if (document.getElementById('sub-count').innerText === '--') {
-        // Updated fallback numbers instead of old placeholders
-        document.getElementById('sub-count').innerText = 'N/A';
-        document.getElementById('view-count').innerText = 'N/A';
-        document.getElementById('video-count').innerText = 'N/A';
       }
     }
 
     fetchLiveStats();
-    setInterval(fetchLiveStats, 30000); // 30s interval to prevent API quota limit issues
+    setInterval(fetchLiveStats, 10000); // Updates every 10 seconds
   </script>
 
 </body>
