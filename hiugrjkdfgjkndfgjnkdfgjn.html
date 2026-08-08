@@ -7,12 +7,12 @@
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Rise Client Green Color Palette & Reset */
+    /* Rise Client Color Palette & Reset (Green Theme) */
     :root {
       --bg-dark: #09090b;
       --card-bg: #121215;
       --border-color: #22222a;
-      --accent-green: #22c55e;
+      --accent-red: #22c55e;
       --accent-glow: rgba(34, 197, 94, 0.35);
       --text-main: #ffffff;
       --text-muted: #a1a1aa;
@@ -41,8 +41,10 @@
     /* Full-Screen Loading Overlay */
     #site-loader {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
       background-color: #050507;
       display: flex;
       justify-content: center;
@@ -64,7 +66,8 @@
     }
 
     .avatar-ring {
-      width: 75px; height: 75px;
+      width: 75px;
+      height: 75px;
       margin: 0 auto 1.5rem auto;
       border-radius: 50%;
       background: rgba(34, 197, 94, 0.1);
@@ -77,7 +80,7 @@
 
     .avatar-ring i {
       font-size: 1.8rem;
-      color: var(--accent-green);
+      color: var(--accent-red);
       filter: drop-shadow(0 0 10px var(--accent-glow));
     }
 
@@ -102,7 +105,7 @@
       margin-bottom: 0.3rem;
     }
 
-    .brand-name span { color: var(--accent-green); }
+    .brand-name span { color: var(--accent-red); }
 
     .status-text {
       font-size: 0.85rem;
@@ -124,7 +127,7 @@
     .progress-bar-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #16a34a, #4ade80);
+      background: linear-gradient(90deg, #16a34a, #22c55e);
       border-radius: 99px;
       box-shadow: 0 0 12px var(--accent-glow);
       transition: width 0.1s ease-out;
@@ -166,7 +169,7 @@
       text-transform: uppercase;
     }
 
-    .nav-logo span { color: var(--accent-green); }
+    .nav-logo span { color: var(--accent-red); }
 
     .nav-socials {
       display: flex;
@@ -185,7 +188,7 @@
     }
 
     .social-icon-btn:hover {
-      color: var(--accent-green);
+      color: var(--accent-red);
       text-shadow: 0 0 15px var(--accent-glow);
       transform: translateY(-2px);
     }
@@ -232,7 +235,7 @@
 
     .page-header {
       text-align: center;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
     }
 
     .page-title {
@@ -242,7 +245,7 @@
     }
 
     .page-title span {
-      background: linear-gradient(135deg, #ffffff 0%, var(--accent-green) 100%);
+      background: linear-gradient(135deg, #ffffff 0%, #22c55e 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -262,8 +265,7 @@
       padding: 2.5rem 2rem;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
       text-align: center;
-      margin-top: 1rem;
-      display: block !important; /* Force visibility */
+      margin-top: 2rem;
     }
 
     .password-card h3 {
@@ -287,15 +289,15 @@
     }
 
     .password-input:focus {
-      border-color: var(--accent-green);
+      border-color: var(--accent-red);
       box-shadow: 0 0 15px var(--accent-glow);
     }
 
     .submit-btn {
       width: 100%;
       padding: 0.9rem;
-      background: var(--accent-green);
-      color: #050507;
+      background: var(--accent-red);
+      color: #fff;
       border: none;
       border-radius: 12px;
       font-weight: 700;
@@ -307,16 +309,48 @@
 
     .submit-btn:hover {
       background: #16a34a;
-      color: #fff;
       transform: translateY(-2px);
     }
 
     .error-msg {
-      color: #ef4444;
+      color: var(--accent-red);
       font-size: 0.85rem;
       margin-top: 0.8rem;
       min-height: 1.2rem;
       font-weight: 600;
+    }
+
+    /* Gateway Protection Notice / Fallback */
+    .access-denied {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      max-width: 500px;
+      margin: 2rem auto;
+    }
+
+    .access-denied h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--accent-red);
+    }
+
+    .access-denied p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .access-denied a {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      background: var(--accent-red);
+      color: #fff;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 0 20px var(--accent-glow);
     }
 
     /* Unlocked Content Area */
@@ -365,9 +399,9 @@
     }
 
     .filter-btn.active {
-      background: var(--accent-green);
-      border-color: var(--accent-green);
-      color: #050507;
+      background: var(--accent-red);
+      border-color: var(--accent-red);
+      color: #fff;
       box-shadow: 0 0 20px var(--accent-glow);
     }
 
@@ -393,7 +427,7 @@
 
     .executor-card:hover {
       transform: translateY(-5px);
-      border-color: var(--accent-green);
+      border-color: var(--accent-red);
       box-shadow: 0 0 25px var(--accent-glow);
     }
 
@@ -425,7 +459,7 @@
       padding: 0.2rem 0.5rem;
       background: rgba(34, 197, 94, 0.1);
       border: 1px solid rgba(34, 197, 94, 0.3);
-      color: var(--accent-green);
+      color: var(--accent-red);
       border-radius: 50px;
       font-weight: 700;
       text-transform: uppercase;
@@ -482,7 +516,7 @@
     }
 
     .card-footer-info i {
-      color: var(--accent-green);
+      color: var(--accent-red);
     }
 
     /* Modal Popup Styles */
@@ -504,7 +538,7 @@
       width: 100%;
       max-width: 440px;
       background: var(--card-bg);
-      border: 1px solid var(--accent-green);
+      border: 1px solid var(--accent-red);
       border-radius: 20px;
       padding: 2.5rem;
       box-shadow: 0 0 40px var(--accent-glow);
@@ -573,7 +607,7 @@
     }
 
     .stat-value.highlight {
-      color: var(--accent-green);
+      color: var(--accent-red);
     }
 
     .modal-links {
@@ -608,14 +642,13 @@
     }
 
     .modal-btn-download {
-      background: var(--accent-green);
-      color: #050507;
+      background: var(--accent-red);
+      color: #fff;
       box-shadow: 0 0 15px var(--accent-glow);
     }
 
     .modal-btn-download:hover {
       background: #16a34a;
-      color: #fff;
     }
 
     @media (max-width: 900px) {
@@ -690,220 +723,231 @@
     </ul>
   </nav>
 
-  <!-- Main Container (Forced Visible by Default) -->
-  <div class="container" id="mainHubContent" style="display: flex; width: 100%; flex-direction: column; align-items: center;">
-    <div class="page-header">
-      <h1 class="page-title">Executors <span>Hub</span></h1>
-      <p class="page-subtitle">Enter the password to access verified exploit tools.</p>
+  <!-- Main Container -->
+  <div class="container">
+    
+    <!-- Access Denied Fallback (If accessed directly without gateway token) -->
+    <div class="access-denied" id="accessDenied" style="display: none;">
+      <h2><i class="fa-solid fa-triangle-exclamation"></i> Access Restricted</h2>
+      <p>You must pass through the secret gateway first to view this page.</p>
+      <a href="gateway.html">Go to Gateway</a>
     </div>
 
-    <!-- Password Prompt Card -->
-    <div class="password-card" id="passwordCard">
-      <h3><i class="fa-solid fa-lock" style="color: var(--accent-green);"></i> Enter Passcode</h3>
-      <input type="password" id="passInput" class="password-input" placeholder="Password..." autocomplete="off">
-      <button onclick="checkPassword()" class="submit-btn">Unlock</button>
-      <div class="error-msg" id="errorMsg"></div>
-    </div>
-
-    <!-- Unlocked Content -->
-    <div class="unlocked-content" id="unlockedContent">
-      <!-- Device Selection Filter Bar -->
-      <div class="device-filter-bar">
-        <button class="filter-btn active" onclick="filterExecutors('all')">
-          <i class="fa-solid fa-layer-group"></i> All Devices
-        </button>
-        <button class="filter-btn" onclick="filterExecutors('windows')">
-          <i class="fa-brands fa-windows"></i> Windows
-        </button>
-        <button class="filter-btn" onclick="filterExecutors('apple')">
-          <i class="fa-brands fa-apple"></i> Apple (iOS/Mac)
-        </button>
-        <button class="filter-btn" onclick="filterExecutors('android')">
-          <i class="fa-brands fa-android"></i> Android
-        </button>
+    <!-- Main Content wrapper containing the hardcoded password prompt & unlocked grid -->
+    <div id="mainHubContent" style="display: none; width: 100%; display: flex; flex-direction: column; align-items: center;">
+      <div class="page-header">
+        <h1 class="page-title">Executors <span>Hub</span></h1>
+        <p class="page-subtitle">Enter the password to access verified exploit tools.</p>
       </div>
 
-      <!-- Executors Grid -->
-      <div class="executors-grid" id="executorsGrid">
-        
-        <!-- Madium -->
-        <div class="executor-card" data-platform="windows" onclick="openModal('Madium', '100%', '98%', 'https://discord.gg/olemad', 'https://getmadium.net/')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Madium</span>
-              <div class="badges-container">
-                <span class="platform-badge">Windows</span>
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
-              </div>
-            </div>
-            <p class="executor-desc">Ultra-powerful Windows execution environment featuring pristine script stability.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+      <!-- Password Prompt Card -->
+      <div class="password-card" id="passwordCard">
+        <h3><i class="fa-solid fa-lock" style="color: var(--accent-red);"></i> Enter Passcode</h3>
+        <input type="password" id="passInput" class="password-input" placeholder="Password..." autocomplete="off">
+        <button onclick="checkPassword()" class="submit-btn">Unlock</button>
+        <div class="error-msg" id="errorMsg"></div>
+      </div>
+
+      <!-- Unlocked Content (Revealed on Correct Password) -->
+      <div class="unlocked-content" id="unlockedContent">
+        <!-- Device Selection Filter Bar -->
+        <div class="device-filter-bar">
+          <button class="filter-btn active" onclick="filterExecutors('all')">
+            <i class="fa-solid fa-layer-group"></i> All Devices
+          </button>
+          <button class="filter-btn" onclick="filterExecutors('windows')">
+            <i class="fa-brands fa-windows"></i> Windows
+          </button>
+          <button class="filter-btn" onclick="filterExecutors('apple')">
+            <i class="fa-brands fa-apple"></i> Apple (iOS/Mac)
+          </button>
+          <button class="filter-btn" onclick="filterExecutors('android')">
+            <i class="fa-brands fa-android"></i> Android
+          </button>
         </div>
 
-        <!-- Solara -->
-        <div class="executor-card" data-platform="windows" onclick="openModal('Solara', '46%', '67%', '', 'https://getsolara.dev/')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Solara</span>
-              <div class="badges-container">
-                <span class="platform-badge">Windows</span>
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
-              </div>
-            </div>
-            <p class="executor-desc">Reliable script execution environment optimized for Windows PC gameplay.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
-        </div>
-
-        <!-- Real -->
-        <div class="executor-card" data-platform="windows" onclick="openModal('Real', '100%', '99%', 'https://discord.com/invite/projectreal', 'https://projectreal.gg/')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Real</span>
-              <div class="badges-container">
-                <span class="platform-badge">Windows</span>
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
-              </div>
-            </div>
-            <p class="executor-desc">Advanced Windows execution client with high script compatibility.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
-        </div>
-
-        <!-- Xeno -->
-        <div class="executor-card" data-platform="windows" onclick="openModal('Xeno', '40%', '84%', 'https://discord.com/invite/xe-no', 'https://www.xeno.now/')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Xeno</span>
-              <div class="badges-container">
-                <span class="platform-badge">Windows</span>
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
-              </div>
-            </div>
-            <p class="executor-desc">Efficient Windows script execution tool with clean interface and stable features.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
-        </div>
-
-        <!-- Opiumware Mac -->
-        <div class="executor-card" data-platform="apple" onclick="openModal('Opiumware', '100%', '99%', 'https://discord.com/invite/opiumwares', 'https://use.opiumware.today/')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Opiumware</span>
-              <div class="badges-container">
-                <span class="platform-badge">Apple</span>
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
-              </div>
-            </div>
-            <p class="executor-desc">Advanced free execution environment built specifically for macOS systems.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
-        </div>
-
-        <!-- Macsploit Mac -->
-        <div class="executor-card" data-platform="apple" onclick="openModal('Macsploit', '100%', '99%', 'https://discord.com/invite/macsploit', 'https://www.raptor.fun/')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Macsploit</span>
-              <div class="badges-container">
-                <span class="platform-badge">Apple</span>
-                <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
-              </div>
-            </div>
-            <p class="executor-desc">High-tier script execution environment built specifically for macOS.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
-        </div>
-
-        <!-- Hydrogen Mac -->
-        <div class="executor-card" data-platform="apple" onclick="openModal('Hydrogen Mac', 'Unknown', 'Unknown', '', 'https://www.hydrogen.lat/')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Hydrogen Mac</span>
-              <div class="badges-container">
-                <span class="platform-badge">Apple</span>
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
-              </div>
-            </div>
-            <p class="executor-desc">Reliable script execution utility available for macOS systems.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
-        </div>
-
-        <!-- Codex Android -->
-        <div class="executor-card" data-platform="android" onclick="openModal('Codex Android', '90%', '92%', 'https://discord.gg/codex', '#')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Codex Android</span>
-              <div class="badges-container">
-                <span class="platform-badge">Android</span>
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
-              </div>
-            </div>
-            <p class="executor-desc">Stable script injector and mobile utility designed for Android devices.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
-        </div>
-
-        <!-- Delta iOS -->
-        <div class="executor-card" data-platform="apple" onclick="openModal('Delta iOS', '100%', '99%', '', 'https://delta.bz/')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Delta iOS</span>
-              <div class="badges-container">
-                <span class="platform-badge">Apple</span>
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
-              </div>
-            </div>
-            <p class="executor-desc">The trusted Delta mobile execution client tailored for iOS devices.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
-        </div>
-
-        <!-- Delta Android -->
-        <div class="executor-card" data-platform="android" onclick="openModal('Delta Android', '100%', '99%', '', 'https://delta.bz/')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Delta Android</span>
-              <div class="badges-container">
-                <span class="platform-badge">Android</span>
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
-              </div>
-            </div>
-            <p class="executor-desc">Feature-rich mobile exploit client built for Android phones and emulators.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
-        </div>
-
-        <!-- Vega X -->
-        <div class="executor-card" data-platform="android" onclick="openModal('Vega X', '98%', '96%', 'https://discord.gg/vegax', '#')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Vega X</span>
-              <div class="badges-container">
-                <span class="platform-badge">Android</span>
-                <div style="display: flex; gap: 0.3rem;">
+        <!-- Executors Grid -->
+        <div class="executors-grid" id="executorsGrid">
+          
+          <!-- Madium -->
+          <div class="executor-card" data-platform="windows" onclick="openModal('Madium', '100%', '98%', 'https://discord.gg/olemad', 'https://getmadium.net/')">
+            <div>
+              <div class="executor-top">
+                <span class="executor-title">Madium</span>
+                <div class="badges-container">
+                  <span class="platform-badge">Windows</span>
                   <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                  <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
+                </div>
+              </div>
+              <p class="executor-desc">Ultra-powerful Windows execution environment featuring pristine script stability.</p>
+            </div>
+            <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+          </div>
+
+          <!-- Solara -->
+          <div class="executor-card" data-platform="windows" onclick="openModal('Solara', '46%', '67%', '', 'https://getsolara.dev/')">
+            <div>
+              <div class="executor-top">
+                <span class="executor-title">Solara</span>
+                <div class="badges-container">
+                  <span class="platform-badge">Windows</span>
+                  <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                  <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
+                </div>
+              </div>
+              <p class="executor-desc">Reliable script execution environment optimized for Windows PC gameplay.</p>
+            </div>
+            <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+          </div>
+
+          <!-- Real -->
+          <div class="executor-card" data-platform="windows" onclick="openModal('Real', '100%', '99%', 'https://discord.com/invite/projectreal', 'https://projectreal.gg/')">
+            <div>
+              <div class="executor-top">
+                <span class="executor-title">Real</span>
+                <div class="badges-container">
+                  <span class="platform-badge">Windows</span>
+                  <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                  <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
+                </div>
+              </div>
+              <p class="executor-desc">Advanced Windows execution client with high script compatibility.</p>
+            </div>
+            <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+          </div>
+
+          <!-- Xeno -->
+          <div class="executor-card" data-platform="windows" onclick="openModal('Xeno', '40%', '84%', 'https://discord.com/invite/xe-no', 'https://www.xeno.now/')">
+            <div>
+              <div class="executor-top">
+                <span class="executor-title">Xeno</span>
+                <div class="badges-container">
+                  <span class="platform-badge">Windows</span>
+                  <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                  <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
+                </div>
+              </div>
+              <p class="executor-desc">Efficient Windows script execution tool with clean interface and stable features.</p>
+            </div>
+            <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+          </div>
+
+          <!-- Opiumware Mac -->
+          <div class="executor-card" data-platform="apple" onclick="openModal('Opiumware', '100%', '99%', 'https://discord.com/invite/opiumwares', 'https://use.opiumware.today/')">
+            <div>
+              <div class="executor-top">
+                <span class="executor-title">Opiumware</span>
+                <div class="badges-container">
+                  <span class="platform-badge">Apple</span>
+                  <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                  <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
+                </div>
+              </div>
+              <p class="executor-desc">Advanced free execution environment built specifically for macOS systems.</p>
+            </div>
+            <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+          </div>
+
+          <!-- Macsploit Mac -->
+          <div class="executor-card" data-platform="apple" onclick="openModal('Macsploit', '100%', '99%', 'https://discord.com/invite/macsploit', 'https://www.raptor.fun/')">
+            <div>
+              <div class="executor-top">
+                <span class="executor-title">Macsploit</span>
+                <div class="badges-container">
+                  <span class="platform-badge">Apple</span>
                   <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
                 </div>
-                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
               </div>
+              <p class="executor-desc">High-tier script execution environment built specifically for macOS.</p>
             </div>
-            <p class="executor-desc">Popular multi-tier execution client with both free and premium versions available for Android.</p>
+            <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
           </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
-        </div>
 
+          <!-- Hydrogen Mac -->
+          <div class="executor-card" data-platform="apple" onclick="openModal('Hydrogen Mac', 'Unknown', 'Unknown', '', 'https://www.hydrogen.lat/')">
+            <div>
+              <div class="executor-top">
+                <span class="executor-title">Hydrogen Mac</span>
+                <div class="badges-container">
+                  <span class="platform-badge">Apple</span>
+                  <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                  <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
+                </div>
+              </div>
+              <p class="executor-desc">Reliable script execution utility available for macOS systems.</p>
+            </div>
+            <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+          </div>
+
+          <!-- Codex Android -->
+          <div class="executor-card" data-platform="android" onclick="openModal('Codex Android', '90%', '92%', 'https://discord.gg/codex', '#')">
+            <div>
+              <div class="executor-top">
+                <span class="executor-title">Codex Android</span>
+                <div class="badges-container">
+                  <span class="platform-badge">Android</span>
+                  <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                  <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
+                </div>
+              </div>
+              <p class="executor-desc">Stable script injector and mobile utility designed for Android devices.</p>
+            </div>
+            <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+          </div>
+
+          <!-- Delta iOS -->
+          <div class="executor-card" data-platform="apple" onclick="openModal('Delta iOS', '100%', '99%', '', 'https://delta.bz/')">
+            <div>
+              <div class="executor-top">
+                <span class="executor-title">Delta iOS</span>
+                <div class="badges-container">
+                  <span class="platform-badge">Apple</span>
+                  <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                  <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
+                </div>
+              </div>
+              <p class="executor-desc">The trusted Delta mobile execution client tailored for iOS devices.</p>
+            </div>
+            <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+          </div>
+
+          <!-- Delta Android -->
+          <div class="executor-card" data-platform="android" onclick="openModal('Delta Android', '100%', '99%', '', 'https://delta.bz/')">
+            <div>
+              <div class="executor-top">
+                <span class="executor-title">Delta Android</span>
+                <div class="badges-container">
+                  <span class="platform-badge">Android</span>
+                  <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                  <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
+                </div>
+              </div>
+              <p class="executor-desc">Feature-rich mobile exploit client built for Android phones and emulators.</p>
+            </div>
+            <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+          </div>
+
+          <!-- Vega X -->
+          <div class="executor-card" data-platform="android" onclick="openModal('Vega X', '98%', '96%', 'https://discord.gg/vegax', '#')">
+            <div>
+              <div class="executor-top">
+                <span class="executor-title">Vega X</span>
+                <div class="badges-container">
+                  <span class="platform-badge">Android</span>
+                  <div style="display: flex; gap: 0.3rem;">
+                    <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                    <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
+                  </div>
+                  <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
+                </div>
+              </div>
+              <p class="executor-desc">Popular multi-tier execution client with both free and premium versions available for Android.</p>
+            </div>
+            <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
@@ -936,38 +980,90 @@
     </div>
   </div>
 
-  <!-- Script Logic -->
+  <!-- Gateway Verification, Password Logic & Interactive Scripts -->
   <script>
-    const HUB_PASSWORD = "dreamyexec";
-
     window.addEventListener('DOMContentLoaded', () => {
-      // Check if already unlocked in this session
-      if (sessionStorage.getItem('hub_unlocked') === 'true') {
-        document.getElementById('passwordCard').style.display = 'none';
-        document.getElementById('unlockedContent').style.display = 'block';
+      const isVerified = sessionStorage.getItem('gateway_verified');
+      const mainHubContent = document.getElementById('mainHubContent');
+      const accessDenied = document.getElementById('accessDenied');
+
+      if (isVerified === 'true') {
+        mainHubContent.style.display = 'flex';
+        accessDenied.style.display = 'none';
+      } else {
+        mainHubContent.style.display = 'none';
+        accessDenied.style.display = 'block';
       }
+
+      // Simulate site loader loading sequence
+      let currentPercent = 0;
+      const progressBarFill = document.getElementById('progressBarFill');
+      const percentageText = document.getElementById('percentageText');
+      const siteLoader = document.getElementById('site-loader');
+      const statusMessages = [
+        "Loading secure hub...",
+        "Verifying assets...",
+        "Establishing connection...",
+        "Ready."
+      ];
+      const statusMessage = document.getElementById('statusMessage');
+
+      const loaderInterval = setInterval(() => {
+        currentPercent += Math.floor(Math.random() * 15) + 5;
+        if (currentPercent >= 100) {
+          currentPercent = 100;
+          clearInterval(loaderInterval);
+          setTimeout(() => {
+            siteLoader.style.opacity = '0';
+            siteLoader.style.visibility = 'hidden';
+          }, 300);
+        }
+        if (progressBarFill) progressBarFill.style.width = currentPercent + '%';
+        if (percentageText) percentageText.textContent = currentPercent + '%';
+        
+        if (currentPercent > 75 && statusMessage) {
+          statusMessage.textContent = statusMessages[3];
+        } else if (currentPercent > 40 && statusMessage) {
+          statusMessage.textContent = statusMessages[2];
+        } else if (currentPercent > 20 && statusMessage) {
+          statusMessage.textContent = statusMessages[1];
+        }
+      }, 100);
     });
 
     function checkPassword() {
       const inputVal = document.getElementById('passInput').value.trim().toLowerCase();
       const errorMsg = document.getElementById('errorMsg');
+      const passwordCard = document.getElementById('passwordCard');
+      const unlockedContent = document.getElementById('unlockedContent');
 
-      if (inputVal === HUB_PASSWORD) {
-        sessionStorage.setItem('hub_unlocked', 'true');
-        document.getElementById('passwordCard').style.display = 'none';
-        document.getElementById('unlockedContent').style.display = 'block';
-        errorMsg.innerText = "";
+      // Change 'dreamyexec' to whatever password you want
+      if (inputVal === 'dreamyexec') {
+        errorMsg.textContent = '';
+        passwordCard.style.display = 'none';
+        unlockedContent.style.display = 'block';
       } else {
-        errorMsg.innerText = "Incorrect password. Try again.";
+        errorMsg.textContent = 'Incorrect passcode! Try again.';
       }
     }
 
-    document.getElementById('passInput').addEventListener('keypress', function (e) {
+    // Allow Enter key to submit password
+    document.getElementById('passInput')?.addEventListener('keypress', function (e) {
       if (e.key === 'Enter') {
         checkPassword();
       }
     });
 
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    if (mobileMenuBtn && navLinks) {
+      mobileMenuBtn.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+      });
+    }
+
+    // Filter Executors Functionality
     function filterExecutors(platform) {
       const buttons = document.querySelectorAll('.filter-btn');
       buttons.forEach(btn => btn.classList.remove('active'));
@@ -975,7 +1071,8 @@
 
       const cards = document.querySelectorAll('.executor-card');
       cards.forEach(card => {
-        if (platform === 'all' || card.getAttribute('data-platform') === platform) {
+        const cardPlatform = card.getAttribute('data-platform');
+        if (platform === 'all' || cardPlatform === platform) {
           card.style.display = 'flex';
         } else {
           card.style.display = 'none';
@@ -983,10 +1080,12 @@
       });
     }
 
-    function openModal(name, sunc, unc, discordUrl, downloadUrl) {
-      document.getElementById('modalTitle').innerText = name;
-      document.getElementById('modalSunc').innerText = sunc;
-      document.getElementById('modalUnc').innerText = unc;
+    // Modal Popup Logic
+    function openModal(title, sunc, unc, discordUrl, downloadUrl) {
+      const modal = document.getElementById('executorModal');
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalSunc').textContent = sunc;
+      document.getElementById('modalUnc').textContent = unc;
 
       const discordBtn = document.getElementById('modalDiscordBtn');
       if (discordUrl && discordUrl !== '#') {
@@ -999,68 +1098,20 @@
       const downloadBtn = document.getElementById('modalDownloadBtn');
       downloadBtn.href = downloadUrl;
 
-      document.getElementById('executorModal').classList.add('active');
+      modal.classList.add('active');
     }
 
     function closeModal() {
-      document.getElementById('executorModal').classList.remove('active');
+      const modal = document.getElementById('executorModal');
+      modal.classList.remove('active');
     }
 
     function closeModalOnOutside(event) {
-      if (event.target.id === 'executorModal') {
+      const modalCard = document.querySelector('.modal-card');
+      if (!modalCard.contains(event.target)) {
         closeModal();
       }
     }
-
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navLinks = document.getElementById('navLinks');
-    mobileMenuBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
   </script>
-
-  <!-- Loading Animation Script -->
-  <script>
-    const steps = [
-      "Establishing secure connection...",
-      "Decrypting modules...",
-      "Fetching assets...",
-      "Finalizing...",
-      "Welcome."
-    ];
-
-    let progress = 0;
-    const progressBarFill = document.getElementById('progressBarFill');
-    const percentageText = document.getElementById('percentageText');
-    const statusMessage = document.getElementById('statusMessage');
-    const siteLoader = document.getElementById('site-loader');
-
-    const loaderInterval = setInterval(() => {
-      progress += Math.floor(Math.random() * 7) + 3;
-
-      if (progress >= 100) {
-        progress = 100;
-        clearInterval(loaderInterval);
-        statusMessage.innerText = steps[4];
-        
-        setTimeout(() => {
-          siteLoader.style.opacity = '0';
-          siteLoader.style.visibility = 'hidden';
-        }, 300);
-      }
-
-      progressBarFill.style.width = progress + '%';
-      percentageText.innerText = progress + '%';
-
-      if (progress > 75) {
-        statusMessage.innerText = steps[3];
-      } else if (progress > 50) {
-        statusMessage.innerText = steps[2];
-      } else if (progress > 25) {
-        statusMessage.innerText = steps[1];
-      }
-    }, 70);
-  </script>
-
 </body>
 </html>
