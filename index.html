@@ -723,7 +723,7 @@
       }
     });
 
-    // Custom Smooth Slow Scroll with Ease-In / Ease-Out
+    // Custom Smooth Slow Scroll with 1500ms Duration & Ease-In / Ease-Out
     document.getElementById('scrollStatsBtn').addEventListener('click', function(e) {
       e.preventDefault();
       const target = document.querySelector('#live-stats');
@@ -732,7 +732,7 @@
       const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
       const startPosition = window.pageYOffset;
       const distance = targetPosition - startPosition;
-      const duration = 1400; // Duration in milliseconds (higher = slower and smoother)
+      const duration = 1500; // Exactly 1500ms duration for slow and smooth scrolling
       let startTime = null;
 
       function easeInOutCubic(t) {
