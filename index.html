@@ -773,11 +773,11 @@
     </div>
   </section>
 
-  <!-- Most Popular Highlights Section (Auto-populated with top 3 videos) -->
+  <!-- Most Popular Highlights Section (With Live View Counts) -->
   <section class="popular-videos-section">
     <div style="text-align: center; margin-bottom: 2.5rem;">
       <h2 class="section-title">Most Popular <span>Highlights</span></h2>
-      <p class="section-subtitle">Your top 3 most-watched channel uploads</p>
+      <p class="section-subtitle">Top 3 most-watched uploads with live view counts</p>
     </div>
 
     <div class="popular-grid">
@@ -793,7 +793,7 @@
         <div class="popular-info">
           <h4 id="pop-title-0">Loading top highlight...</h4>
           <div class="popular-meta">
-            <span><i class="fa-solid fa-fire" style="color: var(--accent-red);"></i> #1 Most Popular</span>
+            <span id="pop-views-0"><i class="fa-solid fa-eye" style="color: var(--accent-red); margin-right: 4px;"></i> -- views</span>
             <a href="https://www.youtube.com/@DreamyFPSRoblox" target="_blank" id="pop-watch-0" style="color: var(--accent-red); text-decoration: none; font-weight: 600;">Watch <i class="fa-solid fa-arrow-right" style="font-size: 0.75rem;"></i></a>
           </div>
         </div>
@@ -810,7 +810,7 @@
         <div class="popular-info">
           <h4 id="pop-title-1">Loading top highlight...</h4>
           <div class="popular-meta">
-            <span><i class="fa-solid fa-fire" style="color: var(--accent-red);"></i> #2 Most Popular</span>
+            <span id="pop-views-1"><i class="fa-solid fa-eye" style="color: var(--accent-red); margin-right: 4px;"></i> -- views</span>
             <a href="https://www.youtube.com/@DreamyFPSRoblox" target="_blank" id="pop-watch-1" style="color: var(--accent-red); text-decoration: none; font-weight: 600;">Watch <i class="fa-solid fa-arrow-right" style="font-size: 0.75rem;"></i></a>
           </div>
         </div>
@@ -827,7 +827,7 @@
         <div class="popular-info">
           <h4 id="pop-title-2">Loading top highlight...</h4>
           <div class="popular-meta">
-            <span><i class="fa-solid fa-fire" style="color: var(--accent-red);"></i> #3 Most Popular</span>
+            <span id="pop-views-2"><i class="fa-solid fa-eye" style="color: var(--accent-red); margin-right: 4px;"></i> -- views</span>
             <a href="https://www.youtube.com/@DreamyFPSRoblox" target="_blank" id="pop-watch-2" style="color: var(--accent-red); text-decoration: none; font-weight: 600;">Watch <i class="fa-solid fa-arrow-right" style="font-size: 0.75rem;"></i></a>
           </div>
         </div>
@@ -1004,32 +1004,45 @@
       }
     }
 
-    // Fetch Top 3 Most Popular Videos by View Count
+    // Fetch Top 3 Most Popular Videos and their View Counts
     async function fetchPopularVideos() {
-      const popularUrl = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=viewCount&maxResults=3&type=video`;
+      const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=viewCount&maxResults=3&type=video`;
 
       try {
-        const res = await fetch(popularUrl);
-        const data = await res.json();
+        const res = await fetch(searchUrl);
+        const searchData = await res.json();
 
-        if (data.items && data.items.length > 0) {
-          data.items.forEach((item, index) => {
-            const videoId = item.id.videoId;
-            const snippet = item.snippet;
+        if (searchData.items && searchData.items.length > 0) {
+          const videoIds = searchData.items.map(item => item.id.videoId).filter(Boolean).join(',');
+          
+          if (!videoIds) return;
 
-            if (videoId && index < 3) {
+          const detailsUrl = `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&part=snippet,statistics&id=${videoIds}`;
+          const detailsRes = await fetch(detailsUrl);
+          const detailsData = await detailsRes.json();
+
+          if (detailsData.items && detailsData.items.length > 0) {
+            detailsData.items.forEach((item, index) => {
+              const snippet = item.snippet;
+              const statistics = item.statistics;
+              const videoId = item.id;
               const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
               const linkEl = document.getElementById(`pop-link-${index}`);
               const imgEl = document.getElementById(`pop-img-${index}`);
               const titleEl = document.getElementById(`pop-title-${index}`);
               const watchEl = document.getElementById(`pop-watch-${index}`);
+              const viewsEl = document.getElementById(`pop-views-${index}`);
 
               if (linkEl) linkEl.href = videoUrl;
               if (imgEl) imgEl.src = snippet.thumbnails.high ? snippet.thumbnails.high.url : snippet.thumbnails.medium.url;
               if (titleEl) titleEl.innerText = snippet.title;
               if (watchEl) watchEl.href = videoUrl;
-            }
-          });
+              if (viewsEl && statistics && statistics.viewCount) {
+                viewsEl.innerHTML = `<i class="fa-solid fa-eye" style="color: var(--accent-red); margin-right: 4px;"></i> ${Number(statistics.viewCount).toLocaleString()} views`;
+              }
+            });
+          }
         }
       } catch (err) {
         console.error("Popular videos fetch error:", err);
@@ -1038,7 +1051,8 @@
 
     fetchYouTubeData();
     fetchPopularVideos();
-    setInterval(fetchYouTubeData, 30000);
+    setInterval(fetchYouTubeData, 30000);             // Update channel stats & latest upload every 30s
+    setInterval(fetchPopularVideos, 600000);          // Update popular videos & view counts every 10 mins
   </script>
 
 </body>
