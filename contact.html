@@ -406,6 +406,7 @@
   <!-- Rise Style Responsive Navbar -->
   <nav>
     <div class="nav-left">
+      <!-- Fixed link to point to executor hub instead of index.html -->
       <a href="hiugrjkdfgjkndfgjnkdfgjn.html" class="nav-logo">Dreamy<span>FPS</span></a>
       <div class="nav-socials">
         <a href="https://discord.gg/XnfZ3fZpy8" target="_blank" class="social-icon-btn" title="Discord"><i class="fa-brands fa-discord"></i></a>
@@ -434,7 +435,7 @@
 
     <!-- Contact Form Card -->
     <div class="contact-card">
-      <form id="contactForm" onsubmit="handleFormspreeSubmit(event)">
+      <form id="contactForm" onsubmit="handleTicketSubmit(event)">
         
         <!-- Reason / Topic Selection -->
         <div class="form-group">
@@ -483,7 +484,7 @@
     </div>
   </div>
 
-  <!-- Interactive Scripts & Formspree AJAX Handler -->
+  <!-- Interactive Scripts & Make.com Webhook Handler -->
   <script>
     // Mobile Menu Toggle
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -561,8 +562,8 @@
       handleReasonChange();
     });
 
-    // Formspree Async Submission Handler with strict link start validation
-    async function handleFormspreeSubmit(event) {
+    // Webhook Async Submission Handler for Make.com
+    async function handleTicketSubmit(event) {
       event.preventDefault();
       
       const form = event.target;
@@ -575,11 +576,9 @@
       if (inquiryType === 'Collab with me' && senderYT && senderYT.value.trim() !== '') {
         let ytVal = senderYT.value.trim().toLowerCase();
         
-        // Strip optional prefixes (https://, http://, www.)
         ytVal = ytVal.replace(/^https?:\/\//, '');
         ytVal = ytVal.replace(/^www\./, '');
 
-        // Must start with youtube.com/@ or youtu.be/@
         const isValid = ytVal.startsWith('youtube.com/@') || ytVal.startsWith('youtu.be/@');
 
         if (!isValid) {
@@ -590,37 +589,37 @@
         }
       }
       
-      // REPLACE WITH YOUR ACTUAL FORMSPREE ENDPOINT URL
-      const FORMSPREE_ENDPOINT = "YOUR_FORMSPREE_ENDPOINT_URL";
+      // PASTE YOUR MAKE.COM CUSTOM WEBHOOK URL HERE
+      const MAKE_WEBHOOK_URL = "YOUR_MAKE_COM_WEBHOOK_URL";
 
       submitBtn.disabled = true;
-      submitBtn.textContent = "Sending...";
+      submitBtn.textContent = "Creating Ticket...";
       successMsg.textContent = "";
 
       try {
+        // Collect form entries into a clean JSON payload for Make.com
         const formData = new FormData(form);
-        const response = await fetch(FORMSPREE_ENDPOINT, {
+        const dataPayload = {};
+        formData.forEach((value, key) => {
+          dataPayload[key] = value;
+        });
+
+        const response = await fetch(MAKE_WEBHOOK_URL, {
           method: 'POST',
-          body: formData,
+          body: JSON.stringify(dataPayload),
           headers: {
-            'Accept': 'application/json'
+            'Content-Type': 'application/json'
           }
         });
 
         if (response.ok) {
           successMsg.style.color = "var(--accent-red)";
-          successMsg.textContent = "Thanks! Your message has been sent successfully.";
+          successMsg.textContent = "Ticket created! Check Discord for your private channel.";
           form.reset();
           handleReasonChange();
         } else {
-          const data = await response.json();
-          if (data && data.errors) {
-            successMsg.style.color = "#ff4d4d";
-            successMsg.textContent = data.errors.map(error => error.message).join(", ");
-          } else {
-            successMsg.style.color = "#ff4d4d";
-            successMsg.textContent = "Oops! There was a problem submitting your form.";
-          }
+          successMsg.style.color = "#ff4d4d";
+          successMsg.textContent = "Oops! There was a problem creating your ticket.";
         }
       } catch (error) {
         successMsg.style.color = "#ff4d4d";
