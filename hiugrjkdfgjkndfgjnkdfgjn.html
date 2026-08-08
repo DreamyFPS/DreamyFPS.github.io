@@ -6,14 +6,6 @@
   <title>Executors Hub - DreamyFPS</title>
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Security Check Script: Block direct access unless coming from gateway.html -->
-  <script>
-    if (localStorage.getItem("gateway_verified") !== "true") {
-      window.location.href = "gateway.html";
-    }
-  </script>
-
   <style>
     /* Rise Client Color Palette & Reset */
     :root {
@@ -232,6 +224,9 @@
       padding: 0 1.5rem;
       flex: 1;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .page-header {
@@ -254,6 +249,83 @@
     .page-subtitle {
       color: var(--text-muted);
       font-size: 1.05rem;
+    }
+
+    /* Password Box Styles */
+    .password-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .password-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+    }
+
+    .password-input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      background: #09090b;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-main);
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .password-input:focus {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 0.9rem;
+      background: var(--accent-red);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 0 20px var(--accent-glow);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .submit-btn:hover {
+      background: #e01e3e;
+      transform: translateY(-2px);
+    }
+
+    .error-msg {
+      color: var(--accent-red);
+      font-size: 0.85rem;
+      margin-top: 0.8rem;
+      min-height: 1.2rem;
+      font-weight: 600;
+    }
+
+    /* Unlocked Content Area (Initially Hidden) */
+    .unlocked-content {
+      display: none;
+      width: 100%;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Device Selection Filter Bar */
@@ -301,6 +373,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 1.5rem;
+      width: 100%;
     }
 
     .executor-card {
@@ -416,7 +489,7 @@
         <i class="fa-solid fa-bolt"></i>
       </div>
       <div class="brand-name">Dreamy<span>FPS</span></div>
-      <div class="status-text" id="statusMessage">Loading executors hub...</div>
+      <div class="status-text" id="statusMessage">Loading secure hub...</div>
       <div class="progress-track">
         <div class="progress-bar-fill" id="progressBarFill"></div>
       </div>
@@ -449,79 +522,115 @@
   <!-- Main Container -->
   <div class="container">
     <div class="page-header">
-      <h1 class="page-title">Verified <span>Executors</span></h1>
-      <p class="page-subtitle">Select your platform to view trusted tools and exploit clients.</p>
+      <h1 class="page-title">Executors <span>Hub</span></h1>
+      <p class="page-subtitle">Enter the password to access verified exploit tools.</p>
     </div>
 
-    <!-- Device Selection Filter Bar -->
-    <div class="device-filter-bar">
-      <button class="filter-btn active" onclick="filterExecutors('all')">
-        <i class="fa-solid fa-layer-group"></i> All Devices
-      </button>
-      <button class="filter-btn" onclick="filterExecutors('windows')">
-        <i class="fa-brands fa-windows"></i> Windows
-      </button>
-      <button class="filter-btn" onclick="filterExecutors('apple')">
-        <i class="fa-brands fa-apple"></i> Apple (iOS/Mac)
-      </button>
-      <button class="filter-btn" onclick="filterExecutors('android')">
-        <i class="fa-brands fa-android"></i> Android
-      </button>
+    <!-- Password Prompt Card -->
+    <div class="password-card" id="passwordCard">
+      <h3><i class="fa-solid fa-lock" style="color: var(--accent-red);"></i> Enter Passcode</h3>
+      <input type="password" id="passInput" class="password-input" placeholder="Password..." autocomplete="off">
+      <button onclick="checkPassword()" class="submit-btn">Unlock</button>
+      <div class="error-msg" id="errorMsg"></div>
     </div>
 
-    <!-- Executors Grid -->
-    <div class="executors-grid" id="executorsGrid">
-      
-      <!-- Windows Executor Example 1 -->
-      <div class="executor-card" data-platform="windows">
-        <div>
-          <div class="executor-top">
-            <span class="executor-title">Wave / Solara</span>
-            <span class="platform-badge">Windows</span>
-          </div>
-          <p class="executor-desc">High-performance script execution environment optimized for Windows PC gameplay.</p>
-        </div>
-        <a href="#" target="_blank" class="download-btn"><i class="fa-solid fa-download"></i> Get Executor</a>
+    <!-- Unlocked Content (Revealed on Correct Password) -->
+    <div class="unlocked-content" id="unlockedContent">
+      <!-- Device Selection Filter Bar -->
+      <div class="device-filter-bar">
+        <button class="filter-btn active" onclick="filterExecutors('all')">
+          <i class="fa-solid fa-layer-group"></i> All Devices
+        </button>
+        <button class="filter-btn" onclick="filterExecutors('windows')">
+          <i class="fa-brands fa-windows"></i> Windows
+        </button>
+        <button class="filter-btn" onclick="filterExecutors('apple')">
+          <i class="fa-brands fa-apple"></i> Apple (iOS/Mac)
+        </button>
+        <button class="filter-btn" onclick="filterExecutors('android')">
+          <i class="fa-brands fa-android"></i> Android
+        </button>
       </div>
 
-      <!-- Apple Executor Example -->
-      <div class="executor-card" data-platform="apple">
-        <div>
-          <div class="executor-top">
-            <span class="executor-title">Codex iOS</span>
-            <span class="platform-badge">Apple</span>
+      <!-- Executors Grid -->
+      <div class="executors-grid" id="executorsGrid">
+        
+        <!-- Windows Executor Example 1 -->
+        <div class="executor-card" data-platform="windows">
+          <div>
+            <div class="executor-top">
+              <span class="executor-title">Wave / Solara</span>
+              <span class="platform-badge">Windows</span>
+            </div>
+            <p class="executor-desc">High-performance script execution environment optimized for Windows PC gameplay.</p>
           </div>
-          <p class="executor-desc">Stable script injector and mobile utility designed for iOS devices and iPhones.</p>
+          <a href="#" target="_blank" class="download-btn"><i class="fa-solid fa-download"></i> Get Executor</a>
         </div>
-        <a href="#" target="_blank" class="download-btn"><i class="fa-solid fa-download"></i> Get Executor</a>
-      </div>
 
-      <!-- Android Executor Example -->
-      <div class="executor-card" data-platform="android">
-        <div>
-          <div class="executor-top">
-            <span class="executor-title">Delta Android</span>
-            <span class="platform-badge">Android</span>
+        <!-- Apple Executor Example -->
+        <div class="executor-card" data-platform="apple">
+          <div>
+            <div class="executor-top">
+              <span class="executor-title">Codex iOS</span>
+              <span class="platform-badge">Apple</span>
+            </div>
+            <p class="executor-desc">Stable script injector and mobile utility designed for iOS devices and iPhones.</p>
           </div>
-          <p class="executor-desc">Feature-rich mobile exploit client built for Android phones and emulators.</p>
+          <a href="#" target="_blank" class="download-btn"><i class="fa-solid fa-download"></i> Get Executor</a>
         </div>
-        <a href="#" target="_blank" class="download-btn"><i class="fa-solid fa-download"></i> Get Executor</a>
-      </div>
 
-      <!-- Windows Executor Example 2 -->
-      <div class="executor-card" data-platform="windows">
-        <div>
-          <div class="executor-top">
-            <span class="executor-title">Zorara PC</span>
-            <span class="platform-badge">Windows</span>
+        <!-- Android Executor Example -->
+        <div class="executor-card" data-platform="android">
+          <div>
+            <div class="executor-top">
+              <span class="executor-title">Delta Android</span>
+              <span class="platform-badge">Android</span>
+            </div>
+            <p class="executor-desc">Feature-rich mobile exploit client built for Android phones and emulators.</p>
           </div>
-          <p class="executor-desc">Reliable level 7 execution client with fast injection speeds and clean UI.</p>
+          <a href="#" target="_blank" class="download-btn"><i class="fa-solid fa-download"></i> Get Executor</a>
         </div>
-        <a href="#" target="_blank" class="download-btn"><i class="fa-solid fa-download"></i> Get Executor</a>
-      </div>
 
+        <!-- Windows Executor Example 2 -->
+        <div class="executor-card" data-platform="windows">
+          <div>
+            <div class="executor-top">
+              <span class="executor-title">Zorara PC</span>
+              <span class="platform-badge">Windows</span>
+            </div>
+            <p class="executor-desc">Reliable level 7 execution client with fast injection speeds and clean UI.</p>
+          </div>
+          <a href="#" target="_blank" class="download-btn"><i class="fa-solid fa-download"></i> Get Executor</a>
+        </div>
+
+      </div>
     </div>
   </div>
+
+  <!-- Password Verification Script -->
+  <script>
+    function checkPassword() {
+      const inputVal = document.getElementById('passInput').value.trim().toLowerCase();
+      const errorMsg = document.getElementById('errorMsg');
+      const passwordCard = document.getElementById('passwordCard');
+      const unlockedContent = document.getElementById('unlockedContent');
+
+      if (inputVal === 'dreamyexec') {
+        passwordCard.style.display = 'none';
+        unlockedContent.style.display = 'block';
+      } else {
+        errorMsg.innerText = "Incorrect password! Try again.";
+        document.getElementById('passInput').style.borderColor = "var(--accent-red)";
+      }
+    }
+
+    // Allow pressing 'Enter' to submit password
+    document.getElementById('passInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        checkPassword();
+      }
+    });
+  </script>
 
   <!-- Filter Script -->
   <script>
@@ -569,9 +678,8 @@
   <!-- Loading Animation Script -->
   <script>
     const steps = [
-      "Accessing database...",
-      "Filtering device architectures...",
-      "Loading client packages...",
+      "Accessing secure node...",
+      "Loading interface components...",
       "Almost ready...",
       "Ready."
     ];
@@ -588,7 +696,7 @@
       if (progress >= 100) {
         progress = 100;
         clearInterval(loaderInterval);
-        statusMessage.innerText = steps[4];
+        statusMessage.innerText = steps[3];
         
         setTimeout(() => {
           siteLoader.style.opacity = '0';
@@ -600,10 +708,8 @@
       percentageText.innerText = progress + '%';
 
       if (progress > 75) {
-        statusMessage.innerText = steps[3];
-      } else if (progress > 50) {
         statusMessage.innerText = steps[2];
-      } else if (progress > 25) {
+      } else if (progress > 40) {
         statusMessage.innerText = steps[1];
       }
     }, 70);
