@@ -689,6 +689,30 @@
           <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for SUNC, UNC & stats</div>
         </div>
 
+        <!-- Macsploit Mac -->
+        <div class="executor-card" data-platform="apple" onclick="openModal('Macsploit', '100%', '99%', 'https://discord.com/invite/macsploit', 'https://www.raptor.fun/')">
+          <div>
+            <div class="executor-top">
+              <span class="executor-title">Macsploit</span>
+              <span class="platform-badge">Apple</span>
+            </div>
+            <p class="executor-desc">High-tier script execution environment built specifically for macOS.</p>
+          </div>
+          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for SUNC, UNC & stats</div>
+        </div>
+
+        <!-- Hydrogen Mac -->
+        <div class="executor-card" data-platform="apple" onclick="openModal('Hydrogen Mac', 'Unknown', 'Unknown', '', 'https://www.hydrogen.lat/')">
+          <div>
+            <div class="executor-top">
+              <span class="executor-title">Hydrogen Mac</span>
+              <span class="platform-badge">Apple</span>
+            </div>
+            <p class="executor-desc">Reliable script execution utility available for macOS systems.</p>
+          </div>
+          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats</div>
+        </div>
+
         <!-- Delta iOS -->
         <div class="executor-card" data-platform="apple" onclick="openModal('Delta iOS', '100%', '99%', '', 'https://delta.bz/')">
           <div>
@@ -801,14 +825,18 @@
       document.getElementById('modalUnc').innerText = unc;
       
       const discordBtn = document.getElementById('modalDiscordBtn');
+      const downloadBtn = document.getElementById('modalDownloadBtn');
+
       if (discordLink && discordLink.trim() !== '') {
         discordBtn.href = discordLink;
         discordBtn.style.display = 'inline-flex';
+        downloadBtn.style.flex = '1';
       } else {
         discordBtn.style.display = 'none';
+        downloadBtn.style.flex = '2';
       }
 
-      document.getElementById('modalDownloadBtn').href = downloadLink;
+      downloadBtn.href = downloadLink;
       
       document.getElementById('executorModal').classList.add('active');
     }
