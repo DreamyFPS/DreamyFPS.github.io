@@ -594,7 +594,6 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact Me</a></li>
     </ul>
   </nav>
 
@@ -605,8 +604,7 @@
     <p>High-tier Roblox gameplay, competitive FPS highlights, and daily shorts content.</p>
     
     <div class="btn-group">
-      <a href="contact.html" class="btn btn-primary">Contact Me</a>
-      <a href="about.html" class="btn btn-secondary">Learn More</a>
+      <a href="about.html" class="btn btn-primary">Learn More</a>
     </div>
   </section>
 
@@ -709,7 +707,6 @@
       }
     });
 
-    // Close menu when resizing to desktop
     window.addEventListener('resize', () => {
       if (window.innerWidth > 900) {
         navLinks.classList.remove('active');
@@ -718,55 +715,66 @@
     });
   </script>
 
-  <!-- Loading Animation & Live YouTube Data Fetcher -->
+  <!-- Loading Animation, Live YouTube Data & Dynamic Tawk.to Loader -->
   <script>
-    // Loading Screen Progress Handler
-    const steps = [
-      "Establishing secure connection...",
-      "Loading user interface...",
-      "Fetching channel statistics...",
-      "Finalizing assets...",
-      "Welcome."
-    ];
+    window.addEventListener('load', () => {
+      const steps = [
+        "Establishing secure connection...",
+        "Loading user interface...",
+        "Fetching channel statistics...",
+        "Finalizing assets...",
+        "Welcome."
+      ];
 
-    let progress = 0;
-    const progressBarFill = document.getElementById('progressBarFill');
-    const percentageText = document.getElementById('percentageText');
-    const statusMessage = document.getElementById('statusMessage');
-    const siteLoader = document.getElementById('site-loader');
+      let progress = 0;
+      const progressBarFill = document.getElementById('progressBarFill');
+      const percentageText = document.getElementById('percentageText');
+      const statusMessage = document.getElementById('statusMessage');
+      const siteLoader = document.getElementById('site-loader');
 
-    const loaderInterval = setInterval(() => {
-      progress += Math.floor(Math.random() * 7) + 3;
+      const loaderInterval = setInterval(() => {
+        progress += Math.floor(Math.random() * 7) + 3;
 
-      if (progress >= 100) {
-        progress = 100;
-        clearInterval(loaderInterval);
-        statusMessage.innerText = steps[4];
-        
-        setTimeout(() => {
-          siteLoader.style.opacity = '0';
-          siteLoader.style.visibility = 'hidden';
-        }, 300);
-      }
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(loaderInterval);
+          if (statusMessage) statusMessage.innerText = steps[4];
+          
+          setTimeout(() => {
+            if (siteLoader) {
+              siteLoader.style.opacity = '0';
+              siteLoader.style.visibility = 'hidden';
+            }
 
-      progressBarFill.style.width = progress + '%';
-      percentageText.innerText = progress + '%';
+            // --- INJECT TAWK.TO SCRIPT AFTER LOADER FINISHES ---
+            var s1 = document.createElement("script");
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/6a75d7a1e014d81d4ab620ec/1jve54kho';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            document.head.appendChild(s1);
 
-      if (progress > 75) {
-        statusMessage.innerText = steps[3];
-      } else if (progress > 50) {
-        statusMessage.innerText = steps[2];
-      } else if (progress > 25) {
-        statusMessage.innerText = steps[1];
-      }
-    }, 70);
+          }, 300);
+        }
+
+        if (progressBarFill) progressBarFill.style.width = progress + '%';
+        if (percentageText) percentageText.innerText = progress + '%';
+
+        if (progress > 75 && statusMessage) {
+          statusMessage.innerText = steps[3];
+        } else if (progress > 50 && statusMessage) {
+          statusMessage.innerText = steps[2];
+        } else if (progress > 25 && statusMessage) {
+          statusMessage.innerText = steps[1];
+        }
+      }, 70);
+    });
 
     // Live YouTube Stats & Latest Video Fetcher
     const API_KEY = 'AIzaSyAwN0dhY_9NRLqv-YpRT-joqbMWYkj8MZk'; 
-    const CHANNEL_ID = 'UCFnng7uZdChcVMH5H4PbRuQ'; // Verified DreamyFPS Channel ID
+    const CHANNEL_ID = 'UCFnng7uZdChcVMH5H4PbRuQ';
 
     async function fetchYouTubeData() {
-      // 1. Fetch Channel Statistics
       const statsUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&id=${CHANNEL_ID}&key=${API_KEY}`;
       
       try {
@@ -789,7 +797,6 @@
         console.error("Stats fetch error:", err);
       }
 
-      // 2. Fetch Latest Upload via Search API
       const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=1`;
 
       try {
@@ -819,7 +826,7 @@
     }
 
     fetchYouTubeData();
-    setInterval(fetchYouTubeData, 30000); // Refreshes data periodically
+    setInterval(fetchYouTubeData, 30000);
   </script>
 
 </body>
