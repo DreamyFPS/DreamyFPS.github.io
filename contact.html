@@ -455,7 +455,7 @@
 
           <div class="form-group">
             <label for="senderYT"><i class="fa-brands fa-youtube" style="color: var(--accent-red);"></i> Your YT Channel Link</label>
-            <input type="url" name="yt_channel" id="senderYT" class="form-input" placeholder="https://youtube.com/@yourchannel" autocomplete="off">
+            <input type="text" name="yt_channel" id="senderYT" class="form-input" placeholder="youtube.com/@yourchannel" autocomplete="off">
           </div>
         </div>
 
@@ -511,12 +511,10 @@
       const senderMessage = document.getElementById('senderMessage');
 
       if (inquiryType === 'Report an issue with the website') {
-        // Hide Collab Inputs smoothly
         collabFieldsGroup.classList.add('hidden-field');
         senderName.removeAttribute('required');
         senderYT.removeAttribute('required');
 
-        // Show Issue Box smoothly, Hide Question & Message Boxes
         issueGroup.classList.remove('hidden-field');
         issueDetails.setAttribute('required', 'true');
         
@@ -527,12 +525,10 @@
         senderMessage.removeAttribute('required');
 
       } else if (inquiryType === 'Have a question?') {
-        // Hide Collab Inputs smoothly
         collabFieldsGroup.classList.add('hidden-field');
         senderName.removeAttribute('required');
         senderYT.removeAttribute('required');
 
-        // Show Question Box smoothly, Hide Issue & Message Boxes
         questionGroup.classList.remove('hidden-field');
         questionDetails.setAttribute('required', 'true');
 
@@ -543,12 +539,10 @@
         senderMessage.removeAttribute('required');
 
       } else {
-        // Show Collab Inputs smoothly
         collabFieldsGroup.classList.remove('hidden-field');
         senderName.setAttribute('required', 'true');
         senderYT.setAttribute('required', 'true');
 
-        // Show regular message box smoothly, Hide Issue & Question Boxes
         messageGroup.classList.remove('hidden-field');
         senderMessage.setAttribute('required', 'true');
 
@@ -567,13 +561,26 @@
       handleReasonChange();
     });
 
-    // Formspree Async Submission Handler
+    // Formspree Async Submission Handler with YouTube Link Validation
     async function handleFormspreeSubmit(event) {
       event.preventDefault();
       
       const form = event.target;
       const successMsg = document.getElementById('successMsg');
       const submitBtn = document.getElementById('submitBtn');
+      const senderYT = document.getElementById('senderYT');
+      const inquiryType = document.getElementById('inquiryType').value;
+
+      // Validate YouTube link if collab fields are visible
+      if (inquiryType === 'Collab with me' && senderYT && senderYT.value.trim() !== '') {
+        const ytVal = senderYT.value.toLowerCase();
+        if (!ytVal.includes('youtube.com') && !ytVal.includes('youtu.be')) {
+          successMsg.style.color = "#ff4d4d";
+          successMsg.textContent = "Please enter a valid YouTube channel link (must contain youtube.com or youtu.be).";
+          senderYT.focus();
+          return;
+        }
+      }
       
       // REPLACE WITH YOUR ACTUAL FORMSPREE ENDPOINT URL
       const FORMSPREE_ENDPOINT = "YOUR_FORMSPREE_ENDPOINT_URL";
@@ -596,7 +603,7 @@
           successMsg.style.color = "var(--accent-red)";
           successMsg.textContent = "Thanks! Your message has been sent successfully.";
           form.reset();
-          handleReasonChange(); // Reset dynamic fields visibility smoothly
+          handleReasonChange();
         } else {
           const data = await response.json();
           if (data && data.errors) {
