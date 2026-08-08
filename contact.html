@@ -577,7 +577,6 @@
       // Validate Roblox Username if collab is selected (no spaces or special characters allowed, only letters, numbers, and underscores)
       if (inquiryType === 'Collab with me' && senderName && senderName.value.trim() !== '') {
         const usernameVal = senderName.value.trim();
-        // Regex: allows only letters, numbers, and underscores (adjust if you only want letters/numbers)
         const isValidUsername = /^[a-zA-Z0-9_]+$/.test(usernameVal);
 
         if (!isValidUsername) {
