@@ -399,7 +399,8 @@
     .executor-top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
+      gap: 1rem;
       margin-bottom: 1rem;
     }
 
@@ -407,17 +408,20 @@
       font-size: 1.3rem;
       font-weight: 800;
       color: var(--text-main);
+      line-height: 1.2;
     }
 
     .badges-container {
       display: flex;
-      gap: 0.4rem;
-      align-items: center;
+      flex-direction: column;
+      gap: 0.35rem;
+      align-items: flex-end;
+      flex-shrink: 0;
     }
 
     .platform-badge {
-      font-size: 0.7rem;
-      padding: 0.25rem 0.6rem;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
       background: rgba(255, 42, 75, 0.1);
       border: 1px solid rgba(255, 42, 75, 0.3);
       color: var(--accent-red);
@@ -427,14 +431,14 @@
     }
 
     .pricing-badge {
-      font-size: 0.7rem;
-      padding: 0.25rem 0.6rem;
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
       border-radius: 50px;
       font-weight: 700;
       text-transform: uppercase;
       display: inline-flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.25rem;
     }
 
     .pricing-badge.free {
@@ -714,8 +718,8 @@
             <div class="executor-top">
               <span class="executor-title">Madium Executor</span>
               <div class="badges-container">
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
                 <span class="platform-badge">Windows</span>
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
               </div>
             </div>
             <p class="executor-desc">Ultra-powerful Windows execution environment featuring pristine script stability.</p>
@@ -729,8 +733,8 @@
             <div class="executor-top">
               <span class="executor-title">Opiumware</span>
               <div class="badges-container">
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
                 <span class="platform-badge">Apple</span>
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
               </div>
             </div>
             <p class="executor-desc">Advanced free execution environment built specifically for macOS systems.</p>
@@ -744,8 +748,8 @@
             <div class="executor-top">
               <span class="executor-title">Macsploit</span>
               <div class="badges-container">
-                <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
                 <span class="platform-badge">Apple</span>
+                <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
               </div>
             </div>
             <p class="executor-desc">High-tier script execution environment built specifically for macOS.</p>
@@ -759,8 +763,8 @@
             <div class="executor-top">
               <span class="executor-title">Hydrogen Mac</span>
               <div class="badges-container">
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
                 <span class="platform-badge">Apple</span>
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
               </div>
             </div>
             <p class="executor-desc">Reliable script execution utility available for macOS systems.</p>
@@ -774,8 +778,8 @@
             <div class="executor-top">
               <span class="executor-title">Codex Android</span>
               <div class="badges-container">
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
                 <span class="platform-badge">Android</span>
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
               </div>
             </div>
             <p class="executor-desc">Stable script injector and mobile utility designed for Android devices.</p>
@@ -789,8 +793,8 @@
             <div class="executor-top">
               <span class="executor-title">Delta iOS</span>
               <div class="badges-container">
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
                 <span class="platform-badge">Apple</span>
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
               </div>
             </div>
             <p class="executor-desc">The trusted Delta mobile execution client tailored for iOS devices.</p>
@@ -804,8 +808,8 @@
             <div class="executor-top">
               <span class="executor-title">Delta Android</span>
               <div class="badges-container">
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
                 <span class="platform-badge">Android</span>
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
               </div>
             </div>
             <p class="executor-desc">Feature-rich mobile exploit client built for Android phones and emulators.</p>
@@ -819,9 +823,11 @@
             <div class="executor-top">
               <span class="executor-title">Vega X</span>
               <div class="badges-container">
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
                 <span class="platform-badge">Android</span>
+                <div style="display: flex; gap: 0.3rem;">
+                  <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                  <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
+                </div>
               </div>
             </div>
             <p class="executor-desc">Popular multi-tier execution client with both free and premium versions available for Android.</p>
@@ -835,8 +841,8 @@
             <div class="executor-top">
               <span class="executor-title">Wave / Solara</span>
               <div class="badges-container">
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
                 <span class="platform-badge">Windows</span>
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
               </div>
             </div>
             <p class="executor-desc">High-performance script execution environment optimized for Windows PC gameplay.</p>
@@ -850,8 +856,8 @@
             <div class="executor-top">
               <span class="executor-title">Zorara PC</span>
               <div class="badges-container">
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
                 <span class="platform-badge">Windows</span>
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
               </div>
             </div>
             <p class="executor-desc">Reliable level 7 execution client with fast injection speeds and clean UI.</p>
@@ -991,47 +997,4 @@
         mobileMenuBtn.querySelector('i').className = 'fa-solid fa-bars';
       }
     });
-  </script>
-
-  <!-- Loading Animation Script -->
-  <script>
-    const steps = [
-      "Accessing secure node...",
-      "Loading interface components...",
-      "Almost ready...",
-      "Ready."
-    ];
-
-    let progress = 0;
-    const progressBarFill = document.getElementById('progressBarFill');
-    const percentageText = document.getElementById('percentageText');
-    const statusMessage = document.getElementById('statusMessage');
-    const siteLoader = document.getElementById('site-loader');
-
-    const loaderInterval = setInterval(() => {
-      progress += Math.floor(Math.random() * 7) + 3;
-
-      if (progress >= 100) {
-        progress = 100;
-        clearInterval(loaderInterval);
-        statusMessage.innerText = steps[3];
-        
-        setTimeout(() => {
-          siteLoader.style.opacity = '0';
-          siteLoader.style.visibility = 'hidden';
-        }, 300);
-      }
-
-      progressBarFill.style.width = progress + '%';
-      percentageText.innerText = progress + '%';
-
-      if (progress > 75) {
-        statusMessage.innerText = steps[2];
-      } else if (progress > 40) {
-        statusMessage.innerText = steps[1];
-      }
-    }, 70);
-  </script>
-
-</body>
-</html>
+  </script> &nbsp;
