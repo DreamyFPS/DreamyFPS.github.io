@@ -558,6 +558,14 @@
       }
     }
   </style>
+
+  <!-- Prevent browser from restoring scroll position to bottom on refresh -->
+  <script>
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  </script>
 </head>
 <body>
 
@@ -751,6 +759,7 @@
   <!-- Loading Animation, Live YouTube Data & Dynamic Tawk.to Loader -->
   <script>
     window.addEventListener('load', () => {
+      window.scrollTo(0, 0); // Double-ensure top positioning on load completion
       const steps = [
         "Establishing secure connection...",
         "Loading user interface...",
