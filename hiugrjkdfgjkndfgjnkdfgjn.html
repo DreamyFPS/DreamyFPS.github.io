@@ -18,6 +18,8 @@
       --text-muted: #a1a1aa;
       --free-color: #22c55e;
       --paid-color: #eab308;
+      --keyless-color: #0ea5e9;
+      --keysystem-color: #f97316;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
@@ -453,6 +455,18 @@
       color: var(--paid-color);
     }
 
+    .pricing-badge.keyless {
+      background: rgba(14, 165, 233, 0.1);
+      border: 1px solid rgba(14, 165, 233, 0.3);
+      color: var(--keyless-color);
+    }
+
+    .pricing-badge.keysystem {
+      background: rgba(249, 115, 22, 0.1);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      color: var(--keysystem-color);
+    }
+
     .executor-desc {
       color: var(--text-muted);
       font-size: 0.95rem;
@@ -712,17 +726,66 @@
       <!-- Executors Grid -->
       <div class="executors-grid" id="executorsGrid">
         
-        <!-- Madium Executor -->
-        <div class="executor-card" data-platform="windows" onclick="openModal('Madium Executor', '100%', '98%', 'https://discord.gg/olemad', 'https://getmadium.net/')">
+        <!-- Madium -->
+        <div class="executor-card" data-platform="windows" onclick="openModal('Madium', '100%', '98%', 'https://discord.gg/olemad', 'https://getmadium.net/')">
           <div>
             <div class="executor-top">
-              <span class="executor-title">Madium Executor</span>
+              <span class="executor-title">Madium</span>
               <div class="badges-container">
                 <span class="platform-badge">Windows</span>
                 <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
               </div>
             </div>
             <p class="executor-desc">Ultra-powerful Windows execution environment featuring pristine script stability.</p>
+          </div>
+          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+        </div>
+
+        <!-- Solara -->
+        <div class="executor-card" data-platform="windows" onclick="openModal('Solara', '46%', '67%', '', 'https://getsolara.dev/')">
+          <div>
+            <div class="executor-top">
+              <span class="executor-title">Solara</span>
+              <div class="badges-container">
+                <span class="platform-badge">Windows</span>
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
+              </div>
+            </div>
+            <p class="executor-desc">Reliable script execution environment optimized for Windows PC gameplay.</p>
+          </div>
+          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+        </div>
+
+        <!-- Real -->
+        <div class="executor-card" data-platform="windows" onclick="openModal('Real', '100%', '99%', 'https://discord.com/invite/projectreal', 'https://projectreal.gg/')">
+          <div>
+            <div class="executor-top">
+              <span class="executor-title">Real</span>
+              <div class="badges-container">
+                <span class="platform-badge">Windows</span>
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
+              </div>
+            </div>
+            <p class="executor-desc">Advanced Windows execution client with high script compatibility.</p>
+          </div>
+          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
+        </div>
+
+        <!-- Xeno -->
+        <div class="executor-card" data-platform="windows" onclick="openModal('Xeno', '40%', '84%', 'https://discord.com/invite/xe-no', 'https://www.xeno.now/')">
+          <div>
+            <div class="executor-top">
+              <span class="executor-title">Xeno</span>
+              <div class="badges-container">
+                <span class="platform-badge">Windows</span>
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
+              </div>
+            </div>
+            <p class="executor-desc">Efficient Windows script execution tool with clean interface and stable features.</p>
           </div>
           <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
         </div>
@@ -735,6 +798,7 @@
               <div class="badges-container">
                 <span class="platform-badge">Apple</span>
                 <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
               </div>
             </div>
             <p class="executor-desc">Advanced free execution environment built specifically for macOS systems.</p>
@@ -750,6 +814,7 @@
               <div class="badges-container">
                 <span class="platform-badge">Apple</span>
                 <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
+                <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
               </div>
             </div>
             <p class="executor-desc">High-tier script execution environment built specifically for macOS.</p>
@@ -765,6 +830,7 @@
               <div class="badges-container">
                 <span class="platform-badge">Apple</span>
                 <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
               </div>
             </div>
             <p class="executor-desc">Reliable script execution utility available for macOS systems.</p>
@@ -780,6 +846,7 @@
               <div class="badges-container">
                 <span class="platform-badge">Android</span>
                 <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
               </div>
             </div>
             <p class="executor-desc">Stable script injector and mobile utility designed for Android devices.</p>
@@ -795,6 +862,7 @@
               <div class="badges-container">
                 <span class="platform-badge">Apple</span>
                 <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
               </div>
             </div>
             <p class="executor-desc">The trusted Delta mobile execution client tailored for iOS devices.</p>
@@ -810,6 +878,7 @@
               <div class="badges-container">
                 <span class="platform-badge">Android</span>
                 <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
               </div>
             </div>
             <p class="executor-desc">Feature-rich mobile exploit client built for Android phones and emulators.</p>
@@ -828,41 +897,12 @@
                   <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
                   <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
                 </div>
+                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
               </div>
             </div>
             <p class="executor-desc">Popular multi-tier execution client with both free and premium versions available for Android.</p>
           </div>
           <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
-        </div>
-
-        <!-- Wave / Solara -->
-        <div class="executor-card" data-platform="windows" onclick="openModal('Wave / Solara', '95%', '97%', 'https://discord.gg/solara', '#')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Wave / Solara</span>
-              <div class="badges-container">
-                <span class="platform-badge">Windows</span>
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-              </div>
-            </div>
-            <p class="executor-desc">High-performance script execution environment optimized for Windows PC gameplay.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & Discord stats</div>
-        </div>
-
-        <!-- Zorara PC -->
-        <div class="executor-card" data-platform="windows" onclick="openModal('Zorara PC', '88%', '90%', 'https://discord.gg/zorara', '#')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Zorara PC</span>
-              <div class="badges-container">
-                <span class="platform-badge">Windows</span>
-                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-              </div>
-            </div>
-            <p class="executor-desc">Reliable level 7 execution client with fast injection speeds and clean UI.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & Discord stats</div>
         </div>
 
       </div>
@@ -1015,7 +1055,7 @@
     const siteLoader = document.getElementById('site-loader');
 
     const loaderInterval = setInterval(() => {
-      progress += Math.floor(Math.random() * 7) + 3;
+      progress += Math.floor(Math.random() * 12) + 5;
 
       if (progress >= 100) {
         progress = 100;
@@ -1025,7 +1065,10 @@
         setTimeout(() => {
           siteLoader.style.opacity = '0';
           siteLoader.style.visibility = 'hidden';
-        }, 300);
+          setTimeout(() => {
+            siteLoader.style.display = 'none';
+          }, 500);
+        }, 200);
       }
 
       progressBarFill.style.width = progress + '%';
@@ -1036,7 +1079,7 @@
       } else if (progress > 40) {
         statusMessage.innerText = steps[1];
       }
-    }, 70);
+    }, 50);
   </script>
 
 </body>
