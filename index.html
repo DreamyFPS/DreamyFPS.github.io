@@ -206,21 +206,6 @@
       color: var(--text-main);
     }
 
-    .nav-login-btn {
-      background: rgba(255, 42, 75, 0.1);
-      border: 1px solid rgba(255, 42, 75, 0.3);
-      padding: 0.5rem 1.2rem;
-      border-radius: 8px;
-      color: var(--accent-red) !important;
-      transition: all 0.2s ease !important;
-    }
-
-    .nav-login-btn:hover {
-      background: var(--accent-red) !important;
-      color: #fff !important;
-      box-shadow: 0 0 15px var(--accent-glow);
-    }
-
     /* Mobile Hamburger Toggle */
     .menu-toggle {
       display: none;
@@ -508,7 +493,6 @@
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact Me</a></li>
-      <li><a href="login.html" id="authNavLink" class="nav-login-btn">Login / Sign Up</a></li>
     </ul>
   </nav>
 
@@ -601,62 +585,6 @@
       if (window.innerWidth > 900) {
         navLinks.classList.remove('active');
         mobileMenuBtn.querySelector('i').className = 'fa-solid fa-bars';
-      }
-    });
-  </script>
-
-  <!-- Firebase Auth State Handler & Admin Nav Link Injector -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-
-    // Admin Email Configured
-    const ADMIN_EMAIL = "win11guy@gmail.com";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBr0powiXiHXuGYNa-5s3zGvBAi23SgXvM",
-      authDomain: "dreamyfpsr.firebaseapp.com",
-      projectId: "dreamyfpsr",
-      storageBucket: "dreamyfpsr.firebasestorage.app",
-      messagingSenderId: "963672326962",
-      appId: "1:963672326962:web:e92c5dbf4876cae84d8d2b",
-      measurementId: "G-KE8KD21TWB"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const authNavLink = document.getElementById('authNavLink');
-    const navLinksContainer = document.getElementById('navLinks');
-
-    // Check user authentication state
-    onAuthStateChanged(auth, (user) => {
-      // Remove existing admin link if re-rendering
-      const existingAdminLink = document.getElementById('adminNavLink');
-      if (existingAdminLink) existingAdminLink.remove();
-
-      if (user) {
-        // If logged in as win11guy@gmail.com, inject Admin Panel link
-        if (user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
-          const adminLi = document.createElement('li');
-          adminLi.id = 'adminNavLink';
-          adminLi.innerHTML = `<a href="admin.html" style="color: var(--accent-red) !important;"><i class="fa-solid fa-user-shield"></i> Admin Panel</a>`;
-          navLinksContainer.insertBefore(adminLi, authNavLink.parentElement);
-        }
-
-        // Update Login button to Account/Logout
-        authNavLink.innerText = "My Account";
-        authNavLink.href = "#";
-        authNavLink.onclick = async (e) => {
-          e.preventDefault();
-          if (confirm(`Logged in as: ${user.email}\nDo you want to log out?`)) {
-            await signOut(auth);
-            window.location.reload();
-          }
-        };
-      } else {
-        authNavLink.innerText = "Login / Sign Up";
-        authNavLink.href = "login.html";
-        authNavLink.onclick = null;
       }
     });
   </script>
