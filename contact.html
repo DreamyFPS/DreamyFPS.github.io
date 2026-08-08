@@ -570,8 +570,23 @@
       const form = event.target;
       const successMsg = document.getElementById('successMsg');
       const submitBtn = document.getElementById('submitBtn');
+      const senderName = document.getElementById('senderName');
       const senderYT = document.getElementById('senderYT');
       const inquiryType = document.getElementById('inquiryType').value;
+
+      // Validate Roblox Username if collab is selected (no spaces or special characters allowed, only letters, numbers, and underscores)
+      if (inquiryType === 'Collab with me' && senderName && senderName.value.trim() !== '') {
+        const usernameVal = senderName.value.trim();
+        // Regex: allows only letters, numbers, and underscores (adjust if you only want letters/numbers)
+        const isValidUsername = /^[a-zA-Z0-9_]+$/.test(usernameVal);
+
+        if (!isValidUsername) {
+          successMsg.style.color = "#ff4d4d";
+          successMsg.textContent = "Roblox usernames cannot contain spaces or special characters!";
+          senderName.focus();
+          return;
+        }
+      }
 
       // Validate YouTube link input if collab is selected
       if (inquiryType === 'Collab with me' && senderYT && senderYT.value.trim() !== '') {
@@ -580,9 +595,9 @@
         ytVal = ytVal.replace(/^https?:\/\//, '');
         ytVal = ytVal.replace(/^www\./, '');
 
-        const isValid = ytVal.startsWith('youtube.com/@') || ytVal.startsWith('youtu.be/@');
+        const isValidYT = ytVal.startsWith('youtube.com/@') || ytVal.startsWith('youtu.be/@');
 
-        if (!isValid) {
+        if (!isValidYT) {
           successMsg.style.color = "#ff4d4d";
           successMsg.textContent = "Your channel link must start with youtube.com/@ or youtu.be/@";
           senderYT.focus();
