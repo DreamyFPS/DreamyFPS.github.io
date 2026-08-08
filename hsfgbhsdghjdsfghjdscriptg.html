@@ -313,7 +313,7 @@
       font-weight: 600;
     }
 
-    /* Unlocked Content Section Wrapper */
+    /* Unlocked Content Area Wrapper */
     .unlocked-content {
       display: none;
       width: 100%;
@@ -720,14 +720,14 @@
           <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
         </div>
 
-        <!-- Script 2: Rivals -->
-        <div class="script-box" data-category="rivals" onclick="openScriptDetail('Rivals Aimbot & ESP', 'rivals', 'Advanced silent aim, customizable field of view, box ESP, and tracer features tailored specifically for Rivals.', 'loadstring(game:HttpGet(\'https://example.com/rivals-script.lua\'))()')">
+        <!-- Script 2: Rivals (Kiciahook V3) -->
+        <div class="script-box" data-category="rivals" onclick="openScriptDetail('Kiciahook V3', 'rivals', 'High performance feature-rich script for Rivals containing advanced aimbot, visual esp modifications, and helper utilities.', 'loadstring(game:HttpGet(\'https://raw.githubusercontent.com/kiciahook/kiciahookv3/main/loader.lua\'))()')">
           <div>
             <div class="script-box-top">
-              <span class="script-title">Rivals Aimbot & ESP</span>
+              <span class="script-title">Kiciahook V3</span>
               <span class="category-badge">Rivals</span>
             </div>
-            <p class="script-desc">Advanced silent aim, customizable field of view, box ESP, and tracer features tailored for Rivals.</p>
+            <p class="script-desc">High performance feature-rich script for Rivals containing advanced aimbot, visual esp modifications, and helper utilities.</p>
           </div>
           <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
         </div>
@@ -817,7 +817,7 @@
       const passwordCard = document.getElementById('passwordCard');
       const unlockedContent = document.getElementById('unlockedContent');
 
-      if (inputVal === 'dreamy script') {
+      if (inputVal === 'dreamyscript') {
         passwordCard.style.display = 'none';
         unlockedContent.style.display = 'flex';
       } else {
@@ -946,7 +946,7 @@
     const progressBarFill = document.getElementById('progressBarFill');
     const percentageText = document.getElementById('percentageText');
     const statusMessage = document.getElementById('statusMessage');
-    let siteLoader = document.getElementById('site-loader');
+    const siteLoader = document.getElementById('site-loader');
 
     const loaderInterval = setInterval(() => {
       progress += Math.floor(Math.random() * 12) + 5;
