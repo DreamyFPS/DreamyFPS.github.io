@@ -420,7 +420,7 @@
         } else {
           await signInWithEmailAndPassword(auth, email, password);
         }
-        window.location.href = "index.html"; // Redirects to homepage on success
+        window.location.href = "index.html";
       } catch (error) {
         authError.innerText = error.message.replace("Firebase: ", "");
       }
@@ -431,7 +431,7 @@
       authError.innerText = '';
       try {
         await signInWithPopup(auth, googleProvider);
-        window.location.href = "index.html"; // Redirects to homepage on success
+        window.location.href = "index.html";
       } catch (error) {
         authError.innerText = error.message.replace("Firebase: ", "");
       }
