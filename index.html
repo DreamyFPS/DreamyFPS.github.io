@@ -533,10 +533,13 @@
     </div>
   </section>
 
-  <!-- Scripts: Loading Animation, Live YouTube Stats, and Firebase Auth State Check -->
+  <!-- Firebase Auth State Handler & Admin Nav Link Injector -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+    // Admin Email Configured
+    const ADMIN_EMAIL = "win11guy@gmail.com";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBr0powiXiHXuGYNa-5s3zGvBAi23SgXvM",
@@ -551,10 +554,24 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const authNavLink = document.getElementById('authNavLink');
+    const navLinks = document.querySelector('.nav-links');
 
-    // Check if user is logged in
+    // Check user authentication state
     onAuthStateChanged(auth, (user) => {
+      // Remove existing admin link if re-rendering
+      const existingAdminLink = document.getElementById('adminNavLink');
+      if (existingAdminLink) existingAdminLink.remove();
+
       if (user) {
+        // If logged in as win11guy@gmail.com, inject Admin Panel link
+        if (user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+          const adminLi = document.createElement('li');
+          adminLi.id = 'adminNavLink';
+          adminLi.innerHTML = `<a href="admin.html" style="color: var(--accent-red) !important;"><i class="fa-solid fa-user-shield"></i> Admin Panel</a>`;
+          navLinks.insertBefore(adminLi, authNavLink.parentElement);
+        }
+
+        // Update Login button to Account/Logout
         authNavLink.innerText = "My Account";
         authNavLink.href = "#";
         authNavLink.onclick = async (e) => {
@@ -572,6 +589,7 @@
     });
   </script>
 
+  <!-- Loading Animation & Live YouTube Stats Fetcher -->
   <script>
     // Loading Screen Progress Handler
     const steps = [
@@ -614,7 +632,7 @@
       }
     }, 70);
 
-    // Live YouTube Stats Fetcher using your exact key and channel ID
+    // Live YouTube Stats Fetcher
     const API_KEY = 'AIzaSyAwN0dhY_9NRLqv-YpRT-joqbMWYkj8MZk';
     const CHANNEL_ID = 'UCFnng7uZdChcVMH5H4PbRuQ'; 
 
@@ -636,8 +654,6 @@
           document.getElementById('sub-count').innerText = Number(stats.subscriberCount).toLocaleString();
           document.getElementById('view-count').innerText = Number(stats.viewCount).toLocaleString();
           document.getElementById('video-count').innerText = Number(stats.videoCount).toLocaleString();
-        } else {
-          console.warn("No YouTube channel found with ID:", CHANNEL_ID);
         }
       } catch (err) {
         console.error("Network or fetch error:", err);
