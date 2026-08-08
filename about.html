@@ -273,6 +273,7 @@
       -webkit-text-fill-color: transparent;
     }
 
+    /* Secret Gateway Username Badge */
     .username-badge {
       display: inline-block;
       padding: 0.3rem 0.8rem;
@@ -283,6 +284,15 @@
       font-size: 0.85rem;
       font-weight: 700;
       margin-bottom: 1.5rem;
+      text-decoration: none;
+      transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .username-badge:hover {
+      background: rgba(255, 42, 75, 0.2);
+      box-shadow: 0 0 15px var(--accent-glow);
+      transform: translateY(-1px);
     }
 
     .about-content p {
@@ -422,7 +432,7 @@
 
     <!-- Text & Bio -->
     <div class="about-content">
-      <span class="username-badge">@amliteralynotcheats</span>
+      <a href="gateway.html" class="username-badge" title="Secret Gateway">@amliteralynotcheats</a>
       <h1>Dominate The <span>Game.</span></h1>
       <p>
         Welcome to the official hub of DreamyFPS. High-level Roblox gameplay, FPS highlights, and short-form content uploaded regularly.
