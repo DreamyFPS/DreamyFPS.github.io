@@ -20,10 +20,6 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       background-color: var(--bg-dark);
       color: var(--text-main);
@@ -609,7 +605,7 @@
     
     <div class="btn-group">
       <a href="about.html" class="btn btn-primary">Learn More</a>
-      <a href="#live-stats" class="btn btn-secondary">See Live Stats</a>
+      <a href="#live-stats" class="btn btn-secondary" id="scrollStatsBtn">See Live Stats</a>
     </div>
   </section>
 
@@ -717,6 +713,38 @@
         navLinks.classList.remove('active');
         mobileMenuBtn.querySelector('i').className = 'fa-solid fa-bars';
       }
+    });
+
+    // Custom Smooth Slow Scroll with Ease-In / Ease-Out
+    document.getElementById('scrollStatsBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector('#live-stats');
+      if (!target) return;
+
+      const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+      const startPosition = window.pageYOffset;
+      const distance = targetPosition - startPosition;
+      const duration = 1400; // Duration in milliseconds (higher = slower and smoother)
+      let startTime = null;
+
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+      }
+
+      function animation(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const timeElapsed = currentTime - startTime;
+        const progress = Math.min(timeElapsed / duration, 1);
+        const ease = easeInOutCubic(progress);
+
+        window.scrollTo(0, startPosition + distance * ease);
+
+        if (timeElapsed < duration) {
+          requestAnimationFrame(animation);
+        }
+      }
+
+      requestAnimationFrame(animation);
     });
   </script>
 
