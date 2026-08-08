@@ -997,4 +997,47 @@
         mobileMenuBtn.querySelector('i').className = 'fa-solid fa-bars';
       }
     });
-  </script> &nbsp;
+  </script>
+
+  <!-- Loading Animation Script -->
+  <script>
+    const steps = [
+      "Accessing secure node...",
+      "Loading interface components...",
+      "Almost ready...",
+      "Ready."
+    ];
+
+    let progress = 0;
+    const progressBarFill = document.getElementById('progressBarFill');
+    const percentageText = document.getElementById('percentageText');
+    const statusMessage = document.getElementById('statusMessage');
+    const siteLoader = document.getElementById('site-loader');
+
+    const loaderInterval = setInterval(() => {
+      progress += Math.floor(Math.random() * 7) + 3;
+
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(loaderInterval);
+        statusMessage.innerText = steps[3];
+        
+        setTimeout(() => {
+          siteLoader.style.opacity = '0';
+          siteLoader.style.visibility = 'hidden';
+        }, 300);
+      }
+
+      progressBarFill.style.width = progress + '%';
+      percentageText.innerText = progress + '%';
+
+      if (progress > 75) {
+        statusMessage.innerText = steps[2];
+      } else if (progress > 40) {
+        statusMessage.innerText = steps[1];
+      }
+    }, 70);
+  </script>
+
+</body>
+</html>
