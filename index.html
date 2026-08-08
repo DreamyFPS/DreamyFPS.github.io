@@ -614,7 +614,7 @@
       }
     }, 70);
 
-    // Live YouTube Stats Fetcher
+    // Live YouTube Stats Fetcher with Detailed Error Logging & Fallback
     const API_KEY = 'AIzaSyAwN0dhY_9NRLqv-YpRT-joqbMWYkj8MZk';
     const CHANNEL_ID = 'UCFnng7uZdChcVMH5H4PbRuQ'; 
 
@@ -625,6 +625,12 @@
         const response = await fetch(url);
         const data = await response.json();
 
+        if (data.error) {
+          console.error("YouTube API Error:", data.error.message);
+          showFallbackStats();
+          return;
+        }
+
         if (data.items && data.items.length > 0) {
           const stats = data.items[0].statistics;
           
@@ -632,10 +638,11 @@
           document.getElementById('view-count').innerText = Number(stats.viewCount).toLocaleString();
           document.getElementById('video-count').innerText = Number(stats.videoCount).toLocaleString();
         } else {
+          console.warn("No YouTube channel found with ID:", CHANNEL_ID);
           showFallbackStats();
         }
       } catch (err) {
-        console.error("Error fetching YouTube stats:", err);
+        console.error("Network or fetch error:", err);
         showFallbackStats();
       }
     }
@@ -649,7 +656,7 @@
     }
 
     fetchLiveStats();
-    setInterval(fetchLiveStats, 5000);
+    setInterval(fetchLiveStats, 30000); // 30s interval to prevent API quota limit issues
   </script>
 
 </body>
