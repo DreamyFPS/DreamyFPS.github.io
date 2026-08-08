@@ -182,8 +182,27 @@
     .login-header p { color: var(--text-muted); font-size: 0.9rem; }
 
     .form-group { margin-bottom: 1.2rem; }
-    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 0.4rem; }
     
+    .form-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); }
+    
+    .forgot-password-link {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+      display: none; /* Hidden by default, shown only in login mode */
+    }
+
+    .forgot-password-link:hover { color: var(--accent-red); text-decoration: underline; }
+
     .form-control {
       width: 100%;
       padding: 0.85rem 1rem;
@@ -224,38 +243,16 @@
       box-shadow: 0 0 30px rgba(255, 42, 75, 0.6);
     }
 
-    .divider {
-      display: flex;
-      align-items: center;
-      text-align: center;
-      color: var(--text-muted);
-      margin: 1.5rem 0;
-      font-size: 0.85rem;
-    }
-
-    .divider::before, .divider::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .divider::before { margin-right: 0.75rem; }
-    .divider::after { margin-left: 0.75rem; }
-
-    .btn-google {
-      background: #ffffff;
-      color: #000000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-weight: 600;
-    }
-
-    .btn-google:hover { background: #e2e2e2; }
-
     .auth-error {
       color: var(--accent-red);
+      font-size: 0.85rem;
+      text-align: center;
+      margin-top: 1rem;
+      min-height: 1.2rem;
+    }
+
+    .auth-success {
+      color: #22c55e;
       font-size: 0.85rem;
       text-align: center;
       margin-top: 1rem;
@@ -324,7 +321,10 @@
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
+          <div class="form-label-row">
+            <label for="password">Password</label>
+            <a href="#" id="forgotPasswordBtn" class="forgot-password-link" style="display: block;">Forgot password?</a>
+          </div>
           <input type="password" id="password" class="form-control" placeholder="••••••••" required>
         </div>
 
@@ -332,13 +332,7 @@
       </form>
 
       <div class="auth-error" id="authError"></div>
-
-      <div class="divider">OR</div>
-
-      <!-- Google Sign-In Button -->
-      <button type="button" id="googleBtn" class="btn btn-google">
-        <i class="fa-brands fa-google"></i> Continue with Google
-      </button>
+      <div class="auth-success" id="authSuccess"></div>
 
       <!-- Toggle between Login and Register -->
       <div class="auth-switch">
@@ -355,9 +349,8 @@
     import { 
       getAuth, 
       signInWithEmailAndPassword, 
-      createUserWithEmailAndPassword, 
-      signInWithPopup, 
-      GoogleAuthProvider 
+      createUserWithEmailAndPassword,
+      sendPasswordResetEmail
     } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
     const firebaseConfig = {
@@ -373,7 +366,6 @@
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
-    const googleProvider = new GoogleAuthProvider();
 
     let isSignUp = false;
 
@@ -381,29 +373,53 @@
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
     const submitBtn = document.getElementById('submitBtn');
-    const googleBtn = document.getElementById('googleBtn');
     const authError = document.getElementById('authError');
+    const authSuccess = document.getElementById('authSuccess');
     const formTitle = document.getElementById('formTitle');
     const formSubtitle = document.getElementById('formSubtitle');
     const switchText = document.getElementById('switchText');
     const toggleModeBtn = document.getElementById('toggleModeBtn');
+    const forgotPasswordBtn = document.getElementById('forgotPasswordBtn');
 
     // Toggle between Login & Register modes
     toggleModeBtn.addEventListener('click', () => {
       isSignUp = !isSignUp;
       authError.innerText = '';
+      authSuccess.innerText = '';
       if (isSignUp) {
         formTitle.innerHTML = "Create <span>Account</span>";
         formSubtitle.innerText = "Sign up to get started";
         submitBtn.innerText = "Sign Up";
         switchText.innerText = "Already have an account?";
         toggleModeBtn.innerText = "Log in";
+        forgotPasswordBtn.style.display = 'none'; // Hide on sign up
       } else {
         formTitle.innerHTML = "Welcome <span>Back</span>";
         formSubtitle.innerText = "Log in to access your profile and dashboard";
         submitBtn.innerText = "Log In";
         switchText.innerText = "Don't have an account?";
         toggleModeBtn.innerText = "Sign up";
+        forgotPasswordBtn.style.display = 'block'; // Show on login
+      }
+    });
+
+    // Handle Forgot Password Click
+    forgotPasswordBtn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      authError.innerText = '';
+      authSuccess.innerText = '';
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        authError.innerText = "Please enter your email address first.";
+        return;
+      }
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        authSuccess.innerText = "Password reset link sent! Check your inbox.";
+      } catch (error) {
+        authError.innerText = error.message.replace("Firebase: ", "");
       }
     });
 
@@ -411,6 +427,7 @@
     authForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       authError.innerText = '';
+      authSuccess.innerText = '';
       const email = emailInput.value;
       const password = passwordInput.value;
 
@@ -420,17 +437,6 @@
         } else {
           await signInWithEmailAndPassword(auth, email, password);
         }
-        window.location.href = "index.html";
-      } catch (error) {
-        authError.innerText = error.message.replace("Firebase: ", "");
-      }
-    });
-
-    // Handle Google Sign-In Popup
-    googleBtn.addEventListener('click', async () => {
-      authError.innerText = '';
-      try {
-        await signInWithPopup(auth, googleProvider);
         window.location.href = "index.html";
       } catch (error) {
         authError.innerText = error.message.replace("Firebase: ", "");
