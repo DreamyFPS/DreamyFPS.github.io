@@ -552,6 +552,7 @@
       background: #5865F2;
       color: #fff;
       box-shadow: 0 0 15px rgba(88, 101, 242, 0.3);
+      display: none; /* Hidden if no discord */
     }
 
     .modal-btn-discord:hover {
@@ -685,10 +686,34 @@
             </div>
             <p class="executor-desc">Ultra-powerful Windows execution environment featuring pristine script stability.</p>
           </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for SUNC, UNC & Discord stats</div>
+          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for SUNC, UNC & stats</div>
         </div>
 
-        <!-- Windows Executor 1 -->
+        <!-- Delta iOS -->
+        <div class="executor-card" data-platform="apple" onclick="openModal('Delta iOS', '92%', '95%', '', 'https://delta.bz/')">
+          <div>
+            <div class="executor-top">
+              <span class="executor-title">Delta iOS</span>
+              <span class="platform-badge">Apple</span>
+            </div>
+            <p class="executor-desc">The trusted Delta mobile execution client tailored for iOS devices.</p>
+          </div>
+          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for SUNC & UNC stats</div>
+        </div>
+
+        <!-- Delta Android -->
+        <div class="executor-card" data-platform="android" onclick="openModal('Delta Android', '92%', '94%', '', 'https://delta.bz/')">
+          <div>
+            <div class="executor-top">
+              <span class="executor-title">Delta Android</span>
+              <span class="platform-badge">Android</span>
+            </div>
+            <p class="executor-desc">Feature-rich mobile exploit client built for Android phones and emulators.</p>
+          </div>
+          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for SUNC & UNC stats</div>
+        </div>
+
+        <!-- Wave / Solara -->
         <div class="executor-card" data-platform="windows" onclick="openModal('Wave / Solara', '95%', '97%', 'https://discord.gg/solara', '#')">
           <div>
             <div class="executor-top">
@@ -700,31 +725,7 @@
           <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for SUNC, UNC & Discord stats</div>
         </div>
 
-        <!-- Apple Executor -->
-        <div class="executor-card" data-platform="apple" onclick="openModal('Codex iOS', '90%', '92%', 'https://discord.gg/codex', '#')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Codex iOS</span>
-              <span class="platform-badge">Apple</span>
-            </div>
-            <p class="executor-desc">Stable script injector and mobile utility designed for iOS devices and iPhones.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for SUNC, UNC & Discord stats</div>
-        </div>
-
-        <!-- Android Executor -->
-        <div class="executor-card" data-platform="android" onclick="openModal('Delta Android', '92%', '94%', 'https://discord.gg/delta', '#')">
-          <div>
-            <div class="executor-top">
-              <span class="executor-title">Delta Android</span>
-              <span class="platform-badge">Android</span>
-            </div>
-            <p class="executor-desc">Feature-rich mobile exploit client built for Android phones and emulators.</p>
-          </div>
-          <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for SUNC, UNC & Discord stats</div>
-        </div>
-
-        <!-- Windows Executor 2 -->
+        <!-- Zorara PC -->
         <div class="executor-card" data-platform="windows" onclick="openModal('Zorara PC', '88%', '90%', 'https://discord.gg/zorara', '#')">
           <div>
             <div class="executor-top">
@@ -761,7 +762,7 @@
         <a href="#" id="modalDiscordBtn" target="_blank" class="modal-btn modal-btn-discord">
           <i class="fa-brands fa-discord"></i> Discord
         </a>
-        <a href="#" id="modalDownloadBtn" target="_blank" class="modal-btn modal-btn-download">
+        <a href="#" id="modalDownloadBtn" target="_blank" class="modal-btn modal-btn-download" style="flex: 2;">
           <i class="fa-solid fa-download"></i> Download
         </a>
       </div>
@@ -798,7 +799,15 @@
       document.getElementById('modalTitle').innerText = name;
       document.getElementById('modalSunc').innerText = sunc;
       document.getElementById('modalUnc').innerText = unc;
-      document.getElementById('modalDiscordBtn').href = discordLink;
+      
+      const discordBtn = document.getElementById('modalDiscordBtn');
+      if (discordLink && discordLink.trim() !== '') {
+        discordBtn.href = discordLink;
+        discordBtn.style.display = 'inline-flex';
+      } else {
+        discordBtn.style.display = 'none';
+      }
+
       document.getElementById('modalDownloadBtn').href = downloadLink;
       
       document.getElementById('executorModal').classList.add('active');
