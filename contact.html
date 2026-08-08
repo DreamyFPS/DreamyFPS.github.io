@@ -420,6 +420,7 @@
     <div class="contact-card">
       <form id="contactForm" onsubmit="handleFormspreeSubmit(event)">
         
+        <!-- Optional Fields for Collab / Question -->
         <div class="form-group" id="collabFieldsGroup">
           <div class="form-group">
             <label for="senderName"><i class="fa-solid fa-user" style="color: var(--accent-red);"></i> Your Roblox Username</label>
@@ -441,12 +442,19 @@
           </select>
         </div>
 
-        <!-- Dynamic Group: Appears only when "Report an issue with the website" is selected -->
+        <!-- Dynamic Group: Issue Details (Website Bug) -->
         <div class="form-group" id="issueGroup" style="display: none;">
           <label for="issueDetails"><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-red);"></i> What is the issue?</label>
           <textarea name="website_issue" id="issueDetails" class="form-textarea" placeholder="Describe the website issue here..."></textarea>
         </div>
 
+        <!-- Dynamic Group: Question Details -->
+        <div class="form-group" id="questionGroup" style="display: none;">
+          <label for="questionDetails"><i class="fa-solid fa-circle-question" style="color: var(--accent-red);"></i> What is your question?</label>
+          <textarea name="user_question" id="questionDetails" class="form-textarea" placeholder="Type your question here..."></textarea>
+        </div>
+
+        <!-- General Message Group (Used for Collabs) -->
         <div class="form-group" id="messageGroup">
           <label for="senderMessage"><i class="fa-solid fa-message" style="color: var(--accent-red);"></i> Message</label>
           <textarea name="message" id="senderMessage" class="form-textarea" placeholder="Type your message here..."></textarea>
@@ -478,6 +486,9 @@
       
       const issueGroup = document.getElementById('issueGroup');
       const issueDetails = document.getElementById('issueDetails');
+
+      const questionGroup = document.getElementById('questionGroup');
+      const questionDetails = document.getElementById('questionDetails');
       
       const messageGroup = document.getElementById('messageGroup');
       const senderMessage = document.getElementById('senderMessage');
@@ -488,27 +499,49 @@
         senderName.removeAttribute('required');
         senderYT.removeAttribute('required');
 
-        // Show "What is the issue?" textarea
+        // Show Issue Box, Hide Question & Message Boxes
         issueGroup.style.display = 'block';
         issueDetails.setAttribute('required', 'true');
         
-        // Hide regular message box
+        questionGroup.style.display = 'none';
+        questionDetails.removeAttribute('required');
+        
         messageGroup.style.display = 'none';
         senderMessage.removeAttribute('required');
+
+      } else if (inquiryType === 'Have a question?') {
+        // Hide Roblox and YT inputs completely
+        collabFieldsGroup.style.display = 'none';
+        senderName.removeAttribute('required');
+        senderYT.removeAttribute('required');
+
+        // Show Question Box, Hide Issue & Message Boxes
+        questionGroup.style.display = 'block';
+        questionDetails.setAttribute('required', 'true');
+
+        issueGroup.style.display = 'none';
+        issueDetails.removeAttribute('required');
+        
+        messageGroup.style.display = 'none';
+        senderMessage.removeAttribute('required');
+
       } else {
-        // Show Roblox and YT inputs for Collab or Questions
+        // Show Roblox and YT inputs for Collab
         collabFieldsGroup.style.display = 'block';
         senderName.setAttribute('required', 'true');
         senderYT.setAttribute('required', 'true');
 
-        // Hide issue textarea
+        // Show regular message box, Hide Issue & Question Boxes
+        messageGroup.style.display = 'block';
+        senderMessage.setAttribute('required', 'true');
+
         issueGroup.style.display = 'none';
         issueDetails.removeAttribute('required');
         issueDetails.value = '';
 
-        // Show regular message box
-        messageGroup.style.display = 'block';
-        senderMessage.setAttribute('required', 'true');
+        questionGroup.style.display = 'none';
+        questionDetails.removeAttribute('required');
+        questionDetails.value = '';
       }
     }
 
