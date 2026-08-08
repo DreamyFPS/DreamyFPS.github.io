@@ -473,58 +473,58 @@
 
   <!-- Loading Animation Script & Dynamic Tawk.to Loader -->
   <script>
-    window.addEventListener('load', () => {
-      const steps = [
-        "Establishing secure connection...",
-        "Loading user interface...",
-        "Fetching assets...",
-        "Finalizing...",
-        "Welcome."
-      ];
+    // Changed from window.addEventListener('load', ...) to execute immediately 
+    // so it doesn't get stuck if an image like avatar.webp is missing or slow.
+    const steps = [
+      "Establishing secure connection...",
+      "Loading user interface...",
+      "Fetching assets...",
+      "Finalizing...",
+      "Welcome."
+    ];
 
-      let progress = 0;
-      const progressBarFill = document.getElementById('progressBarFill');
-      const percentageText = document.getElementById('percentageText');
-      const statusMessage = document.getElementById('statusMessage');
-      const siteLoader = document.getElementById('site-loader');
+    let progress = 0;
+    const progressBarFill = document.getElementById('progressBarFill');
+    const percentageText = document.getElementById('percentageText');
+    const statusMessage = document.getElementById('statusMessage');
+    const siteLoader = document.getElementById('site-loader');
 
-      const loaderInterval = setInterval(() => {
-        progress += Math.floor(Math.random() * 7) + 3;
+    const loaderInterval = setInterval(() => {
+      progress += Math.floor(Math.random() * 7) + 3;
 
-        if (progress >= 100) {
-          progress = 100;
-          clearInterval(loaderInterval);
-          if (statusMessage) statusMessage.innerText = steps[4];
-          
-          setTimeout(() => {
-            if (siteLoader) {
-              siteLoader.style.opacity = '0';
-              siteLoader.style.visibility = 'hidden';
-            }
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(loaderInterval);
+        if (statusMessage) statusMessage.innerText = steps[4];
+        
+        setTimeout(() => {
+          if (siteLoader) {
+            siteLoader.style.opacity = '0';
+            siteLoader.style.visibility = 'hidden';
+          }
 
-            // --- INJECT TAWK.TO SCRIPT AFTER LOADER FINISHES ---
-            var s1 = document.createElement("script");
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/6a75d7a1e014d81d4ab620ec/1jve54kho';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            document.head.appendChild(s1);
+          // --- INJECT TAWK.TO SCRIPT AFTER LOADER FINISHES ---
+          var s1 = document.createElement("script");
+          s1.async = true;
+          s1.src = 'https://embed.tawk.to/6a75d7a1e014d81d4ab620ec/1jve54kho';
+          s1.charset = 'UTF-8';
+          s1.setAttribute('crossorigin', '*');
+          document.head.appendChild(s1);
 
-          }, 300);
-        }
+        }, 300);
+      }
 
-        if (progressBarFill) progressBarFill.style.width = progress + '%';
-        if (percentageText) percentageText.innerText = progress + '%';
+      if (progressBarFill) progressBarFill.style.width = progress + '%';
+      if (percentageText) percentageText.innerText = progress + '%';
 
-        if (progress > 75 && statusMessage) {
-          statusMessage.innerText = steps[3];
-        } else if (progress > 50 && statusMessage) {
-          statusMessage.innerText = steps[2];
-        } else if (progress > 25 && statusMessage) {
-          statusMessage.innerText = steps[1];
-        }
-      }, 70);
-    });
+      if (progress > 75 && statusMessage) {
+        statusMessage.innerText = steps[3];
+      } else if (progress > 50 && statusMessage) {
+        statusMessage.innerText = steps[2];
+      } else if (progress > 25 && statusMessage) {
+        statusMessage.innerText = steps[1];
+      }
+    }, 70);
   </script>
 
 </body>
