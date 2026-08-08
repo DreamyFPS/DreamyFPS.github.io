@@ -335,6 +335,103 @@
       line-height: 1.6;
     }
 
+    /* Latest Video Section */
+    .latest-video-section {
+      max-width: 1000px;
+      margin: 5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .video-showcase-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 2rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-showcase-card:hover {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 35px var(--accent-glow);
+    }
+
+    .video-thumbnail-wrapper {
+      position: relative;
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .video-thumbnail-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .video-showcase-card:hover .video-thumbnail-wrapper img {
+      transform: scale(1.03);
+    }
+
+    .play-overlay-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 55px;
+      height: 55px;
+      background: var(--accent-red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.2rem;
+      box-shadow: 0 0 20px var(--accent-glow);
+      transition: transform 0.2s ease;
+    }
+
+    .video-thumbnail-wrapper:hover .play-overlay-badge {
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .video-details h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
+    }
+
+    .video-details p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .video-meta-info {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .video-meta-info span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
     /* Live Stats Section */
     .stats-section {
       max-width: 1000px;
@@ -454,6 +551,11 @@
       .btn-group { flex-direction: column; align-items: center; width: 100%; }
       .btn { width: 100%; max-width: 280px; text-align: center; }
       .stat-number { font-size: 2.5rem; }
+      
+      .video-showcase-card {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
@@ -526,6 +628,33 @@
     </div>
   </section>
 
+  <!-- Latest Video Showcase Section -->
+  <section class="latest-video-section">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h2 class="section-title">Latest <span>Upload</span></h2>
+      <p class="section-subtitle">Catch the freshest gameplay straight from the channel</p>
+    </div>
+
+    <div class="video-showcase-card">
+      <a href="https://www.youtube.com/@DreamyFPSRoblox" target="_blank" class="video-thumbnail-wrapper" id="latest-video-link">
+        <img id="latest-thumbnail" src="https://img.youtube.com/vi/UCFnng7uZdChcVMH5H4PbRuQ/hqdefault.jpg" alt="Latest YouTube Video">
+        <div class="play-overlay-badge">
+          <i class="fa-solid fa-play"></i>
+        </div>
+      </a>
+      <div class="video-details">
+        <span class="tagline-badge" style="margin-bottom: 0.8rem;">Just Dropped</span>
+        <h3 id="latest-title">Loading latest upload...</h3>
+        <div class="video-meta-info">
+          <span id="latest-date"><i class="fa-regular fa-calendar"></i> Recent</span>
+          <span><i class="fa-brands fa-youtube" style="color: var(--accent-red);"></i> DreamyFPS</span>
+        </div>
+        <p id="latest-description">Check out the newest competitive highlights and Roblox action live on the channel.</p>
+        <a href="https://www.youtube.com/@DreamyFPSRoblox" target="_blank" class="btn btn-primary" id="latest-watch-btn" style="display: inline-block; width: auto; padding: 0.7rem 1.8rem; font-size: 0.9rem;">Watch On YouTube</a>
+      </div>
+    </div>
+  </section>
+
   <!-- Live Counts Section -->
   <section class="stats-section">
     <h2 class="section-title">Live <span>Channel Stats</span></h2>
@@ -589,7 +718,7 @@
     });
   </script>
 
-  <!-- Loading Animation & Live YouTube Stats Fetcher -->
+  <!-- Loading Animation & Live YouTube Data Fetcher -->
   <script>
     // Loading Screen Progress Handler
     const steps = [
@@ -632,15 +761,16 @@
       }
     }, 70);
 
-    // Live YouTube Stats Fetcher
+    // Live YouTube Stats & Latest Video Fetcher
     const API_KEY = 'AIzaSyAwN0dhY_9NRLqv-YpRT-joqbMWYkj8MZk'; 
     const CHANNEL_ID = 'UCFnng7uZdChcVMH5H4PbRuQ'; // Verified DreamyFPS Channel ID
 
-    async function fetchLiveStats() {
-      const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`;
+    async function fetchYouTubeData() {
+      // 1. Fetch Channel Statistics
+      const statsUrl = `https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&id=${CHANNEL_ID}&key=${API_KEY}`;
       
       try {
-        const response = await fetch(url);
+        const response = await fetch(statsUrl);
         const data = await response.json();
 
         if (data.error) {
@@ -656,12 +786,40 @@
           document.getElementById('video-count').innerText = Number(stats.videoCount).toLocaleString();
         }
       } catch (err) {
-        console.error("Network or fetch error:", err);
+        console.error("Stats fetch error:", err);
+      }
+
+      // 2. Fetch Latest Upload via Search API
+      const searchUrl = `https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=1`;
+
+      try {
+        const res = await fetch(searchUrl);
+        const searchData = await res.json();
+
+        if (searchData.items && searchData.items.length > 0) {
+          const latestVideo = searchData.items[0];
+          const videoId = latestVideo.id.videoId;
+          const snippet = latestVideo.snippet;
+
+          if (videoId) {
+            const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+            document.getElementById('latest-video-link').href = videoUrl;
+            document.getElementById('latest-watch-btn').href = videoUrl;
+            document.getElementById('latest-thumbnail').src = snippet.thumbnails.high ? snippet.thumbnails.high.url : snippet.thumbnails.medium.url;
+            document.getElementById('latest-title').innerText = snippet.title;
+            document.getElementById('latest-description').innerText = snippet.description || "Check out the newest competitive highlights and Roblox action live on the channel.";
+            
+            const publishDate = new Date(snippet.publishedAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+            document.getElementById('latest-date').innerHTML = `<i class="fa-regular fa-calendar"></i> ${publishDate}`;
+          }
+        }
+      } catch (err) {
+        console.error("Latest video fetch error:", err);
       }
     }
 
-    fetchLiveStats();
-    setInterval(fetchLiveStats, 10000); // Updates every 10 seconds
+    fetchYouTubeData();
+    setInterval(fetchYouTubeData, 30000); // Refreshes data periodically
   </script>
 
 </body>
