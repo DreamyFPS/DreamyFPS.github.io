@@ -649,9 +649,10 @@
 
     function showFallbackStats() {
       if (document.getElementById('sub-count').innerText === '--') {
-        document.getElementById('sub-count').innerText = '1,250+';
-        document.getElementById('view-count').innerText = '45,000+';
-        document.getElementById('video-count').innerText = '120+';
+        // Updated fallback numbers instead of old placeholders
+        document.getElementById('sub-count').innerText = 'N/A';
+        document.getElementById('view-count').innerText = 'N/A';
+        document.getElementById('video-count').innerText = 'N/A';
       }
     }
 
