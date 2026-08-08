@@ -198,7 +198,6 @@
       text-decoration: none;
       font-weight: 600;
       transition: color 0.2s ease;
-      display: none; /* Hidden by default, shown only in login mode */
     }
 
     .forgot-password-link:hover { color: var(--accent-red); text-decoration: underline; }
@@ -323,7 +322,7 @@
         <div class="form-group">
           <div class="form-label-row">
             <label for="password">Password</label>
-            <a href="#" id="forgotPasswordBtn" class="forgot-password-link" style="display: block;">Forgot password?</a>
+            <a href="#" id="forgotPasswordBtn" class="forgot-password-link">Forgot password?</a>
           </div>
           <input type="password" id="password" class="form-control" placeholder="••••••••" required>
         </div>
@@ -392,18 +391,18 @@
         submitBtn.innerText = "Sign Up";
         switchText.innerText = "Already have an account?";
         toggleModeBtn.innerText = "Log in";
-        forgotPasswordBtn.style.display = 'none'; // Hide on sign up
+        forgotPasswordBtn.style.display = 'none'; // Hidden during sign up
       } else {
         formTitle.innerHTML = "Welcome <span>Back</span>";
         formSubtitle.innerText = "Log in to access your profile and dashboard";
         submitBtn.innerText = "Log In";
         switchText.innerText = "Don't have an account?";
         toggleModeBtn.innerText = "Sign up";
-        forgotPasswordBtn.style.display = 'block'; // Show on login
+        forgotPasswordBtn.style.display = 'block'; // Shown on login
       }
     });
 
-    // Handle Forgot Password Click
+    // Handle Forgot Password Reset Email Trigger
     forgotPasswordBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       authError.innerText = '';
@@ -417,13 +416,13 @@
 
       try {
         await sendPasswordResetEmail(auth, email);
-        authSuccess.innerText = "Password reset link sent! Check your inbox.";
+        authSuccess.innerText = "Password reset email sent! Check your inbox.";
       } catch (error) {
         authError.innerText = error.message.replace("Firebase: ", "");
       }
     });
 
-    // Handle Email/Password Submit
+    // Handle Email/Password Form Submit
     authForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       authError.innerText = '';
