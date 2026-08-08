@@ -217,6 +217,22 @@
       box-shadow: 0 0 15px var(--accent-glow);
     }
 
+    .nav-admin-btn {
+      background: rgba(255, 165, 0, 0.1);
+      border: 1px solid rgba(255, 165, 0, 0.3);
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      color: #ffa500 !important;
+      transition: all 0.2s ease !important;
+      display: none; /* Hidden by default until admin logs in */
+    }
+
+    .nav-admin-btn:hover {
+      background: #ffa500 !important;
+      color: #000 !important;
+      box-shadow: 0 0 15px rgba(255, 165, 0, 0.4);
+    }
+
     /* Main Container Layout */
     .hero-container {
       max-width: 1000px;
@@ -368,6 +384,7 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html" class="active">About</a></li>
       <li><a href="contact.html">Contact Me</a></li>
+      <li><a href="admin.html" id="adminNavLink" class="nav-admin-btn">Admin Panel</a></li>
       <li><a href="login.html" id="authNavLink" class="nav-login-btn">Login / Sign Up</a></li>
     </ul>
   </nav>
@@ -403,6 +420,8 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
+    const ADMIN_EMAIL = "win11guy@gmail.com";
+
     const firebaseConfig = {
       apiKey: "AIzaSyBr0powiXiHXuGYNa-5s3zGvBAi23SgXvM",
       authDomain: "dreamyfpsr.firebaseapp.com",
@@ -416,6 +435,7 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const authNavLink = document.getElementById('authNavLink');
+    const adminNavLink = document.getElementById('adminNavLink');
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -428,10 +448,18 @@
             window.location.reload();
           }
         };
+
+        // Show Admin link only for admin email
+        if (user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()) {
+          adminNavLink.style.display = 'inline-block';
+        } else {
+          adminNavLink.style.display = 'none';
+        }
       } else {
         authNavLink.innerText = "Login / Sign Up";
         authNavLink.href = "login.html";
         authNavLink.onclick = null;
+        adminNavLink.style.display = 'none';
       }
     });
   </script>
