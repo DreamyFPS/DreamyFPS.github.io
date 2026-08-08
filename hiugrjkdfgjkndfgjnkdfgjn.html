@@ -7,13 +7,13 @@
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Rise Client Color Palette & Reset */
+    /* Rise Client Green Color Palette & Reset */
     :root {
       --bg-dark: #09090b;
       --card-bg: #121215;
       --border-color: #22222a;
-      --accent-red: #ff2a4b;
-      --accent-glow: rgba(255, 42, 75, 0.35);
+      --accent-green: #22c55e;
+      --accent-glow: rgba(34, 197, 94, 0.35);
       --text-main: #ffffff;
       --text-muted: #a1a1aa;
       --free-color: #22c55e;
@@ -32,7 +32,7 @@
       display: flex;
       flex-direction: column;
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(255, 42, 75, 0.15) 0%, transparent 65%),
+        radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.15) 0%, transparent 65%),
         linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
       background-size: 100% 100%, 40px 40px, 40px 40px;
@@ -41,10 +41,8 @@
     /* Full-Screen Loading Overlay */
     #site-loader {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       background-color: #050507;
       display: flex;
       justify-content: center;
@@ -66,12 +64,11 @@
     }
 
     .avatar-ring {
-      width: 75px;
-      height: 75px;
+      width: 75px; height: 75px;
       margin: 0 auto 1.5rem auto;
       border-radius: 50%;
-      background: rgba(255, 42, 75, 0.1);
-      border: 2px solid rgba(255, 42, 75, 0.3);
+      background: rgba(34, 197, 94, 0.1);
+      border: 2px solid rgba(34, 197, 94, 0.3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -80,7 +77,7 @@
 
     .avatar-ring i {
       font-size: 1.8rem;
-      color: var(--accent-red);
+      color: var(--accent-green);
       filter: drop-shadow(0 0 10px var(--accent-glow));
     }
 
@@ -88,7 +85,7 @@
       content: '';
       position: absolute;
       top: -5px; left: -5px; right: -5px; bottom: -5px;
-      border: 2px dashed rgba(255, 42, 75, 0.4);
+      border: 2px dashed rgba(34, 197, 94, 0.4);
       border-radius: 50%;
       animation: spin 8s linear infinite;
     }
@@ -105,7 +102,7 @@
       margin-bottom: 0.3rem;
     }
 
-    .brand-name span { color: var(--accent-red); }
+    .brand-name span { color: var(--accent-green); }
 
     .status-text {
       font-size: 0.85rem;
@@ -127,7 +124,7 @@
     .progress-bar-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #ff1e42, #ff526c);
+      background: linear-gradient(90deg, #16a34a, #4ade80);
       border-radius: 99px;
       box-shadow: 0 0 12px var(--accent-glow);
       transition: width 0.1s ease-out;
@@ -169,7 +166,7 @@
       text-transform: uppercase;
     }
 
-    .nav-logo span { color: var(--accent-red); }
+    .nav-logo span { color: var(--accent-green); }
 
     .nav-socials {
       display: flex;
@@ -188,7 +185,7 @@
     }
 
     .social-icon-btn:hover {
-      color: var(--accent-red);
+      color: var(--accent-green);
       text-shadow: 0 0 15px var(--accent-glow);
       transform: translateY(-2px);
     }
@@ -245,7 +242,7 @@
     }
 
     .page-title span {
-      background: linear-gradient(135deg, #ffffff 0%, #ff2a4b 100%);
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent-green) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -289,15 +286,15 @@
     }
 
     .password-input:focus {
-      border-color: var(--accent-red);
+      border-color: var(--accent-green);
       box-shadow: 0 0 15px var(--accent-glow);
     }
 
     .submit-btn {
       width: 100%;
       padding: 0.9rem;
-      background: var(--accent-red);
-      color: #fff;
+      background: var(--accent-green);
+      color: #050507;
       border: none;
       border-radius: 12px;
       font-weight: 700;
@@ -308,12 +305,13 @@
     }
 
     .submit-btn:hover {
-      background: #e01e3e;
+      background: #16a34a;
+      color: #fff;
       transform: translateY(-2px);
     }
 
     .error-msg {
-      color: var(--accent-red);
+      color: #ef4444;
       font-size: 0.85rem;
       margin-top: 0.8rem;
       min-height: 1.2rem;
@@ -334,7 +332,7 @@
     .access-denied h2 {
       font-size: 1.8rem;
       margin-bottom: 1rem;
-      color: var(--accent-red);
+      color: var(--accent-green);
     }
 
     .access-denied p {
@@ -345,8 +343,8 @@
     .access-denied a {
       display: inline-block;
       padding: 0.9rem 2rem;
-      background: var(--accent-red);
-      color: #fff;
+      background: var(--accent-green);
+      color: #050507;
       border-radius: 12px;
       text-decoration: none;
       font-weight: 700;
@@ -394,14 +392,14 @@
     }
 
     .filter-btn:hover {
-      border-color: rgba(255, 42, 75, 0.4);
+      border-color: rgba(34, 197, 94, 0.4);
       color: var(--text-main);
     }
 
     .filter-btn.active {
-      background: var(--accent-red);
-      border-color: var(--accent-red);
-      color: #fff;
+      background: var(--accent-green);
+      border-color: var(--accent-green);
+      color: #050507;
       box-shadow: 0 0 20px var(--accent-glow);
     }
 
@@ -427,7 +425,7 @@
 
     .executor-card:hover {
       transform: translateY(-5px);
-      border-color: var(--accent-red);
+      border-color: var(--accent-green);
       box-shadow: 0 0 25px var(--accent-glow);
     }
 
@@ -457,9 +455,9 @@
     .platform-badge {
       font-size: 0.65rem;
       padding: 0.2rem 0.5rem;
-      background: rgba(255, 42, 75, 0.1);
-      border: 1px solid rgba(255, 42, 75, 0.3);
-      color: var(--accent-red);
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: var(--accent-green);
       border-radius: 50px;
       font-weight: 700;
       text-transform: uppercase;
@@ -516,7 +514,7 @@
     }
 
     .card-footer-info i {
-      color: var(--accent-red);
+      color: var(--accent-green);
     }
 
     /* Modal Popup Styles */
@@ -538,7 +536,7 @@
       width: 100%;
       max-width: 440px;
       background: var(--card-bg);
-      border: 1px solid var(--accent-red);
+      border: 1px solid var(--accent-green);
       border-radius: 20px;
       padding: 2.5rem;
       box-shadow: 0 0 40px var(--accent-glow);
@@ -607,7 +605,7 @@
     }
 
     .stat-value.highlight {
-      color: var(--accent-red);
+      color: var(--accent-green);
     }
 
     .modal-links {
@@ -642,13 +640,14 @@
     }
 
     .modal-btn-download {
-      background: var(--accent-red);
-      color: #fff;
+      background: var(--accent-green);
+      color: #050507;
       box-shadow: 0 0 15px var(--accent-glow);
     }
 
     .modal-btn-download:hover {
-      background: #e01e3e;
+      background: #16a34a;
+      color: #fff;
     }
 
     @media (max-width: 900px) {
@@ -726,15 +725,15 @@
   <!-- Main Container -->
   <div class="container">
     
-    <!-- Access Denied Fallback (If accessed directly without gateway token) -->
+    <!-- Access Denied Fallback -->
     <div class="access-denied" id="accessDenied" style="display: none;">
       <h2><i class="fa-solid fa-triangle-exclamation"></i> Access Restricted</h2>
       <p>You must pass through the secret gateway first to view this page.</p>
       <a href="gateway.html">Go to Gateway</a>
     </div>
 
-    <!-- Main Content wrapper containing the hardcoded password prompt & unlocked grid -->
-    <div id="mainHubContent" style="display: none; width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <!-- Main Content Wrapper -->
+    <div id="mainHubContent" style="display: none; width: 100%; flex-direction: column; align-items: center;">
       <div class="page-header">
         <h1 class="page-title">Executors <span>Hub</span></h1>
         <p class="page-subtitle">Enter the password to access verified exploit tools.</p>
@@ -742,13 +741,13 @@
 
       <!-- Password Prompt Card -->
       <div class="password-card" id="passwordCard">
-        <h3><i class="fa-solid fa-lock" style="color: var(--accent-red);"></i> Enter Passcode</h3>
+        <h3><i class="fa-solid fa-lock" style="color: var(--accent-green);"></i> Enter Passcode</h3>
         <input type="password" id="passInput" class="password-input" placeholder="Password..." autocomplete="off">
         <button onclick="checkPassword()" class="submit-btn">Unlock</button>
         <div class="error-msg" id="errorMsg"></div>
       </div>
 
-      <!-- Unlocked Content (Revealed on Correct Password) -->
+      <!-- Unlocked Content -->
       <div class="unlocked-content" id="unlockedContent">
         <!-- Device Selection Filter Bar -->
         <div class="device-filter-bar">
@@ -980,12 +979,19 @@
     </div>
   </div>
 
-  <!-- Gateway Verification & Password Logic Script -->
+  <!-- Script Logic -->
   <script>
+    const HUB_PASSWORD = "dreamy";
+
     window.addEventListener('DOMContentLoaded', () => {
       const isVerified = sessionStorage.getItem('gateway_verified');
       const mainHubContent = document.getElementById('mainHubContent');
       const accessDenied = document.getElementById('accessDenied');
+
+      if (sessionStorage.getItem('hub_unlocked') === 'true') {
+        document.getElementById('passwordCard').style.display = 'none';
+        document.getElementById('unlockedContent').style.display = 'block';
+      }
 
       if (isVerified === 'true') {
         mainHubContent.style.display = 'flex';
@@ -999,62 +1005,23 @@
     function checkPassword() {
       const inputVal = document.getElementById('passInput').value.trim().toLowerCase();
       const errorMsg = document.getElementById('errorMsg');
-      const passwordCard = document.getElementById('passwordCard');
-      const unlockedContent = document.getElementById('unlockedContent');
 
-      if (inputVal === 'dreamyexec') {
-        passwordCard.style.display = 'none';
-        unlockedContent.style.display = 'block';
+      if (inputVal === HUB_PASSWORD) {
+        sessionStorage.setItem('hub_unlocked', 'true');
+        document.getElementById('passwordCard').style.display = 'none';
+        document.getElementById('unlockedContent').style.display = 'block';
+        errorMsg.innerText = "";
       } else {
-        errorMsg.innerText = "Incorrect password! Try again.";
-        document.getElementById('passInput').style.borderColor = "var(--accent-red)";
+        errorMsg.innerText = "Incorrect password. Try again.";
       }
     }
 
-    document.getElementById('passInput').addEventListener('keypress', function(e) {
+    document.getElementById('passInput').addEventListener('keypress', function (e) {
       if (e.key === 'Enter') {
         checkPassword();
       }
     });
-  </script>
 
-  <!-- Modal Popup Logic Script -->
-  <script>
-    function openModal(name, sunc, unc, discordLink, downloadLink) {
-      document.getElementById('modalTitle').innerText = name;
-      document.getElementById('modalSunc').innerText = sunc;
-      document.getElementById('modalUnc').innerText = unc;
-      
-      const discordBtn = document.getElementById('modalDiscordBtn');
-      const downloadBtn = document.getElementById('modalDownloadBtn');
-
-      if (discordLink && discordLink.trim() !== '') {
-        discordBtn.href = discordLink;
-        discordBtn.style.display = 'inline-flex';
-        downloadBtn.style.flex = '1';
-      } else {
-        discordBtn.style.display = 'none';
-        downloadBtn.style.flex = '2';
-      }
-
-      downloadBtn.href = downloadLink;
-      
-      document.getElementById('executorModal').classList.add('active');
-    }
-
-    function closeModal() {
-      document.getElementById('executorModal').classList.remove('active');
-    }
-
-    function closeModalOnOutside(event) {
-      if (event.target.id === 'executorModal') {
-        closeModal();
-      }
-    }
-  </script>
-
-  <!-- Filter Script -->
-  <script>
     function filterExecutors(platform) {
       const buttons = document.querySelectorAll('.filter-btn');
       buttons.forEach(btn => btn.classList.remove('active'));
@@ -1069,40 +1036,51 @@
         }
       });
     }
-  </script>
 
-  <!-- Mobile Hamburger Menu Toggle Script -->
-  <script>
+    function openModal(name, sunc, unc, discordUrl, downloadUrl) {
+      document.getElementById('modalTitle').innerText = name;
+      document.getElementById('modalSunc').innerText = sunc;
+      document.getElementById('modalUnc').innerText = unc;
+
+      const discordBtn = document.getElementById('modalDiscordBtn');
+      if (discordUrl && discordUrl !== '#') {
+        discordBtn.href = discordUrl;
+        discordBtn.style.display = 'inline-flex';
+      } else {
+        discordBtn.style.display = 'none';
+      }
+
+      const downloadBtn = document.getElementById('modalDownloadBtn');
+      downloadBtn.href = downloadUrl;
+
+      document.getElementById('executorModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('executorModal').classList.remove('active');
+    }
+
+    function closeModalOnOutside(event) {
+      if (event.target.id === 'executorModal') {
+        closeModal();
+      }
+    }
+
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navLinks = document.getElementById('navLinks');
-
     mobileMenuBtn.addEventListener('click', () => {
       navLinks.classList.toggle('active');
-      const icon = mobileMenuBtn.querySelector('i');
-      if (navLinks.classList.contains('active')) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-xmark');
-      } else {
-        icon.classList.remove('fa-xmark');
-        icon.classList.add('fa-bars');
-      }
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 900) {
-        navLinks.classList.remove('active');
-        mobileMenuBtn.querySelector('i').className = 'fa-solid fa-bars';
-      }
     });
   </script>
 
   <!-- Loading Animation Script -->
   <script>
     const steps = [
-      "Checking access token...",
-      "Loading interface components...",
-      "Almost ready...",
-      "Ready."
+      "Establishing secure connection...",
+      "Decrypting modules...",
+      "Fetching assets...",
+      "Finalizing...",
+      "Welcome."
     ];
 
     let progress = 0;
@@ -1112,31 +1090,30 @@
     const siteLoader = document.getElementById('site-loader');
 
     const loaderInterval = setInterval(() => {
-      progress += Math.floor(Math.random() * 12) + 5;
+      progress += Math.floor(Math.random() * 7) + 3;
 
       if (progress >= 100) {
         progress = 100;
         clearInterval(loaderInterval);
-        statusMessage.innerText = steps[3];
+        statusMessage.innerText = steps[4];
         
         setTimeout(() => {
           siteLoader.style.opacity = '0';
           siteLoader.style.visibility = 'hidden';
-          setTimeout(() => {
-            siteLoader.style.display = 'none';
-          }, 500);
-        }, 200);
+        }, 300);
       }
 
       progressBarFill.style.width = progress + '%';
       percentageText.innerText = progress + '%';
 
       if (progress > 75) {
+        statusMessage.innerText = steps[3];
+      } else if (progress > 50) {
         statusMessage.innerText = steps[2];
-      } else if (progress > 40) {
+      } else if (progress > 25) {
         statusMessage.innerText = steps[1];
       }
-    }, 50);
+    }, 70);
   </script>
 
 </body>
