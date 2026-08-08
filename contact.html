@@ -455,7 +455,7 @@
 
           <div class="form-group">
             <label for="senderYT"><i class="fa-brands fa-youtube" style="color: var(--accent-red);"></i> Your YT Channel Link</label>
-            <input type="text" name="yt_channel" id="senderYT" class="form-input" placeholder="youtube.com/@yourchannel" autocomplete="off">
+            <input type="text" name="yt_channel" id="senderYT" class="form-input" placeholder="@yourchannel" autocomplete="off">
           </div>
         </div>
 
@@ -561,7 +561,7 @@
       handleReasonChange();
     });
 
-    // Formspree Async Submission Handler with YouTube Link Validation
+    // Formspree Async Submission Handler with strict start validation
     async function handleFormspreeSubmit(event) {
       event.preventDefault();
       
@@ -571,12 +571,20 @@
       const senderYT = document.getElementById('senderYT');
       const inquiryType = document.getElementById('inquiryType').value;
 
-      // Validate YouTube link if collab fields are visible
+      // Validate YouTube channel/handle input if collab is selected
       if (inquiryType === 'Collab with me' && senderYT && senderYT.value.trim() !== '') {
-        const ytVal = senderYT.value.toLowerCase();
-        if (!ytVal.includes('youtube.com') && !ytVal.includes('youtu.be')) {
+        let ytVal = senderYT.value.trim().toLowerCase();
+        
+        // Strip optional prefixes (https://, http://, www.)
+        ytVal = ytVal.replace(/^https?:\/\//, '');
+        ytVal = ytVal.replace(/^www\./, '');
+
+        // Must start with '@', 'youtube.com/@', or 'youtu.be/@'
+        const isValid = ytVal.startsWith('@') || ytVal.startsWith('youtube.com/@') || ytVal.startsWith('youtu.be/@');
+
+        if (!isValid) {
           successMsg.style.color = "#ff4d4d";
-          successMsg.textContent = "Please enter a valid YouTube channel link (must contain youtube.com or youtu.be).";
+          successMsg.textContent = "Your channel link must start with @, youtube.com/@, or youtu.be/@";
           senderYT.focus();
           return;
         }
