@@ -326,17 +326,6 @@
       box-shadow: 0 0 30px rgba(255, 42, 75, 0.6);
     }
 
-    .btn-secondary {
-      background: #1c1c24;
-      color: var(--text-main);
-      border: 1px solid var(--border-color);
-    }
-
-    .btn-secondary:hover {
-      background: #252530;
-      border-color: #333342;
-    }
-
     /* Responsive Mobile Breakpoints */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
@@ -416,7 +405,6 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html" class="active">About</a></li>
-      <li><a href="contact.html">Contact Me</a></li>
     </ul>
   </nav>
 
@@ -440,7 +428,6 @@
 
       <div class="btn-group">
         <a href="index.html" class="btn btn-primary">Home</a>
-        <a href="contact.html" class="btn btn-secondary">Contact Me</a>
       </div>
     </div>
 
@@ -473,8 +460,6 @@
 
   <!-- Loading Animation Script & Dynamic Tawk.to Loader -->
   <script>
-    // Changed from window.addEventListener('load', ...) to execute immediately 
-    // so it doesn't get stuck if an image like avatar.webp is missing or slow.
     const steps = [
       "Establishing secure connection...",
       "Loading user interface...",
