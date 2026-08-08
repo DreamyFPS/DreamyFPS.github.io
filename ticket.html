@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support Tickets - DreamyFPS</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #09090b;
+      --card-bg: #121215;
+      --border-color: #22222a;
+      --accent-red: #ff2a4b;
+      --accent-glow: rgba(255, 42, 75, 0.35);
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 3rem; background: rgba(18, 18, 21, 0.9);
+      border-bottom: 1px solid var(--border-color);
+    }
+    .nav-logo { font-size: 1.4rem; font-weight: 800; color: var(--text-main); text-decoration: none; text-transform: uppercase; }
+    .nav-logo span { color: var(--accent-red); }
+    .container { max-width: 700px; margin: 3rem auto; padding: 0 1.5rem; flex: 1; width: 100%; }
+    .page-header { text-align: center; margin-bottom: 2rem; }
+    .page-title { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem; }
+    .page-title span { color: var(--accent-red); }
+    .ticket-card {
+      background: var(--card-bg); border: 1px solid var(--border-color);
+      border-radius: 20px; padding: 2.5rem; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    }
+    .form-group { margin-bottom: 1.5rem; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; padding: 0.9rem 1rem; background: #09090b;
+      border: 1px solid var(--border-color); border-radius: 12px; color: var(--text-main); font-size: 1rem; outline: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--accent-red); box-shadow: 0 0 15px var(--accent-glow); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .submit-btn {
+      width: 100%; padding: 0.9rem; background: var(--accent-red); color: #fff;
+      border: none; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer;
+      box-shadow: 0 0 20px var(--accent-glow); transition: background 0.2s;
+    }
+    .submit-btn:hover { background: #e01e3e; }
+    .ticket-msg { text-align: center; margin-top: 1rem; font-size: 0.9rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="hiugrjkdfgjkndfgjnkdfgjn.html" class="nav-logo">Dreamy<span>FPS</span></a>
+  </nav>
+
+  <div class="container">
+    <div class="page-header">
+      <h1 class="page-title">Support <span>Tickets</span></h1>
+      <p class="page-subtitle" style="color: var(--text-muted);">Submit an issue and our team will review it.</p>
+    </div>
+
+    <div class="ticket-card">
+      <form id="ticketForm" onsubmit="sendDiscordTicket(event)">
+        <div class="form-group">
+          <label><i class="fa-solid fa-user"></i> Your Name / Username</label>
+          <input type="text" id="tName" class="form-input" placeholder="e.g. DreamyFPS" required autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-tag"></i> Ticket Category</label>
+          <select id="tCategory" class="form-select">
+            <option value="Executor Issue">Executor Issue / Not Working</option>
+            <option value="Key System Help">Key System Help</option>
+            <option value="General Question">General Question</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label><i class="fa-solid fa-pen"></i> Describe Your Issue</label>
+          <textarea id="tDesc" class="form-textarea" placeholder="Explain what's happening..." required></textarea>
+        </div>
+
+        <button type="submit" id="tBtn" class="submit-btn">Submit Ticket</button>
+        <div class="ticket-msg" id="tMsg"></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    async function sendDiscordTicket(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('tName').value;
+      const category = document.getElementById('tCategory').value;
+      const desc = document.getElementById('tDesc').value;
+      const tMsg = document.getElementById('tMsg');
+      const tBtn = document.getElementById('tBtn');
+
+      // REPLACE WITH YOUR DISCORD WEBHOOK URL
+      const WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL_HERE";
+
+      if (WEBHOOK_URL === "YOUR_DISCORD_WEBHOOK_URL_HERE") {
+        tMsg.style.color = "#ff4d4d";
+        tMsg.textContent = "Error: Discord Webhook URL is not configured in the code!";
+        return;
+      }
+
+      tBtn.disabled = true;
+      tBtn.textContent = "Submitting...";
+
+      const payload = {
+        embeds: [{
+          title: "🎫 New Support Ticket Submitted",
+          color: 16718411, // Pink/Red accent hex decimal
+          fields: [
+            { name: "User", value: name, inline: true },
+            { name: "Category", value: category, inline: true },
+            { name: "Description", value: desc, inline: false }
+          ],
+          timestamp: new Date().toISOString()
+        }]
+      };
+
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          tMsg.style.color = "var(--accent-red)";
+          tMsg.textContent = "Ticket sent successfully! Check our Discord for updates.";
+          document.getElementById('ticketForm').reset();
+        } else {
+          tMsg.style.color = "#ff4d4d";
+          tMsg.textContent = "Failed to send ticket. Try again later.";
+        }
+      } catch (err) {
+        tMsg.style.color = "#ff4d4d";
+        tMsg.textContent = "Network error occurred.";
+      } finally {
+        tBtn.disabled = false;
+        tBtn.textContent = "Submit Ticket";
+      }
+    }
+  </script>
+</body>
+</html>
