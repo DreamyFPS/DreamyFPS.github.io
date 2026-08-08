@@ -20,6 +20,10 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: var(--bg-dark);
       color: var(--text-main);
@@ -605,6 +609,7 @@
     
     <div class="btn-group">
       <a href="about.html" class="btn btn-primary">Learn More</a>
+      <a href="#live-stats" class="btn btn-secondary">See Live Stats</a>
     </div>
   </section>
 
@@ -654,7 +659,7 @@
   </section>
 
   <!-- Live Counts Section -->
-  <section class="stats-section">
+  <section class="stats-section" id="live-stats">
     <h2 class="section-title">Live <span>Channel Stats</span></h2>
     <p class="section-subtitle">Real-time statistics updated directly from YouTube</p>
 
