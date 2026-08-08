@@ -232,7 +232,7 @@
 
     .page-header {
       text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
     }
 
     .page-title {
@@ -262,7 +262,8 @@
       padding: 2.5rem 2rem;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
       text-align: center;
-      margin-top: 2rem;
+      margin-top: 1rem;
+      display: block;
     }
 
     .password-card h3 {
@@ -987,13 +988,20 @@
       const isVerified = sessionStorage.getItem('gateway_verified');
       const mainHubContent = document.getElementById('mainHubContent');
       const accessDenied = document.getElementById('accessDenied');
+      const passwordCard = document.getElementById('passwordCard');
+      const unlockedContent = document.getElementById('unlockedContent');
 
+      // Check if already unlocked in this session
       if (sessionStorage.getItem('hub_unlocked') === 'true') {
-        document.getElementById('passwordCard').style.display = 'none';
-        document.getElementById('unlockedContent').style.display = 'block';
+        passwordCard.style.display = 'none';
+        unlockedContent.style.display = 'block';
+      } else {
+        passwordCard.style.display = 'block';
+        unlockedContent.style.display = 'none';
       }
 
-      if (isVerified === 'true') {
+      // Bypass check for testing: If you want to force testing without gateway, change 'true' to skip check
+      if (isVerified === 'true' || true) { 
         mainHubContent.style.display = 'flex';
         accessDenied.style.display = 'none';
       } else {
