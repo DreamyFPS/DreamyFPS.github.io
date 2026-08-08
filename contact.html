@@ -308,6 +308,22 @@
       min-height: 130px;
     }
 
+    /* Smooth Slide & Fade Animation for Switching Options */
+    .dynamic-field-wrapper {
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: 350px;
+      opacity: 1;
+    }
+
+    .dynamic-field-wrapper.hidden-field {
+      max-height: 0;
+      opacity: 0;
+      margin-bottom: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+    }
+
     .submit-btn {
       width: 100%;
       padding: 0.9rem;
@@ -420,8 +436,18 @@
     <div class="contact-card">
       <form id="contactForm" onsubmit="handleFormspreeSubmit(event)">
         
-        <!-- Optional Fields for Collab / Question -->
-        <div class="form-group" id="collabFieldsGroup">
+        <!-- Reason / Topic Selection -->
+        <div class="form-group">
+          <label for="inquiryType"><i class="fa-solid fa-tag" style="color: var(--accent-red);"></i> Reason / Topic</label>
+          <select name="reason" id="inquiryType" class="form-select" onchange="handleReasonChange()">
+            <option value="Collab with me">Collab with me</option>
+            <option value="Report an issue with the website">Report an issue with the website</option>
+            <option value="Have a question?">Have a question?</option>
+          </select>
+        </div>
+
+        <!-- Optional Fields Wrapper for Collab -->
+        <div id="collabFieldsGroup" class="dynamic-field-wrapper">
           <div class="form-group">
             <label for="senderName"><i class="fa-solid fa-user" style="color: var(--accent-red);"></i> Your Roblox Username</label>
             <input type="text" name="roblox_username" id="senderName" class="form-input" placeholder="Enter your Roblox username..." autocomplete="off">
@@ -433,29 +459,20 @@
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="inquiryType"><i class="fa-solid fa-tag" style="color: var(--accent-red);"></i> Reason / Topic</label>
-          <select name="reason" id="inquiryType" class="form-select" onchange="handleReasonChange()">
-            <option value="Collab with me">Collab with me</option>
-            <option value="Report an issue with the website">Report an issue with the website</option>
-            <option value="Have a question?">Have a question?</option>
-          </select>
-        </div>
-
         <!-- Dynamic Group: Issue Details (Website Bug) -->
-        <div class="form-group" id="issueGroup" style="display: none;">
+        <div class="form-group dynamic-field-wrapper hidden-field" id="issueGroup">
           <label for="issueDetails"><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-red);"></i> What is the issue?</label>
           <textarea name="website_issue" id="issueDetails" class="form-textarea" placeholder="Describe the website issue here..."></textarea>
         </div>
 
         <!-- Dynamic Group: Question Details -->
-        <div class="form-group" id="questionGroup" style="display: none;">
+        <div class="form-group dynamic-field-wrapper hidden-field" id="questionGroup">
           <label for="questionDetails"><i class="fa-solid fa-circle-question" style="color: var(--accent-red);"></i> What is your question?</label>
           <textarea name="user_question" id="questionDetails" class="form-textarea" placeholder="Type your question here..."></textarea>
         </div>
 
         <!-- General Message Group (Used for Collabs) -->
-        <div class="form-group" id="messageGroup">
+        <div class="form-group dynamic-field-wrapper" id="messageGroup">
           <label for="senderMessage"><i class="fa-solid fa-message" style="color: var(--accent-red);"></i> Message</label>
           <textarea name="message" id="senderMessage" class="form-textarea" placeholder="Type your message here..."></textarea>
         </div>
@@ -477,7 +494,7 @@
       });
     }
 
-    // Toggle Dynamic Fields based on dropdown choice
+    // Toggle Dynamic Fields smoothly based on dropdown choice
     function handleReasonChange() {
       const inquiryType = document.getElementById('inquiryType').value;
       const collabFieldsGroup = document.getElementById('collabFieldsGroup');
@@ -494,52 +511,52 @@
       const senderMessage = document.getElementById('senderMessage');
 
       if (inquiryType === 'Report an issue with the website') {
-        // Hide Roblox and YT inputs completely
-        collabFieldsGroup.style.display = 'none';
+        // Hide Collab Inputs smoothly
+        collabFieldsGroup.classList.add('hidden-field');
         senderName.removeAttribute('required');
         senderYT.removeAttribute('required');
 
-        // Show Issue Box, Hide Question & Message Boxes
-        issueGroup.style.display = 'block';
+        // Show Issue Box smoothly, Hide Question & Message Boxes
+        issueGroup.classList.remove('hidden-field');
         issueDetails.setAttribute('required', 'true');
         
-        questionGroup.style.display = 'none';
+        questionGroup.classList.add('hidden-field');
         questionDetails.removeAttribute('required');
         
-        messageGroup.style.display = 'none';
+        messageGroup.classList.add('hidden-field');
         senderMessage.removeAttribute('required');
 
       } else if (inquiryType === 'Have a question?') {
-        // Hide Roblox and YT inputs completely
-        collabFieldsGroup.style.display = 'none';
+        // Hide Collab Inputs smoothly
+        collabFieldsGroup.classList.add('hidden-field');
         senderName.removeAttribute('required');
         senderYT.removeAttribute('required');
 
-        // Show Question Box, Hide Issue & Message Boxes
-        questionGroup.style.display = 'block';
+        // Show Question Box smoothly, Hide Issue & Message Boxes
+        questionGroup.classList.remove('hidden-field');
         questionDetails.setAttribute('required', 'true');
 
-        issueGroup.style.display = 'none';
+        issueGroup.classList.add('hidden-field');
         issueDetails.removeAttribute('required');
         
-        messageGroup.style.display = 'none';
+        messageGroup.classList.add('hidden-field');
         senderMessage.removeAttribute('required');
 
       } else {
-        // Show Roblox and YT inputs for Collab
-        collabFieldsGroup.style.display = 'block';
+        // Show Collab Inputs smoothly
+        collabFieldsGroup.classList.remove('hidden-field');
         senderName.setAttribute('required', 'true');
         senderYT.setAttribute('required', 'true');
 
-        // Show regular message box, Hide Issue & Question Boxes
-        messageGroup.style.display = 'block';
+        // Show regular message box smoothly, Hide Issue & Question Boxes
+        messageGroup.classList.remove('hidden-field');
         senderMessage.setAttribute('required', 'true');
 
-        issueGroup.style.display = 'none';
+        issueGroup.classList.add('hidden-field');
         issueDetails.removeAttribute('required');
         issueDetails.value = '';
 
-        questionGroup.style.display = 'none';
+        questionGroup.classList.add('hidden-field');
         questionDetails.removeAttribute('required');
         questionDetails.value = '';
       }
@@ -579,7 +596,7 @@
           successMsg.style.color = "var(--accent-red)";
           successMsg.textContent = "Thanks! Your message has been sent successfully.";
           form.reset();
-          handleReasonChange(); // Reset dynamic fields visibility
+          handleReasonChange(); // Reset dynamic fields visibility smoothly
         } else {
           const data = await response.json();
           if (data && data.errors) {
