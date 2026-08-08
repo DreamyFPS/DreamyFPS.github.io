@@ -406,8 +406,8 @@
   <!-- Rise Style Responsive Navbar -->
   <nav>
     <div class="nav-left">
-      <!-- Fixed link to point to executor hub instead of index.html -->
-      <a href="hiugrjkdfgjkndfgjnkdfgjn.html" class="nav-logo">Dreamy<span>FPS</span></a>
+      <!-- DreamyFPS Logo points to index.html -->
+      <a href="index.html" class="nav-logo">Dreamy<span>FPS</span></a>
       <div class="nav-socials">
         <a href="https://discord.gg/XnfZ3fZpy8" target="_blank" class="social-icon-btn" title="Discord"><i class="fa-brands fa-discord"></i></a>
         <a href="https://tiktok.com/@yourlink" target="_blank" class="social-icon-btn" title="TikTok"><i class="fa-brands fa-tiktok"></i></a>
@@ -420,7 +420,8 @@
     </button>
 
     <ul class="nav-links" id="navLinks">
-      <li><a href="hiugrjkdfgjkndfgjnkdfgjn.html">Home</a></li>
+      <!-- Home link points to index.html -->
+      <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html" class="active">Contact Me</a></li>
     </ul>
@@ -597,7 +598,6 @@
       successMsg.textContent = "";
 
       try {
-        // Collect form entries into a clean JSON payload for Make.com
         const formData = new FormData(form);
         const dataPayload = {};
         formData.forEach((value, key) => {
