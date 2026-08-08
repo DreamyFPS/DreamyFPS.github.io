@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - DreamyFPS</title>
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Rise Client Color Palette & Reset */
+    :root {
+      --bg-dark: #09090b;
+      --card-bg: #121215;
+      --border-color: #22222a;
+      --accent-red: #ff2a4b;
+      --accent-glow: rgba(255, 42, 75, 0.35);
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(255, 42, 75, 0.12) 0%, transparent 60%),
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px;
+    }
+
+    /* Rise-Style Glass Navigation Bar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(18, 18, 21, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-left { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-logo { font-size: 1.4rem; font-weight: 800; letter-spacing: 1px; color: var(--text-main); text-decoration: none; text-transform: uppercase; }
+    .nav-logo span { color: var(--accent-red); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: color 0.2s ease; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text-main); }
+
+    /* Login Container Layout */
+    .login-container {
+      max-width: 440px;
+      width: 100%;
+      margin: auto;
+      padding: 1.5rem;
+    }
+
+    .login-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    .login-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-header h1 { font-size: 1.8rem; font-weight: 900; margin-bottom: 0.3rem; }
+    .login-header h1 span { color: var(--accent-red); }
+    .login-header p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 0.4rem; }
+    
+    .form-control {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      margin-top: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--accent-red);
+      color: #fff;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .btn-primary:hover {
+      background: #e01e3e;
+      box-shadow: 0 0 30px rgba(255, 42, 75, 0.6);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: var(--text-muted);
+      margin: 1.5rem 0;
+      font-size: 0.85rem;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .divider::before { margin-right: 0.75rem; }
+    .divider::after { margin-left: 0.75rem; }
+
+    .btn-google {
+      background: #ffffff;
+      color: #000000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+
+    .btn-google:hover { background: #e2e2e2; }
+
+    .auth-error {
+      color: var(--accent-red);
+      font-size: 0.85rem;
+      text-align: center;
+      margin-top: 1rem;
+      min-height: 1.2rem;
+    }
+
+    .auth-switch {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .auth-switch a { color: var(--accent-red); text-decoration: none; font-weight: 700; cursor: pointer; }
+    .auth-switch a:hover { text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; flex-direction: column; gap: 1rem; }
+      .nav-left { flex-direction: column; gap: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Rise Style Navbar -->
+  <nav>
+    <div class="nav-left">
+      <a href="index.html" class="nav-logo">Dreamy<span>FPS</span></a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact Me</a></li>
+      <li><a href="login.html" class="active">Login</a></li>
+    </ul>
+  </nav>
+
+  <!-- Login Form Container -->
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <h1 id="formTitle">Welcome <span>Back</span></h1>
+        <p id="formSubtitle">Log in to access your profile and dashboard</p>
+      </div>
+
+      <!-- Email/Password Form -->
+      <form id="authForm">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" class="form-control" placeholder="name@example.com" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" id="submitBtn" class="btn btn-primary">Log In</button>
+      </form>
+
+      <div class="auth-error" id="authError"></div>
+
+      <div class="divider">OR</div>
+
+      <!-- Google Sign-In Button -->
+      <button type="button" id="googleBtn" class="btn btn-google">
+        <i class="fa-brands fa-google"></i> Continue with Google
+      </button>
+
+      <!-- Toggle between Login and Register -->
+      <div class="auth-switch">
+        <span id="switchText">Don't have an account?</span> 
+        <a id="toggleModeBtn">Sign up</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Authentication Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
+    import { 
+      getAuth, 
+      signInWithEmailAndPassword, 
+      createUserWithEmailAndPassword, 
+      signInWithPopup, 
+      GoogleAuthProvider 
+    } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBr0powiXiHXuGYNa-5s3zGvBAi23SgXvM",
+      authDomain: "dreamyfpsr.firebaseapp.com",
+      projectId: "dreamyfpsr",
+      storageBucket: "dreamyfpsr.firebasestorage.app",
+      messagingSenderId: "963672326962",
+      appId: "1:963672326962:web:e92c5dbf4876cae84d8d2b",
+      measurementId: "G-KE8KD21TWB"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    let isSignUp = false;
+
+    const authForm = document.getElementById('authForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const submitBtn = document.getElementById('submitBtn');
+    const googleBtn = document.getElementById('googleBtn');
+    const authError = document.getElementById('authError');
+    const formTitle = document.getElementById('formTitle');
+    const formSubtitle = document.getElementById('formSubtitle');
+    const switchText = document.getElementById('switchText');
+    const toggleModeBtn = document.getElementById('toggleModeBtn');
+
+    // Toggle between Login & Register modes
+    toggleModeBtn.addEventListener('click', () => {
+      isSignUp = !isSignUp;
+      authError.innerText = '';
+      if (isSignUp) {
+        formTitle.innerHTML = "Create <span>Account</span>";
+        formSubtitle.innerText = "Sign up to get started";
+        submitBtn.innerText = "Sign Up";
+        switchText.innerText = "Already have an account?";
+        toggleModeBtn.innerText = "Log in";
+      } else {
+        formTitle.innerHTML = "Welcome <span>Back</span>";
+        formSubtitle.innerText = "Log in to access your profile and dashboard";
+        submitBtn.innerText = "Log In";
+        switchText.innerText = "Don't have an account?";
+        toggleModeBtn.innerText = "Sign up";
+      }
+    });
+
+    // Handle Email/Password Submit
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      authError.innerText = '';
+      const email = emailInput.value;
+      const password = passwordInput.value;
+
+      try {
+        if (isSignUp) {
+          await createUserWithEmailAndPassword(auth, email, password);
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+        }
+        window.location.href = "index.html"; // Redirects to homepage on success
+      } catch (error) {
+        authError.innerText = error.message.replace("Firebase: ", "");
+      }
+    });
+
+    // Handle Google Sign-In Popup
+    googleBtn.addEventListener('click', async () => {
+      authError.innerText = '';
+      try {
+        await signInWithPopup(auth, googleProvider);
+        window.location.href = "index.html"; // Redirects to homepage on success
+      } catch (error) {
+        authError.innerText = error.message.replace("Firebase: ", "");
+      }
+    });
+  </script>
+
+</body>
+</html>
