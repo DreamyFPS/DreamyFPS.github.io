@@ -255,72 +255,40 @@
       font-size: 1.05rem;
     }
 
-    /* Password Box Styles */
-    .password-card {
-      width: 100%;
-      max-width: 400px;
+    /* Gateway Protection Notice / Fallback */
+    .access-denied {
+      text-align: center;
+      padding: 4rem 2rem;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
       border-radius: 20px;
-      padding: 2.5rem 2rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
-      text-align: center;
-      margin-top: 2rem;
+      max-width: 500px;
+      margin: 2rem auto;
     }
 
-    .password-card h3 {
-      font-size: 1.2rem;
+    .access-denied h2 {
+      font-size: 1.8rem;
       margin-bottom: 1rem;
-      color: var(--text-main);
+      color: var(--accent-red);
     }
 
-    .password-input {
-      width: 100%;
-      padding: 0.9rem 1rem;
-      background: #09090b;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      color: var(--text-main);
-      font-size: 1rem;
-      text-align: center;
-      margin-bottom: 1rem;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    .access-denied p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
     }
 
-    .password-input:focus {
-      border-color: var(--accent-red);
-      box-shadow: 0 0 15px var(--accent-glow);
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 0.9rem;
+    .access-denied a {
+      display: inline-block;
+      padding: 0.9rem 2rem;
       background: var(--accent-red);
       color: #fff;
-      border: none;
       border-radius: 12px;
+      text-decoration: none;
       font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
       box-shadow: 0 0 20px var(--accent-glow);
-      transition: background 0.2s ease, transform 0.2s ease;
     }
 
-    .submit-btn:hover {
-      background: #e01e3e;
-      transform: translateY(-2px);
-    }
-
-    .error-msg {
-      color: var(--accent-red);
-      font-size: 0.85rem;
-      margin-top: 0.8rem;
-      min-height: 1.2rem;
-      font-weight: 600;
-    }
-
-    /* Unlocked Content Area (Initially Hidden) */
+    /* Unlocked Content Area */
     .unlocked-content {
       display: none;
       width: 100%;
@@ -692,21 +660,21 @@
 
   <!-- Main Container -->
   <div class="container">
-    <div class="page-header">
-      <h1 class="page-title">Executors <span>Hub</span></h1>
-      <p class="page-subtitle">Enter the password to access verified exploit tools.</p>
+    
+    <!-- Access Denied Fallback (If accessed directly without gateway token) -->
+    <div class="access-denied" id="accessDenied" style="display: none;">
+      <h2><i class="fa-solid fa-triangle-exclamation"></i> Access Restricted</h2>
+      <p>You must pass through the secret gateway first to view this page.</p>
+      <a href="gateway.html">Go to Gateway</a>
     </div>
 
-    <!-- Password Prompt Card -->
-    <div class="password-card" id="passwordCard">
-      <h3><i class="fa-solid fa-lock" style="color: var(--accent-red);"></i> Enter Passcode</h3>
-      <input type="password" id="passInput" class="password-input" placeholder="Password..." autocomplete="off">
-      <button onclick="checkPassword()" class="submit-btn">Unlock</button>
-      <div class="error-msg" id="errorMsg"></div>
-    </div>
+    <!-- Unlocked Content (Revealed via Session Token) -->
+    <div class="unlocked-content" id="unlockedContent" style="display: none;">
+      <div class="page-header">
+        <h1 class="page-title">Executors <span>Hub</span></h1>
+        <p class="page-subtitle">Verified exploit tools and runtime environments.</p>
+      </div>
 
-    <!-- Unlocked Content (Revealed on Correct Password) -->
-    <div class="unlocked-content" id="unlockedContent">
       <!-- Device Selection Filter Bar -->
       <div class="device-filter-bar">
         <button class="filter-btn active" onclick="filterExecutors('all')">
@@ -734,7 +702,7 @@
               <div class="badges-container">
                 <span class="platform-badge">Windows</span>
                 <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
+                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
               </div>
             </div>
             <p class="executor-desc">Ultra-powerful Windows execution environment featuring pristine script stability.</p>
@@ -782,7 +750,7 @@
               <div class="badges-container">
                 <span class="platform-badge">Windows</span>
                 <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
-                <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
+                <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
               </div>
             </div>
             <p class="executor-desc">Efficient Windows script execution tool with clean interface and stable features.</p>
@@ -814,7 +782,6 @@
               <div class="badges-container">
                 <span class="platform-badge">Apple</span>
                 <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
-                <span class="pricing-badge keyless"><i class="fa-solid fa-key"></i> Keyless</span>
               </div>
             </div>
             <p class="executor-desc">High-tier script execution environment built specifically for macOS.</p>
@@ -886,7 +853,7 @@
           <div class="card-footer-info"><i class="fa-solid fa-circle-info"></i> Click card for stats & links</div>
         </div>
 
-        <!-- Vega X (Combined Free/Paid) -->
+        <!-- Vega X -->
         <div class="executor-card" data-platform="android" onclick="openModal('Vega X', '98%', '96%', 'https://discord.gg/vegax', '#')">
           <div>
             <div class="executor-top">
@@ -937,26 +904,16 @@
     </div>
   </div>
 
-  <!-- Password Verification Script -->
+  <!-- Gateway Verification Guard Script -->
   <script>
-    function checkPassword() {
-      const inputVal = document.getElementById('passInput').value.trim().toLowerCase();
-      const errorMsg = document.getElementById('errorMsg');
-      const passwordCard = document.getElementById('passwordCard');
-      const unlockedContent = document.getElementById('unlockedContent');
-
-      if (inputVal === 'dreamyexec') {
-        passwordCard.style.display = 'none';
-        unlockedContent.style.display = 'block';
+    window.addEventListener('DOMContentLoaded', () => {
+      const isVerified = sessionStorage.getItem('gateway_verified');
+      if (isVerified === 'true') {
+        document.getElementById('unlockedContent').style.display = 'block';
+        document.getElementById('accessDenied').style.display = 'none';
       } else {
-        errorMsg.innerText = "Incorrect password! Try again.";
-        document.getElementById('passInput').style.borderColor = "var(--accent-red)";
-      }
-    }
-
-    document.getElementById('passInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        checkPassword();
+        document.getElementById('unlockedContent').style.display = 'none';
+        document.getElementById('accessDenied').style.display = 'block';
       }
     });
   </script>
@@ -1042,7 +999,7 @@
   <!-- Loading Animation Script -->
   <script>
     const steps = [
-      "Accessing secure node...",
+      "Checking access token...",
       "Loading interface components...",
       "Almost ready...",
       "Ready."
