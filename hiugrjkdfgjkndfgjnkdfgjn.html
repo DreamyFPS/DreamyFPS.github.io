@@ -16,6 +16,8 @@
       --accent-glow: rgba(255, 42, 75, 0.35);
       --text-main: #ffffff;
       --text-muted: #a1a1aa;
+      --free-color: #22c55e;
+      --paid-color: #eab308;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
@@ -407,15 +409,44 @@
       color: var(--text-main);
     }
 
+    .badges-container {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
     .platform-badge {
-      font-size: 0.75rem;
-      padding: 0.3rem 0.8rem;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
       background: rgba(255, 42, 75, 0.1);
       border: 1px solid rgba(255, 42, 75, 0.3);
       color: var(--accent-red);
       border-radius: 50px;
       font-weight: 700;
       text-transform: uppercase;
+    }
+
+    .pricing-badge {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 50px;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .pricing-badge.free {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: var(--free-color);
+    }
+
+    .pricing-badge.paid {
+      background: rgba(234, 179, 8, 0.1);
+      border: 1px solid rgba(234, 179, 8, 0.3);
+      color: var(--paid-color);
     }
 
     .executor-desc {
@@ -682,7 +713,10 @@
           <div>
             <div class="executor-top">
               <span class="executor-title">Madium Executor</span>
-              <span class="platform-badge">Windows</span>
+              <div class="badges-container">
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="platform-badge">Windows</span>
+              </div>
             </div>
             <p class="executor-desc">Ultra-powerful Windows execution environment featuring pristine script stability.</p>
           </div>
@@ -694,7 +728,10 @@
           <div>
             <div class="executor-top">
               <span class="executor-title">Opiumware</span>
-              <span class="platform-badge">Apple</span>
+              <div class="badges-container">
+                <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
+                <span class="platform-badge">Apple</span>
+              </div>
             </div>
             <p class="executor-desc">Advanced execution environment built specifically for macOS systems.</p>
           </div>
@@ -706,7 +743,10 @@
           <div>
             <div class="executor-top">
               <span class="executor-title">Macsploit</span>
-              <span class="platform-badge">Apple</span>
+              <div class="badges-container">
+                <span class="pricing-badge paid"><i class="fa-solid fa-crown"></i> Paid</span>
+                <span class="platform-badge">Apple</span>
+              </div>
             </div>
             <p class="executor-desc">High-tier script execution environment built specifically for macOS.</p>
           </div>
@@ -718,7 +758,10 @@
           <div>
             <div class="executor-top">
               <span class="executor-title">Hydrogen Mac</span>
-              <span class="platform-badge">Apple</span>
+              <div class="badges-container">
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="platform-badge">Apple</span>
+              </div>
             </div>
             <p class="executor-desc">Reliable script execution utility available for macOS systems.</p>
           </div>
@@ -730,7 +773,10 @@
           <div>
             <div class="executor-top">
               <span class="executor-title">Delta iOS</span>
-              <span class="platform-badge">Apple</span>
+              <div class="badges-container">
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="platform-badge">Apple</span>
+              </div>
             </div>
             <p class="executor-desc">The trusted Delta mobile execution client tailored for iOS devices.</p>
           </div>
@@ -742,7 +788,10 @@
           <div>
             <div class="executor-top">
               <span class="executor-title">Delta Android</span>
-              <span class="platform-badge">Android</span>
+              <div class="badges-container">
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="platform-badge">Android</span>
+              </div>
             </div>
             <p class="executor-desc">Feature-rich mobile exploit client built for Android phones and emulators.</p>
           </div>
@@ -754,7 +803,10 @@
           <div>
             <div class="executor-top">
               <span class="executor-title">Wave / Solara</span>
-              <span class="platform-badge">Windows</span>
+              <div class="badges-container">
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="platform-badge">Windows</span>
+              </div>
             </div>
             <p class="executor-desc">High-performance script execution environment optimized for Windows PC gameplay.</p>
           </div>
@@ -766,7 +818,10 @@
           <div>
             <div class="executor-top">
               <span class="executor-title">Zorara PC</span>
-              <span class="platform-badge">Windows</span>
+              <div class="badges-container">
+                <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
+                <span class="platform-badge">Windows</span>
+              </div>
             </div>
             <p class="executor-desc">Reliable level 7 execution client with fast injection speeds and clean UI.</p>
           </div>
