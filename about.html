@@ -188,7 +188,7 @@
       transform: translateY(-2px);
     }
 
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
 
     .nav-links a {
       color: var(--text-muted);
@@ -200,6 +200,21 @@
 
     .nav-links a:hover, .nav-links a.active {
       color: var(--text-main);
+    }
+
+    .nav-login-btn {
+      background: rgba(255, 42, 75, 0.1);
+      border: 1px solid rgba(255, 42, 75, 0.3);
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      color: var(--accent-red) !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .nav-login-btn:hover {
+      background: var(--accent-red) !important;
+      color: #fff !important;
+      box-shadow: 0 0 15px var(--accent-glow);
     }
 
     /* Main Container Layout */
@@ -353,6 +368,7 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html" class="active">About</a></li>
       <li><a href="contact.html">Contact Me</a></li>
+      <li><a href="login.html" id="authNavLink" class="nav-login-btn">Login / Sign Up</a></li>
     </ul>
   </nav>
 
@@ -381,6 +397,44 @@
     </div>
 
   </div>
+
+  <!-- Firebase Auth State Check Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBr0powiXiHXuGYNa-5s3zGvBAi23SgXvM",
+      authDomain: "dreamyfpsr.firebaseapp.com",
+      projectId: "dreamyfpsr",
+      storageBucket: "dreamyfpsr.firebasestorage.app",
+      messagingSenderId: "963672326962",
+      appId: "1:963672326962:web:e92c5dbf4876cae84d8d2b",
+      measurementId: "G-KE8KD21TWB"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const authNavLink = document.getElementById('authNavLink');
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        authNavLink.innerText = "My Account";
+        authNavLink.href = "#";
+        authNavLink.onclick = async (e) => {
+          e.preventDefault();
+          if (confirm(`Logged in as: ${user.email}\nDo you want to log out?`)) {
+            await signOut(auth);
+            window.location.reload();
+          }
+        };
+      } else {
+        authNavLink.innerText = "Login / Sign Up";
+        authNavLink.href = "login.html";
+        authNavLink.onclick = null;
+      }
+    });
+  </script>
 
   <!-- Loading Animation Script -->
   <script>
