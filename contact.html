@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Support Tickets - DreamyFPS</title>
+  <title>Contact Me - DreamyFPS</title>
   <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -251,8 +251,8 @@
       font-size: 1.05rem;
     }
 
-    /* Ticket Card Style */
-    .ticket-card {
+    /* Contact Card Style */
+    .contact-card {
       width: 100%;
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -327,7 +327,8 @@
       transform: translateY(-2px);
     }
 
-    .ticket-msg {
+    .success-msg {
+      color: var(--accent-red);
       font-size: 0.9rem;
       text-align: center;
       margin-top: 1rem;
@@ -335,6 +336,7 @@
       min-height: 1.2rem;
     }
 
+    /* Responsive adjustments */
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
       .menu-toggle { display: block; }
@@ -377,7 +379,7 @@
         <i class="fa-solid fa-bolt"></i>
       </div>
       <div class="brand-name">Dreamy<span>FPS</span></div>
-      <div class="status-text" id="statusMessage">Loading ticket system...</div>
+      <div class="status-text" id="statusMessage">Loading contact page...</div>
       <div class="progress-track">
         <div class="progress-bar-fill" id="progressBarFill"></div>
       </div>
@@ -403,46 +405,51 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="hiugrjkdfgjkndfgjnkdfgjn.html">Home</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="contact.html">Contact Me</a></li>
+      <li><a href="contact.html" class="active">Contact Me</a></li>
     </ul>
   </nav>
 
   <!-- Main Container -->
   <div class="container">
     <div class="page-header">
-      <h1 class="page-title">Support <span>Tickets</span></h1>
-      <p class="page-subtitle">Submit an issue directly to our team Discord channel.</p>
+      <h1 class="page-title">Contact <span>Me</span></h1>
+      <p class="page-subtitle">Have questions, feedback, or inquiries? Reach out below.</p>
     </div>
 
-    <!-- Ticket Form Card -->
-    <div class="ticket-card">
-      <form id="ticketForm" onsubmit="sendDiscordTicket(event)">
+    <!-- Contact Form Card -->
+    <div class="contact-card">
+      <form id="contactForm" onsubmit="handleFormspreeSubmit(event)">
         <div class="form-group">
-          <label for="tName"><i class="fa-solid fa-user" style="color: var(--accent-red);"></i> Your Name / Discord Tag</label>
-          <input type="text" id="tName" class="form-input" placeholder="e.g. DreamyFPS" required autocomplete="off">
+          <label for="senderName"><i class="fa-solid fa-user" style="color: var(--accent-red);"></i> Your Name</label>
+          <input type="text" name="name" id="senderName" class="form-input" placeholder="Enter your name..." required autocomplete="off">
         </div>
 
         <div class="form-group">
-          <label for="tCategory"><i class="fa-solid fa-tag" style="color: var(--accent-red);"></i> Ticket Category</label>
-          <select id="tCategory" class="form-select">
-            <option value="Executor Issue">Executor Issue / Not Working</option>
-            <option value="Key System Help">Key System Help</option>
-            <option value="General Question">General Question</option>
+          <label for="senderEmail"><i class="fa-solid fa-envelope" style="color: var(--accent-red);"></i> Email Address</label>
+          <input type="email" name="email" id="senderEmail" class="form-input" placeholder="Enter your email..." required autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label for="inquiryType"><i class="fa-solid fa-tag" style="color: var(--accent-red);"></i> Reason / Topic</label>
+          <select name="reason" id="inquiryType" class="form-select">
+            <option value="Have a question?">Have a question?</option>
+            <option value="Collab with me">Collab with me</option>
+            <option value="Report a issue with the website">Report a issue with the website</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="tDesc"><i class="fa-solid fa-message" style="color: var(--accent-red);"></i> Describe Your Issue</label>
-          <textarea id="tDesc" class="form-textarea" placeholder="Explain what's happening..." required></textarea>
+          <label for="senderMessage"><i class="fa-solid fa-message" style="color: var(--accent-red);"></i> Message</label>
+          <textarea name="message" id="senderMessage" class="form-textarea" placeholder="Type your message here..." required></textarea>
         </div>
 
-        <button type="submit" id="tBtn" class="submit-btn">Submit Ticket</button>
-        <div class="ticket-msg" id="tMsg"></div>
+        <button type="submit" id="submitBtn" class="submit-btn">Send Message</button>
+        <div class="success-msg" id="successMsg"></div>
       </form>
     </div>
   </div>
 
-  <!-- Interactive Scripts & Webhook Handler -->
+  <!-- Interactive Scripts & Formspree AJAX Handler -->
   <script>
     // Mobile Menu Toggle
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -453,63 +460,51 @@
       });
     }
 
-    // Send Ticket via Discord Webhook
-    async function sendDiscordTicket(event) {
+    // Formspree Async Submission Handler
+    async function handleFormspreeSubmit(event) {
       event.preventDefault();
+      
+      const form = event.target;
+      const successMsg = document.getElementById('successMsg');
+      const submitBtn = document.getElementById('submitBtn');
+      
+      // REPLACE WITH YOUR ACTUAL FORMSPREE ENDPOINT URL
+      const FORMSPREE_ENDPOINT = "YOUR_FORMSPREE_ENDPOINT_URL";
 
-      const name = document.getElementById('tName').value;
-      const category = document.getElementById('tCategory').value;
-      const desc = document.getElementById('tDesc').value;
-      const tMsg = document.getElementById('tMsg');
-      const tBtn = document.getElementById('tBtn');
-
-      // REPLACE WITH YOUR ACTUAL DISCORD WEBHOOK URL
-      const WEBHOOK_URL = "YOUR_DISCORD_WEBHOOK_URL_HERE";
-
-      if (WEBHOOK_URL === "YOUR_DISCORD_WEBHOOK_URL_HERE") {
-        tMsg.style.color = "#ff4d4d";
-        tMsg.textContent = "Error: Discord Webhook URL is not configured in the code!";
-        return;
-      }
-
-      tBtn.disabled = true;
-      tBtn.textContent = "Submitting...";
-      tMsg.textContent = "";
-
-      const payload = {
-        embeds: [{
-          title: "🎫 New Support Ticket Submitted",
-          color: 16720715, // Pink/Red accent color decimal
-          fields: [
-            { name: "User", value: name, inline: true },
-            { name: "Category", value: category, inline: true },
-            { name: "Description", value: desc, inline: false }
-          ],
-          timestamp: new Date().toISOString()
-        }]
-      };
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending...";
+      successMsg.textContent = "";
 
       try {
-        const response = await fetch(WEBHOOK_URL, {
+        const formData = new FormData(form);
+        const response = await fetch(FORMSPREE_ENDPOINT, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
         });
 
         if (response.ok) {
-          tMsg.style.color = "var(--accent-red)";
-          tMsg.textContent = "Ticket sent successfully! Check our Discord for updates.";
-          document.getElementById('ticketForm').reset();
+          successMsg.style.color = "var(--accent-red)";
+          successMsg.textContent = "Thanks! Your message has been sent successfully.";
+          form.reset();
         } else {
-          tMsg.style.color = "#ff4d4d";
-          tMsg.textContent = "Failed to send ticket. Try again later.";
+          const data = await response.json();
+          if (data && data.errors) {
+            successMsg.style.color = "#ff4d4d";
+            successMsg.textContent = data.errors.map(error => error.message).join(", ");
+          } else {
+            successMsg.style.color = "#ff4d4d";
+            successMsg.textContent = "Oops! There was a problem submitting your form.";
+          }
         }
-      } catch (err) {
-        tMsg.style.color = "#ff4d4d";
-        tMsg.textContent = "Network error occurred.";
+      } catch (error) {
+        successMsg.style.color = "#ff4d4d";
+        successMsg.textContent = "Network error! Please check your connection.";
       } finally {
-        tBtn.disabled = false;
-        tBtn.textContent = "Submit Ticket";
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send Message";
       }
     }
   </script>
@@ -521,8 +516,8 @@
     const percentageText = document.getElementById('percentageText');
     const siteLoader = document.getElementById('site-loader');
     const statusMessages = [
-      "Loading ticket system...",
-      "Connecting channels...",
+      "Loading contact page...",
+      "Configuring form elements...",
       "Ready."
     ];
     const statusMessage = document.getElementById('statusMessage');
