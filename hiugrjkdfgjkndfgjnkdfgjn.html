@@ -9,7 +9,7 @@
   
   <!-- Security Check Script: Block direct access unless coming from gateway.html -->
   <script>
-    if (sessionStorage.getItem("gateway_verified") !== "true") {
+    if (localStorage.getItem("gateway_verified") !== "true") {
       window.location.href = "gateway.html";
     }
   </script>
