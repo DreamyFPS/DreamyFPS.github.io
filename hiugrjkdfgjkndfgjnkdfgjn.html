@@ -20,6 +20,7 @@
       --paid-color: #eab308;
       --keyless-color: #0ea5e9;
       --keysystem-color: #f97316;
+      --best-choice-color: #10b981;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
@@ -423,12 +424,24 @@
       justify-content: space-between;
       transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
+      position: relative;
+    }
+
+    .executor-card.featured {
+      border-color: var(--best-choice-color);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, var(--card-bg) 60%);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
     }
 
     .executor-card:hover {
       transform: translateY(-5px);
       border-color: var(--accent-red);
       box-shadow: 0 0 25px var(--accent-glow);
+    }
+
+    .executor-card.featured:hover {
+      border-color: var(--best-choice-color);
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.35);
     }
 
     .executor-top {
@@ -498,6 +511,14 @@
       background: rgba(249, 115, 22, 0.1);
       border: 1px solid rgba(249, 115, 22, 0.3);
       color: var(--keysystem-color);
+    }
+
+    /* Best Free Choice Badge Styling */
+    .pricing-badge.best-choice {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      color: #34d399;
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.25);
     }
 
     .executor-desc {
@@ -769,13 +790,14 @@
         <!-- Executors Grid -->
         <div class="executors-grid" id="executorsGrid">
           
-          <!-- Madium -->
-          <div class="executor-card" data-platform="windows" onclick="openModal('Madium', '100%', '98%', 'https://discord.gg/olemad', 'https://getmadium.net/')">
+          <!-- Madium V2 (Featured Best Free Choice) -->
+          <div class="executor-card featured" data-platform="windows" onclick="openModal('Madium V2', '100%', '98%', 'https://discord.gg/olemad', 'https://getmadium.net/')">
             <div>
               <div class="executor-top">
-                <span class="executor-title">Madium</span>
+                <span class="executor-title">Madium V2</span>
                 <div class="badges-container">
                   <span class="platform-badge">Windows</span>
+                  <span class="pricing-badge best-choice"><i class="fa-solid fa-award"></i> Best Free Choice</span>
                   <span class="pricing-badge free"><i class="fa-solid fa-check"></i> Free</span>
                   <span class="pricing-badge keysystem"><i class="fa-solid fa-lock"></i> Key System</span>
                 </div>
@@ -1037,7 +1059,6 @@
       const passwordCard = document.getElementById('passwordCard');
       const unlockedContent = document.getElementById('unlockedContent');
 
-      // Change 'dreamyexec' to whatever password you want
       if (inputVal === 'dreamyexec') {
         errorMsg.textContent = '';
         passwordCard.style.display = 'none';
