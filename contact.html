@@ -419,14 +419,17 @@
     <!-- Contact Form Card -->
     <div class="contact-card">
       <form id="contactForm" onsubmit="handleFormspreeSubmit(event)">
-        <div class="form-group">
-          <label for="senderName"><i class="fa-solid fa-user" style="color: var(--accent-red);"></i> Your Roblox Username</label>
-          <input type="text" name="roblox_username" id="senderName" class="form-input" placeholder="Enter your Roblox username..." required autocomplete="off">
-        </div>
+        
+        <div class="form-group" id="collabFieldsGroup">
+          <div class="form-group">
+            <label for="senderName"><i class="fa-solid fa-user" style="color: var(--accent-red);"></i> Your Roblox Username</label>
+            <input type="text" name="roblox_username" id="senderName" class="form-input" placeholder="Enter your Roblox username..." autocomplete="off">
+          </div>
 
-        <div class="form-group">
-          <label for="senderYT"><i class="fa-brands fa-youtube" style="color: var(--accent-red);"></i> Your YT Channel Link</label>
-          <input type="url" name="yt_channel" id="senderYT" class="form-input" placeholder="https://youtube.com/@yourchannel" required autocomplete="off">
+          <div class="form-group">
+            <label for="senderYT"><i class="fa-brands fa-youtube" style="color: var(--accent-red);"></i> Your YT Channel Link</label>
+            <input type="url" name="yt_channel" id="senderYT" class="form-input" placeholder="https://youtube.com/@yourchannel" autocomplete="off">
+          </div>
         </div>
 
         <div class="form-group">
@@ -446,7 +449,7 @@
 
         <div class="form-group" id="messageGroup">
           <label for="senderMessage"><i class="fa-solid fa-message" style="color: var(--accent-red);"></i> Message</label>
-          <textarea name="message" id="senderMessage" class="form-textarea" placeholder="Type your message here..." required></textarea>
+          <textarea name="message" id="senderMessage" class="form-textarea" placeholder="Type your message here..."></textarea>
         </div>
 
         <button type="submit" id="submitBtn" class="submit-btn">Send Message</button>
@@ -466,29 +469,53 @@
       });
     }
 
-    // Toggle Dynamic Field based on dropdown choice
+    // Toggle Dynamic Fields based on dropdown choice
     function handleReasonChange() {
       const inquiryType = document.getElementById('inquiryType').value;
+      const collabFieldsGroup = document.getElementById('collabFieldsGroup');
+      const senderName = document.getElementById('senderName');
+      const senderYT = document.getElementById('senderYT');
+      
       const issueGroup = document.getElementById('issueGroup');
       const issueDetails = document.getElementById('issueDetails');
+      
       const messageGroup = document.getElementById('messageGroup');
       const senderMessage = document.getElementById('senderMessage');
 
       if (inquiryType === 'Report an issue with the website') {
+        // Hide Roblox and YT inputs completely
+        collabFieldsGroup.style.display = 'none';
+        senderName.removeAttribute('required');
+        senderYT.removeAttribute('required');
+
+        // Show "What is the issue?" textarea
         issueGroup.style.display = 'block';
         issueDetails.setAttribute('required', 'true');
         
+        // Hide regular message box
         messageGroup.style.display = 'none';
         senderMessage.removeAttribute('required');
       } else {
+        // Show Roblox and YT inputs for Collab or Questions
+        collabFieldsGroup.style.display = 'block';
+        senderName.setAttribute('required', 'true');
+        senderYT.setAttribute('required', 'true');
+
+        // Hide issue textarea
         issueGroup.style.display = 'none';
         issueDetails.removeAttribute('required');
         issueDetails.value = '';
 
+        // Show regular message box
         messageGroup.style.display = 'block';
         senderMessage.setAttribute('required', 'true');
       }
     }
+
+    // Run on page load to set correct initial states
+    window.addEventListener('DOMContentLoaded', () => {
+      handleReasonChange();
+    });
 
     // Formspree Async Submission Handler
     async function handleFormspreeSubmit(event) {
