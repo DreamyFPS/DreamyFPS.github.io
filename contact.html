@@ -431,14 +431,20 @@
 
         <div class="form-group">
           <label for="inquiryType"><i class="fa-solid fa-tag" style="color: var(--accent-red);"></i> Reason / Topic</label>
-          <select name="reason" id="inquiryType" class="form-select">
+          <select name="reason" id="inquiryType" class="form-select" onchange="handleReasonChange()">
             <option value="Collab with me">Collab with me</option>
-            <option value="Report a issue with the website">Report a issue with the website</option>
+            <option value="Report an issue with the website">Report an issue with the website</option>
             <option value="Have a question?">Have a question?</option>
           </select>
         </div>
 
-        <div class="form-group">
+        <!-- Dynamic Group: Appears only when "Report an issue with the website" is selected -->
+        <div class="form-group" id="issueGroup" style="display: none;">
+          <label for="issueDetails"><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-red);"></i> What is the issue?</label>
+          <textarea name="website_issue" id="issueDetails" class="form-textarea" placeholder="Describe the website issue here..."></textarea>
+        </div>
+
+        <div class="form-group" id="messageGroup">
           <label for="senderMessage"><i class="fa-solid fa-message" style="color: var(--accent-red);"></i> Message</label>
           <textarea name="message" id="senderMessage" class="form-textarea" placeholder="Type your message here..." required></textarea>
         </div>
@@ -458,6 +464,30 @@
       mobileMenuBtn.addEventListener('click', () => {
         navLinks.classList.toggle('active');
       });
+    }
+
+    // Toggle Dynamic Field based on dropdown choice
+    function handleReasonChange() {
+      const inquiryType = document.getElementById('inquiryType').value;
+      const issueGroup = document.getElementById('issueGroup');
+      const issueDetails = document.getElementById('issueDetails');
+      const messageGroup = document.getElementById('messageGroup');
+      const senderMessage = document.getElementById('senderMessage');
+
+      if (inquiryType === 'Report an issue with the website') {
+        issueGroup.style.display = 'block';
+        issueDetails.setAttribute('required', 'true');
+        
+        messageGroup.style.display = 'none';
+        senderMessage.removeAttribute('required');
+      } else {
+        issueGroup.style.display = 'none';
+        issueDetails.removeAttribute('required');
+        issueDetails.value = '';
+
+        messageGroup.style.display = 'block';
+        senderMessage.setAttribute('required', 'true');
+      }
     }
 
     // Formspree Async Submission Handler
@@ -489,6 +519,7 @@
           successMsg.style.color = "var(--accent-red)";
           successMsg.textContent = "Thanks! Your message has been sent successfully.";
           form.reset();
+          handleReasonChange(); // Reset dynamic fields visibility
         } else {
           const data = await response.json();
           if (data && data.errors) {
