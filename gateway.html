@@ -332,13 +332,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .button-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
     /* Pill Button Styling */
     .pill-btn {
       display: inline-flex;
@@ -370,18 +363,6 @@
       border-color: #ffffff;
       box-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
       transform: translateY(-2px);
-    }
-
-    /* Corresponding Password Subtext */
-    .button-pwd-hint {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      opacity: 0.75;
-      font-family: monospace;
-    }
-
-    .button-pwd-hint span {
-      color: var(--text-main);
     }
 
     @media (max-width: 900px) {
@@ -471,24 +452,18 @@
       <div class="error-msg" id="errorMsg"></div>
     </div>
 
-    <!-- Hidden Action Buttons (Revealed on Correct Password) -->
+    <!-- Hidden Action Buttons (Find Executors on Left, Script Hub on Right) -->
     <div class="buttons-container" id="buttonsContainer">
       
-      <!-- Script Hub Button with LocalStorage Setter -->
-      <div class="button-wrapper">
-        <a href="hsfgbhsdghjdsfghjdscriptg.html" onclick="localStorage.setItem('gateway_verified', 'true')" class="pill-btn">
-          <i class="fa-solid fa-code"></i> Script Hub
-        </a>
-        <div class="button-pwd-hint">pwd: <span>dreamyscript</span></div>
-      </div>
+      <!-- Find Executors Button -->
+      <a href="hiugrjkdfgjkndfgjn.html" onclick="localStorage.setItem('gateway_verified', 'true')" class="pill-btn">
+        <i class="fa-solid fa-terminal"></i> Find executors
+      </a>
 
-      <!-- Find Executors Button with LocalStorage Setter -->
-      <div class="button-wrapper">
-        <a href="hiugrjkdfgjkndfgjnkdfgjn.html" onclick="localStorage.setItem('gateway_verified', 'true')" class="pill-btn">
-          <i class="fa-solid fa-terminal"></i> Find executors
-        </a>
-        <div class="button-pwd-hint">pwd: <span>dreamyexec</span></div>
-      </div>
+      <!-- Script Hub Button -->
+      <a href="hsfgbhsdghjdsfghjdscriptg.html" onclick="localStorage.setItem('gateway_verified', 'true')" class="pill-btn">
+        <i class="fa-solid fa-code"></i> Script Hub
+      </a>
 
     </div>
   </div>
