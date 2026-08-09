@@ -256,71 +256,6 @@
       font-size: 1.05rem;
     }
 
-    /* Password Box Styles */
-    .password-card {
-      width: 100%;
-      max-width: 400px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 2.5rem 2rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
-      text-align: center;
-      margin-top: 2rem;
-    }
-
-    .password-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: var(--text-main);
-    }
-
-    .password-input {
-      width: 100%;
-      padding: 0.9rem 1rem;
-      background: #09090b;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      color: var(--text-main);
-      font-size: 1rem;
-      text-align: center;
-      margin-bottom: 1rem;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .password-input:focus {
-      border-color: var(--accent-red);
-      box-shadow: 0 0 15px var(--accent-glow);
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 0.9rem;
-      background: var(--accent-red);
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 0 20px var(--accent-glow);
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-
-    .submit-btn:hover {
-      background: #16a34a;
-      transform: translateY(-2px);
-    }
-
-    .error-msg {
-      color: var(--accent-red);
-      font-size: 0.85rem;
-      margin-top: 0.8rem;
-      min-height: 1.2rem;
-      font-weight: 600;
-    }
-
     /* Gateway Protection Notice / Fallback */
     .access-denied {
       text-align: center;
@@ -356,8 +291,10 @@
 
     /* Unlocked Content Area */
     .unlocked-content {
-      display: none;
+      display: flex;
       width: 100%;
+      flex-direction: column;
+      align-items: center;
       animation: fadeIn 0.5s ease forwards;
     }
 
@@ -753,22 +690,14 @@
       <a href="gateway.html">Go to Gateway</a>
     </div>
 
-    <!-- Main Content wrapper containing the hardcoded password prompt & unlocked grid -->
-    <div id="mainHubContent" style="display: none; width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <!-- Main Content wrapper containing the unlocked grid -->
+    <div id="mainHubContent" style="display: none; width: 100%; flex-direction: column; align-items: center;">
       <div class="page-header">
         <h1 class="page-title">Executors <span>Hub</span></h1>
-        <p class="page-subtitle" id="pageSubtitle">Enter the password to access verified exploit tools.</p>
+        <p class="page-subtitle" id="pageSubtitle">Select your platform below to explore available tools.</p>
       </div>
 
-      <!-- Password Prompt Card -->
-      <div class="password-card" id="passwordCard">
-        <h3><i class="fa-solid fa-lock" style="color: var(--accent-red);"></i> Enter Passcode</h3>
-        <input type="password" id="passInput" class="password-input" placeholder="Password..." autocomplete="off">
-        <button onclick="checkPassword()" class="submit-btn">Unlock</button>
-        <div class="error-msg" id="errorMsg"></div>
-      </div>
-
-      <!-- Unlocked Content (Revealed on Correct Password) -->
+      <!-- Unlocked Content -->
       <div class="unlocked-content" id="unlockedContent">
         <!-- Device Selection Filter Bar -->
         <div class="device-filter-bar">
@@ -1001,10 +930,10 @@
     </div>
   </div>
 
-  <!-- Gateway Verification, Password Logic & Interactive Scripts -->
+  <!-- Gateway Verification & Interactive Scripts -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const isVerified = sessionStorage.getItem('gateway_verified');
+      const isVerified = sessionStorage.getItem('gateway_verified');[cite: 1]
       const mainHubContent = document.getElementById('mainHubContent');
       const accessDenied = document.getElementById('accessDenied');
 
@@ -1050,31 +979,6 @@
           statusMessage.textContent = statusMessages[1];
         }
       }, 100);
-    });
-
-    function checkPassword() {
-      const inputVal = document.getElementById('passInput').value.trim().toLowerCase();
-      const errorMsg = document.getElementById('errorMsg');
-      const passwordCard = document.getElementById('passwordCard');
-      const unlockedContent = document.getElementById('unlockedContent');
-      const pageSubtitle = document.getElementById('pageSubtitle');
-
-      if (inputVal === 'dreamyexec') {
-        errorMsg.textContent = '';
-        passwordCard.style.display = 'none';
-        unlockedContent.style.display = 'block';
-        // Changes subtitle text instantly upon successful login
-        pageSubtitle.textContent = 'Select your platform below to explore available tools.';
-      } else {
-        errorMsg.textContent = 'Incorrect passcode! Try again.';
-      }
-    }
-
-    // Allow Enter key to submit password
-    document.getElementById('passInput')?.addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') {
-        checkPassword();
-      }
     });
 
     // Mobile Menu Toggle
