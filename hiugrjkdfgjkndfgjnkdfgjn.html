@@ -930,7 +930,7 @@
     </div>
   </div>
 
-  <!-- Gateway Verification & Interactive Scripts -->
+  <!-- One-Time Temporary Token Verification Script -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const mainHubContent = document.getElementById('mainHubContent');
@@ -938,7 +938,11 @@
 
       let isVerified = false;
       try {
-        isVerified = (localStorage.getItem('gateway_verified') === 'true');
+        if (localStorage.getItem('gateway_verified') === 'true') {
+          isVerified = true;
+          // CONSUME/WIPE the token immediately so it's temporary & single-use!
+          localStorage.removeItem('gateway_verified');
+        }
       } catch (e) {
         isVerified = false;
       }
