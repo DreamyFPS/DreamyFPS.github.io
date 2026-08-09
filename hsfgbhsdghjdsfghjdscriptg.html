@@ -281,74 +281,9 @@
       box-shadow: 0 0 20px var(--accent-glow);
     }
 
-    /* Password Box Styles */
-    .password-card {
-      width: 100%;
-      max-width: 400px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      padding: 2.5rem 2rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
-      text-align: center;
-      margin: 3rem auto;
-    }
-
-    .password-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      color: var(--text-main);
-    }
-
-    .password-input {
-      width: 100%;
-      padding: 0.9rem 1rem;
-      background: #09090b;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      color: var(--text-main);
-      font-size: 1rem;
-      text-align: center;
-      margin-bottom: 1rem;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .password-input:focus {
-      border-color: var(--accent-purple);
-      box-shadow: 0 0 15px var(--accent-glow);
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 0.9rem;
-      background: var(--accent-purple);
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      box-shadow: 0 0 20px var(--accent-glow);
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-
-    .submit-btn:hover {
-      background: #9333ea;
-      transform: translateY(-2px);
-    }
-
-    .error-msg {
-      color: #f87171;
-      font-size: 0.85rem;
-      margin-top: 0.8rem;
-      min-height: 1.2rem;
-      font-weight: 600;
-    }
-
     /* Unlocked Content Area Wrapper */
     .unlocked-content {
-      display: none;
+      display: flex;
       width: 100%;
       flex-direction: column;
       align-items: center;
@@ -715,22 +650,14 @@
       <a href="gateway.html">Go to Gateway</a>
     </div>
 
-    <!-- Main Content wrapper containing the hardcoded password prompt & script repository -->
-    <div id="mainHubContent" style="display: none; width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <!-- Main Content wrapper -->
+    <div id="mainHubContent" style="display: none; width: 100%; flex-direction: column; align-items: center;">
       <div class="page-header">
         <h1 class="page-title">Script <span>Hub</span></h1>
-        <p class="page-subtitle" id="pageSubtitle">Enter the password to access the script repository.</p>
+        <p class="page-subtitle">Select or search available scripts below.</p>
       </div>
 
-      <!-- Password Prompt Card -->
-      <div class="password-card" id="passwordCard">
-        <h3><i class="fa-solid fa-lock" style="color: var(--accent-purple);"></i> Enter Passcode</h3>
-        <input type="password" id="passInput" class="password-input" placeholder="Password..." autocomplete="off">
-        <button onclick="checkPassword()" class="submit-btn">Unlock</button>
-        <div class="error-msg" id="errorMsg"></div>
-      </div>
-
-      <!-- Unlocked Content Area (Initially Hidden) -->
+      <!-- Unlocked Content Area -->
       <div class="unlocked-content" id="unlockedContent">
         <!-- Controls: Search Bar & Categories -->
         <div class="controls-wrapper">
@@ -853,7 +780,7 @@
     </div>
   </div>
 
-  <!-- Gateway Verification & Password Verification Script -->
+  <!-- Gateway Verification Script -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const isVerified = sessionStorage.getItem('gateway_verified');
@@ -866,30 +793,6 @@
       } else {
         mainHubContent.style.display = 'none';
         accessDenied.style.display = 'block';
-      }
-    });
-
-    function checkPassword() {
-      const inputVal = document.getElementById('passInput').value.trim().toLowerCase();
-      const errorMsg = document.getElementById('errorMsg');
-      const passwordCard = document.getElementById('passwordCard');
-      const unlockedContent = document.getElementById('unlockedContent');
-      const pageSubtitle = document.getElementById('pageSubtitle');
-
-      if (inputVal === 'dreamyscript') {
-        errorMsg.innerText = "";
-        passwordCard.style.display = 'none';
-        unlockedContent.style.display = 'flex';
-        pageSubtitle.innerText = 'Select or search available scripts below.';
-      } else {
-        errorMsg.innerText = "Incorrect password! Try again.";
-        document.getElementById('passInput').style.borderColor = "#f87171";
-      }
-    }
-
-    document.getElementById('passInput')?.addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        checkPassword();
       }
     });
   </script>
