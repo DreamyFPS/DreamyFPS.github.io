@@ -654,7 +654,7 @@
     <div id="mainHubContent" style="display: none; width: 100%; flex-direction: column; align-items: center;">
       <div class="page-header">
         <h1 class="page-title">Script <span>Hub</span></h1>
-        <p class="page-subtitle">Select or search available scripts below.</p>
+        <p class="page-subtitle">Select or search available scripts below[cite: 2].</p>
       </div>
 
       <!-- Unlocked Content Area -->
@@ -780,14 +780,24 @@
     </div>
   </div>
 
-  <!-- LocalStorage Gateway Verification Script -->
+  <!-- One-Time Temporary Token Verification Script -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const isVerified = localStorage.getItem('gateway_verified');
       const mainHubContent = document.getElementById('mainHubContent');
       const accessDenied = document.getElementById('accessDenied');
 
-      if (isVerified === 'true') {
+      let isVerified = false;
+      try {
+        if (localStorage.getItem('gateway_verified') === 'true') {
+          isVerified = true;
+          // CONSUME/WIPE the token immediately so refreshing requires going back to the gateway!
+          localStorage.removeItem('gateway_verified');
+        }
+      } catch (e) {
+        isVerified = false;
+      }
+
+      if (isVerified) {
         mainHubContent.style.display = 'flex';
         accessDenied.style.display = 'none';
       } else {
