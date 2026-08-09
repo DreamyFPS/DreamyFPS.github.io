@@ -222,7 +222,7 @@
       margin: 4rem auto;
       padding: 0 1.5rem;
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1.2fr;
       gap: 3rem;
       align-items: center;
     }
@@ -261,7 +261,7 @@
 
     /* Typography & Buttons */
     .about-content h1 {
-      font-size: 3rem;
+      font-size: 2.8rem;
       font-weight: 900;
       line-height: 1.1;
       margin-bottom: 0.8rem;
@@ -297,9 +297,30 @@
 
     .about-content p {
       color: var(--text-muted);
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .about-features {
+      list-style: none;
       margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .about-features li {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .about-features li i {
+      color: var(--accent-red);
+      font-size: 0.9rem;
     }
 
     /* Action Buttons */
@@ -364,6 +385,7 @@
       }
 
       .about-content h1 { font-size: 2.4rem; }
+      .about-features { align-items: center; }
       .btn-group { justify-content: center; flex-direction: column; width: 100%; }
       .btn { width: 100%; }
       .avatar-card { max-width: 280px; margin: 0 auto; }
@@ -423,11 +445,17 @@
       <a href="gateway.html" class="username-badge" title="Secret Gateway">@amliteralynotcheats</a>
       <h1>Dominate The <span>Game.</span></h1>
       <p>
-        Welcome to the official hub of DreamyFPS. High-level Roblox gameplay, FPS highlights, and short-form content uploaded regularly.
+        Welcome to the official hub of DreamyFPS. Delivering high-precision Roblox gameplay, snappy crosshair tracking, and viral, fast-paced shorts designed for maximum retention.
       </p>
+      
+      <ul class="about-features">
+        <li><i class="fa-solid fa-crosshairs"></i> High-level competitive Roblox Rivals gameplay & sniper tracking</li>
+        <li><i class="fa-solid fa-bolt"></i> Fast-paced, high-energy viral YouTube shorts & rapid edits</li>
+        <li><i class="fa-solid fa-film"></i> Clean sync montages and community highlights</li>
+      </ul>
 
       <div class="btn-group">
-        <a href="index.html" class="btn btn-primary">Home</a>
+        <a href="index.html" class="btn btn-primary">Back To Home</a>
       </div>
     </div>
 
