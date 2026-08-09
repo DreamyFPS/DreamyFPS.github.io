@@ -683,7 +683,7 @@
   <!-- Main Container -->
   <div class="container">
     
-    <!-- Access Denied Fallback (If accessed directly without gateway token) -->
+    <!-- Access Denied Fallback -->
     <div class="access-denied" id="accessDenied" style="display: none;">
       <h2><i class="fa-solid fa-triangle-exclamation"></i> Access Restricted</h2>
       <p>You must pass through the secret gateway first to view this page.</p>
@@ -933,16 +933,22 @@
   <!-- Gateway Verification & Interactive Scripts -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const isVerified = sessionStorage.getItem('gateway_verified');[cite: 1]
       const mainHubContent = document.getElementById('mainHubContent');
       const accessDenied = document.getElementById('accessDenied');
 
-      if (isVerified === 'true') {
+      try {
+        const isVerified = localStorage.getItem('gateway_verified');
+        if (isVerified === 'true') {
+          mainHubContent.style.display = 'flex';
+          accessDenied.style.display = 'none';
+        } else {
+          mainHubContent.style.display = 'none';
+          accessDenied.style.display = 'block';
+        }
+      } catch (e) {
+        // Fallback if local storage is blocked by browser file security
         mainHubContent.style.display = 'flex';
         accessDenied.style.display = 'none';
-      } else {
-        mainHubContent.style.display = 'none';
-        accessDenied.style.display = 'block';
       }
 
       // Simulate site loader loading sequence
