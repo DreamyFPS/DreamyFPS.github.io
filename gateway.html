@@ -453,6 +453,7 @@
 
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
+      <li><a href="gateway.html" class="active">Gateway</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
   </nav>
@@ -473,17 +474,17 @@
     <!-- Hidden Action Buttons (Revealed on Correct Password) -->
     <div class="buttons-container" id="buttonsContainer">
       
-      <!-- Script Hub Wrapper -->
+      <!-- Script Hub Button with LocalStorage Setter -->
       <div class="button-wrapper">
-        <a href="hsfgbhsdghjdsfghjdscriptg.html" class="pill-btn">
+        <a href="hsfgbhsdghjdsfghjdscriptg.html" onclick="localStorage.setItem('gateway_verified', 'true')" class="pill-btn">
           <i class="fa-solid fa-code"></i> Script Hub
         </a>
         <div class="button-pwd-hint">pwd: <span>dreamyscript</span></div>
       </div>
 
-      <!-- Find Executors Wrapper -->
+      <!-- Find Executors Button with LocalStorage Setter -->
       <div class="button-wrapper">
-        <a href="hiugrjkdfgjkndfgjnkdfgjn.html" onclick="sessionStorage.setItem('gateway_verified', 'true')" class="pill-btn">
+        <a href="hiugrjkdfgjkndfgjnkdfgjn.html" onclick="localStorage.setItem('gateway_verified', 'true')" class="pill-btn">
           <i class="fa-solid fa-terminal"></i> Find executors
         </a>
         <div class="button-pwd-hint">pwd: <span>dreamyexec</span></div>
