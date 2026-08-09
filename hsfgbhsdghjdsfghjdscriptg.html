@@ -643,7 +643,7 @@
   <!-- Main Container -->
   <div class="container">
     
-    <!-- Access Denied Fallback (If accessed directly without gateway token) -->
+    <!-- Access Denied Fallback -->
     <div class="access-denied" id="accessDenied" style="display: none;">
       <h2><i class="fa-solid fa-triangle-exclamation"></i> Access Restricted</h2>
       <p>You must pass through the secret gateway first to view this page.</p>
@@ -780,10 +780,10 @@
     </div>
   </div>
 
-  <!-- Gateway Verification Script -->
+  <!-- LocalStorage Gateway Verification Script -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const isVerified = sessionStorage.getItem('gateway_verified');
+      const isVerified = localStorage.getItem('gateway_verified');
       const mainHubContent = document.getElementById('mainHubContent');
       const accessDenied = document.getElementById('accessDenied');
 
