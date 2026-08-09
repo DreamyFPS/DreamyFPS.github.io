@@ -248,6 +248,39 @@
       font-size: 1.05rem;
     }
 
+    /* Gateway Protection Notice / Fallback */
+    .access-denied {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      max-width: 500px;
+      margin: 2rem auto;
+    }
+
+    .access-denied h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--accent-purple);
+    }
+
+    .access-denied p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .access-denied a {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      background: var(--accent-purple);
+      color: #fff;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
     /* Password Box Styles */
     .password-card {
       width: 100%;
@@ -674,112 +707,123 @@
 
   <!-- Main Container -->
   <div class="container">
-    <div class="page-header">
-      <h1 class="page-title">Script <span>Hub</span></h1>
-      <p class="page-subtitle">Enter the password to access the script repository.</p>
+    
+    <!-- Access Denied Fallback (If accessed directly without gateway token) -->
+    <div class="access-denied" id="accessDenied" style="display: none;">
+      <h2><i class="fa-solid fa-triangle-exclamation"></i> Access Restricted</h2>
+      <p>You must pass through the secret gateway first to view this page.</p>
+      <a href="gateway.html">Go to Gateway</a>
     </div>
 
-    <!-- Password Prompt Card -->
-    <div class="password-card" id="passwordCard">
-      <h3><i class="fa-solid fa-lock" style="color: var(--accent-purple);"></i> Enter Passcode</h3>
-      <input type="password" id="passInput" class="password-input" placeholder="Password..." autocomplete="off">
-      <button onclick="checkPassword()" class="submit-btn">Unlock</button>
-      <div class="error-msg" id="errorMsg"></div>
-    </div>
-
-    <!-- Unlocked Content Area (Initially Hidden) -->
-    <div class="unlocked-content" id="unlockedContent">
-      <!-- Controls: Search Bar & Categories -->
-      <div class="controls-wrapper">
-        <div class="search-bar-container">
-          <i class="fa-solid fa-magnifying-glass search-icon"></i>
-          <input type="text" id="searchInput" class="search-input" placeholder="Search scripts..." onkeyup="filterScripts()">
-        </div>
-
-        <div class="category-filter-bar">
-          <button class="filter-btn active" onclick="filterCategory('all', event)">All Scripts</button>
-          <button class="filter-btn" onclick="filterCategory('universal', event)">Universal</button>
-          <button class="filter-btn" onclick="filterCategory('rivals', event)">Rivals</button>
-          <button class="filter-btn" onclick="filterCategory('utilities', event)">Utilities</button>
-          <button class="filter-btn" onclick="filterCategory('other', event)">Other Games</button>
-        </div>
+    <!-- Main Content wrapper containing the hardcoded password prompt & script repository -->
+    <div id="mainHubContent" style="display: none; width: 100%; display: flex; flex-direction: column; align-items: center;">
+      <div class="page-header">
+        <h1 class="page-title">Script <span>Hub</span></h1>
+        <p class="page-subtitle" id="pageSubtitle">Enter the password to access the script repository.</p>
       </div>
 
-      <!-- Scripts Grid -->
-      <div class="scripts-grid" id="scriptsGrid">
-        
-        <!-- Script 1: Universal -->
-        <div class="script-box" data-category="universal" onclick="openScriptDetail('Infinite Yield', 'universal', 'The ultimate universal admin command script featuring hundreds of useful client-side commands and bypasses.', 'loadstring(game:HttpGet(\'https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source\'))()')">
-          <div>
-            <div class="script-box-top">
-              <span class="script-title">Infinite Yield</span>
-              <span class="category-badge">Universal</span>
-            </div>
-            <p class="script-desc">The ultimate universal admin command script featuring hundreds of useful client-side commands.</p>
+      <!-- Password Prompt Card -->
+      <div class="password-card" id="passwordCard">
+        <h3><i class="fa-solid fa-lock" style="color: var(--accent-purple);"></i> Enter Passcode</h3>
+        <input type="password" id="passInput" class="password-input" placeholder="Password..." autocomplete="off">
+        <button onclick="checkPassword()" class="submit-btn">Unlock</button>
+        <div class="error-msg" id="errorMsg"></div>
+      </div>
+
+      <!-- Unlocked Content Area (Initially Hidden) -->
+      <div class="unlocked-content" id="unlockedContent">
+        <!-- Controls: Search Bar & Categories -->
+        <div class="controls-wrapper">
+          <div class="search-bar-container">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search scripts..." onkeyup="filterScripts()">
           </div>
-          <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
+
+          <div class="category-filter-bar">
+            <button class="filter-btn active" onclick="filterCategory('all', event)">All Scripts</button>
+            <button class="filter-btn" onclick="filterCategory('universal', event)">Universal</button>
+            <button class="filter-btn" onclick="filterCategory('rivals', event)">Rivals</button>
+            <button class="filter-btn" onclick="filterCategory('utilities', event)">Utilities</button>
+            <button class="filter-btn" onclick="filterCategory('other', event)">Other Games</button>
+          </div>
         </div>
 
-        <!-- Script 2: Rivals (Kiciahook V3) -->
-        <div class="script-box" data-category="rivals" onclick="openScriptDetail('Kiciahook V3', 'rivals', 'High performance feature-rich script for Rivals containing advanced aimbot, visual esp modifications, and helper utilities.', 'loadstring(game:HttpGet(\'https://raw.githubusercontent.com/kiciahook/kiciahookv3/main/loader.lua\'))()')">
-          <div>
-            <div class="script-box-top">
-              <span class="script-title">Kiciahook V3</span>
-              <span class="category-badge">Rivals</span>
+        <!-- Scripts Grid -->
+        <div class="scripts-grid" id="scriptsGrid">
+          
+          <!-- Script 1: Universal -->
+          <div class="script-box" data-category="universal" onclick="openScriptDetail('Infinite Yield', 'universal', 'The ultimate universal admin command script featuring hundreds of useful client-side commands and bypasses.', 'loadstring(game:HttpGet(\'https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source\'))()')">
+            <div>
+              <div class="script-box-top">
+                <span class="script-title">Infinite Yield</span>
+                <span class="category-badge">Universal</span>
+              </div>
+              <p class="script-desc">The ultimate universal admin command script featuring hundreds of useful client-side commands.</p>
             </div>
-            <p class="script-desc">High performance feature-rich script for Rivals containing advanced aimbot, visual esp modifications, and helper utilities.</p>
+            <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
           </div>
-          <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
-        </div>
 
-        <!-- Script 3: Utilities -->
-        <div class="script-box" data-category="utilities" onclick="openScriptDetail('FPS Booster & Cleaner', 'utilities', 'Reduces particle clutter, lowers rendering lag, and optimizes frame rates across any workspace.', 'loadstring(game:HttpGet(\'https://example.com/fps-booster.lua\'))()')">
-          <div>
-            <div class="script-box-top">
-              <span class="script-title">FPS Booster & Cleaner</span>
-              <span class="category-badge">Utilities</span>
+          <!-- Script 2: Rivals (Kiciahook V3) -->
+          <div class="script-box" data-category="rivals" onclick="openScriptDetail('Kiciahook V3', 'rivals', 'High performance feature-rich script for Rivals containing advanced aimbot, visual esp modifications, and helper utilities.', 'loadstring(game:HttpGet(\'https://raw.githubusercontent.com/kiciahook/kiciahookv3/main/loader.lua\'))()')">
+            <div>
+              <div class="script-box-top">
+                <span class="script-title">Kiciahook V3</span>
+                <span class="category-badge">Rivals</span>
+              </div>
+              <p class="script-desc">High performance feature-rich script for Rivals containing advanced aimbot, visual esp modifications, and helper utilities.</p>
             </div>
-            <p class="script-desc">Reduces particle clutter, lowers rendering lag, and optimizes frame rates across any workspace.</p>
+            <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
           </div>
-          <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
-        </div>
 
-        <!-- Script 4: Other Games -->
-        <div class="script-box" data-category="other" onclick="openScriptDetail('Blox Fruits Auto Farm', 'other', 'Fully automated quest progress, devil fruit notifier, and instant melee attack multipliers.', 'loadstring(game:HttpGet(\'https://example.com/bloxfruits.lua\'))()')">
-          <div>
-            <div class="script-box-top">
-              <span class="script-title">Blox Fruits Auto Farm</span>
-              <span class="category-badge">Other Games</span>
+          <!-- Script 3: Utilities -->
+          <div class="script-box" data-category="utilities" onclick="openScriptDetail('FPS Booster & Cleaner', 'utilities', 'Reduces particle clutter, lowers rendering lag, and optimizes frame rates across any workspace.', 'loadstring(game:HttpGet(\'https://example.com/fps-booster.lua\'))()')">
+            <div>
+              <div class="script-box-top">
+                <span class="script-title">FPS Booster & Cleaner</span>
+                <span class="category-badge">Utilities</span>
+              </div>
+              <p class="script-desc">Reduces particle clutter, lowers rendering lag, and optimizes frame rates across any workspace.</p>
             </div>
-            <p class="script-desc">Fully automated quest progress, devil fruit notifier, and instant melee attack multipliers.</p>
+            <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
           </div>
-          <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
-        </div>
 
-        <!-- Script 5: Universal -->
-        <div class="script-box" data-category="universal" onclick="openScriptDetail('Dex Explorer V4', 'universal', 'Inspect game workspace hierarchies, edit properties live, and examine remote events easily.', 'loadstring(game:HttpGet(\'https://example.com/dex.lua\'))()')">
-          <div>
-            <div class="script-box-top">
-              <span class="script-title">Dex Explorer V4</span>
-              <span class="category-badge">Universal</span>
+          <!-- Script 4: Other Games -->
+          <div class="script-box" data-category="other" onclick="openScriptDetail('Blox Fruits Auto Farm', 'other', 'Fully automated quest progress, devil fruit notifier, and instant melee attack multipliers.', 'loadstring(game:HttpGet(\'https://example.com/bloxfruits.lua\'))()')">
+            <div>
+              <div class="script-box-top">
+                <span class="script-title">Blox Fruits Auto Farm</span>
+                <span class="category-badge">Other Games</span>
+              </div>
+              <p class="script-desc">Fully automated quest progress, devil fruit notifier, and instant melee attack multipliers.</p>
             </div>
-            <p class="script-desc">Inspect game workspace hierarchies, edit properties live, and examine remote events easily.</p>
+            <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
           </div>
-          <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
-        </div>
 
-        <!-- Script 6: Utilities -->
-        <div class="script-box" data-category="utilities" onclick="openScriptDetail('Remote Spy Tool', 'utilities', 'Intercepts and logs remote events and functions fired by the server or client.', 'loadstring(game:HttpGet(\'https://example.com/remotespy.lua\'))()')">
-          <div>
-            <div class="script-box-top">
-              <span class="script-title">Remote Spy Tool</span>
-              <span class="category-badge">Utilities</span>
+          <!-- Script 5: Universal -->
+          <div class="script-box" data-category="universal" onclick="openScriptDetail('Dex Explorer V4', 'universal', 'Inspect game workspace hierarchies, edit properties live, and examine remote events easily.', 'loadstring(game:HttpGet(\'https://example.com/dex.lua\'))()')">
+            <div>
+              <div class="script-box-top">
+                <span class="script-title">Dex Explorer V4</span>
+                <span class="category-badge">Universal</span>
+              </div>
+              <p class="script-desc">Inspect game workspace hierarchies, edit properties live, and examine remote events easily.</p>
             </div>
-            <p class="script-desc">Intercepts and logs remote events and functions fired by the server or client.</p>
+            <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
           </div>
-          <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
-        </div>
 
+          <!-- Script 6: Utilities -->
+          <div class="script-box" data-category="utilities" onclick="openScriptDetail('Remote Spy Tool', 'utilities', 'Intercepts and logs remote events and functions fired by the server or client.', 'loadstring(game:HttpGet(\'https://example.com/remotespy.lua\'))()')">
+            <div>
+              <div class="script-box-top">
+                <span class="script-title">Remote Spy Tool</span>
+                <span class="category-badge">Utilities</span>
+              </div>
+              <p class="script-desc">Intercepts and logs remote events and functions fired by the server or client.</p>
+            </div>
+            <div class="script-card-footer"><i class="fa-solid fa-circle-info"></i> Click to view script details</div>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
@@ -809,24 +853,41 @@
     </div>
   </div>
 
-  <!-- Password Verification Script -->
+  <!-- Gateway Verification & Password Verification Script -->
   <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const isVerified = sessionStorage.getItem('gateway_verified');
+      const mainHubContent = document.getElementById('mainHubContent');
+      const accessDenied = document.getElementById('accessDenied');
+
+      if (isVerified === 'true') {
+        mainHubContent.style.display = 'flex';
+        accessDenied.style.display = 'none';
+      } else {
+        mainHubContent.style.display = 'none';
+        accessDenied.style.display = 'block';
+      }
+    });
+
     function checkPassword() {
       const inputVal = document.getElementById('passInput').value.trim().toLowerCase();
       const errorMsg = document.getElementById('errorMsg');
       const passwordCard = document.getElementById('passwordCard');
       const unlockedContent = document.getElementById('unlockedContent');
+      const pageSubtitle = document.getElementById('pageSubtitle');
 
       if (inputVal === 'dreamyscript') {
+        errorMsg.innerText = "";
         passwordCard.style.display = 'none';
         unlockedContent.style.display = 'flex';
+        pageSubtitle.innerText = 'Select or search available scripts below.';
       } else {
         errorMsg.innerText = "Incorrect password! Try again.";
         document.getElementById('passInput').style.borderColor = "#f87171";
       }
     }
 
-    document.getElementById('passInput').addEventListener('keypress', function(e) {
+    document.getElementById('passInput')?.addEventListener('keypress', function(e) {
       if (e.key === 'Enter') {
         checkPassword();
       }
