@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Application - DreamyFPS</title>
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Rise Client Orange Theme Palette & Reset */
+    :root {
+      --bg-dark: #09090b;
+      --card-bg: #121215;
+      --border-color: #22222a;
+      --accent-orange: #f97316;
+      --accent-glow: rgba(249, 115, 22, 0.35);
+      --text-main: #ffffff;
+      --text-muted: #a1a1aa;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.15) 0%, transparent 65%),
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px;
+      padding: 2rem 1rem;
+    }
+
+    /* Full-Screen Loading Overlay */
+    #site-loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background-color: #050507;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader-box {
+      width: 100%;
+      max-width: 380px;
+      padding: 2.5rem;
+      background: rgba(12, 12, 16, 0.85);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(249, 115, 22, 0.2);
+      border-radius: 24px;
+      text-align: center;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    .avatar-ring {
+      width: 75px; height: 75px;
+      margin: 0 auto 1.5rem auto;
+      border-radius: 50%;
+      background: rgba(249, 115, 22, 0.1);
+      border: 2px solid rgba(249, 115, 22, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .avatar-ring i {
+      font-size: 1.8rem;
+      color: var(--accent-orange);
+      filter: drop-shadow(0 0 10px var(--accent-glow));
+    }
+
+    .avatar-ring::after {
+      content: '';
+      position: absolute;
+      top: -5px; left: -5px; right: -5px; bottom: -5px;
+      border: 2px dashed rgba(249, 115, 22, 0.4);
+      border-radius: 50%;
+      animation: spin 8s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .brand-name {
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+
+    .brand-name span { color: var(--accent-orange); }
+
+    .status-text {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      height: 1.2rem;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #c2410c, #f97316);
+      border-radius: 99px;
+      box-shadow: 0 0 12px var(--accent-glow);
+      transition: width 0.1s ease-out;
+    }
+
+    .percentage-indicator {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    /* Access Denied Fallback */
+    .access-denied {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .access-denied h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--accent-orange);
+    }
+
+    .access-denied p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .access-denied a {
+      display: inline-block;
+      padding: 0.9rem 2rem;
+      background: var(--accent-orange);
+      color: #fff;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    /* Application Container */
+    .container {
+      width: 100%;
+      max-width: 650px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-title span {
+      background: linear-gradient(135deg, #ffffff 0%, #f97316 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Application Form Card */
+    .app-card {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      background: #000000;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--accent-orange);
+      box-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: var(--accent-orange);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 0 20px var(--accent-glow);
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+      background: #ea580c;
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px rgba(249, 115, 22, 0.5);
+    }
+
+    /* Success Message State */
+    .success-box {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .success-box i {
+      font-size: 3rem;
+      color: var(--accent-orange);
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 0 15px var(--accent-glow));
+    }
+
+    .success-box h3 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .success-box p {
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .app-card { padding: 1.5rem; }
+      .page-title { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Full-Screen Loading Screen Overlay -->
+  <div id="site-loader">
+    <div class="loader-box">
+      <div class="avatar-ring">
+        <i class="fa-solid fa-shield-halved"></i>
+      </div>
+      <div class="brand-name">Dreamy<span>FPS</span></div>
+      <div class="status-text" id="statusMessage">Loading application portal...</div>
+      <div class="progress-track">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+      <div class="percentage-indicator" id="percentageText">0%</div>
+    </div>
+  </div>
+
+  <!-- Access Denied Fallback -->
+  <div class="access-denied" id="accessDenied" style="display: none;">
+    <h2><i class="fa-solid fa-triangle-exclamation"></i> Access Restricted</h2>
+    <p>You must pass through the secret gateway first to view this page.</p>
+    <a href="gateway.html">Go to Gateway</a>
+  </div>
+
+  <!-- Main Application Container (No Navbar) -->
+  <div class="container" id="mainAppContent" style="display: none;">
+    <div class="page-header">
+      <h1 class="page-title">Staff <span>Application</span></h1>
+      <p class="page-subtitle">Fill out the form below to apply for the DreamyFPS moderation team.</p>
+    </div>
+
+    <div class="app-card">
+      <form id="staffForm" onsubmit="submitApplication(event)">
+        
+        <div class="form-group">
+          <label class="form-label" for="discordTag">Discord Username / Tag</label>
+          <input type="text" id="discordTag" class="form-input" placeholder="e.g. dreamyfps" required autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="ageTimezone">Age & Timezone</label>
+          <input type="text" id="ageTimezone" class="form-input" placeholder="e.g. 17, EST" required autocomplete="off">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="experience">Previous Staff Experience</label>
+          <textarea id="experience" class="form-textarea" placeholder="List any communities you have moderated for and your roles..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="whyYou">Why do you want to become staff?</label>
+          <textarea id="whyYou" class="form-textarea" placeholder="Explain what makes you a good fit for our team..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="scenario">Scenario: How would you handle an aggressive or toxic user?</label>
+          <textarea id="scenario" class="form-textarea" placeholder="Describe your step-by-step approach..." required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Application</button>
+      </form>
+
+      <!-- Success Screen -->
+      <div class="success-box" id="successBox">
+        <i class="fa-solid fa-circle-check"></i>
+        <h3>Application Submitted!</h3>
+        <p>Thank you for applying. Our management team will review your application and reach out via Discord if you are selected.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gateway Verification & Single-Use Token Logic -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const mainAppContent = document.getElementById('mainAppContent');
+      const accessDenied = document.getElementById('accessDenied');
+
+      let isVerified = false;
+      try {
+        if (localStorage.getItem('gateway_verified') === 'true') {
+          isVerified = true;
+          // Consume token so refreshing requires passing the gateway again
+          localStorage.removeItem('gateway_verified');
+        }
+      } catch (e) {
+        isVerified = false;
+      }
+
+      if (isVerified) {
+        mainAppContent.style.display = 'flex';
+        accessDenied.style.display = 'none';
+      } else {
+        mainAppContent.style.display = 'none';
+        accessDenied.style.display = 'block';
+      }
+
+      // Simulate loading sequence
+      let currentPercent = 0;
+      const progressBarFill = document.getElementById('progressBarFill');
+      const percentageText = document.getElementById('percentageText');
+      const siteLoader = document.getElementById('site-loader');
+      const statusMessage = document.getElementById('statusMessage');
+
+      const loaderInterval = setInterval(() => {
+        currentPercent += Math.floor(Math.random() * 12) + 5;
+        if (currentPercent >= 100) {
+          currentPercent = 100;
+          clearInterval(loaderInterval);
+          if (statusMessage) statusMessage.textContent = "Ready.";
+          setTimeout(() => {
+            siteLoader.style.opacity = '0';
+            siteLoader.style.visibility = 'hidden';
+            setTimeout(() => { siteLoader.style.display = 'none'; }, 500);
+          }, 200);
+        }
+        if (progressBarFill) progressBarFill.style.width = currentPercent + '%';
+        if (percentageText) percentageText.textContent = currentPercent + '%';
+      }, 50);
+    });
+
+    // Form Submission Handler
+    function submitApplication(event) {
+      event.preventDefault();
+      
+      // Hide form and show success message
+      document.getElementById('staffForm').style.display = 'none';
+      document.getElementById('successBox').style.display = 'block';
+
+      // (Optional) You can add your Discord Webhook fetch logic here to send responses directly to your staff channel!
+    }
+  </script>
+</body>
+</html>
