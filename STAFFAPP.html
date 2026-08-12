@@ -271,7 +271,7 @@
 </head>
 <body>
 
-  <!-- Full-Screen Loading Screen Overlay -->
+  <!-- Full-Screen Loading Overlay -->
   <div id="site-loader">
     <div class="loader-box">
       <div class="avatar-ring">
@@ -286,7 +286,7 @@
     </div>
   </div>
 
-  <!-- Main Application Container (No Navbar & No Gateway Restrictions) -->
+  <!-- Main Application Container (No Navbar) -->
   <div class="container" id="mainAppContent">
     <div class="page-header">
       <h1 class="page-title">Staff <span>Application</span></h1>
@@ -333,7 +333,7 @@
     </div>
   </div>
 
-  <!-- Loading Animation Script -->
+  <!-- Scripts -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       let currentPercent = 0;
@@ -359,13 +359,47 @@
       }, 50);
     });
 
-    // Form Submission Handler
-    function submitApplication(event) {
+    // Form Submission Handler with Make.com Webhook Integration
+    async function submitApplication(event) {
       event.preventDefault();
       
-      // Hide form and show success message
-      document.getElementById('staffForm').style.display = 'none';
-      document.getElementById('successBox').style.display = 'block';
+      const formData = {
+        discordTag: document.getElementById('discordTag').value,
+        ageTimezone: document.getElementById('ageTimezone').value,
+        experience: document.getElementById('experience').value,
+        whyYou: document.getElementById('whyYou').value,
+        scenario: document.getElementById('scenario').value
+      };
+
+      const submitBtn = event.target.querySelector('.submit-btn');
+      submitBtn.textContent = "Submitting...";
+      submitBtn.disabled = true;
+
+      try {
+        const webhookUrl = 'https://hook.eu1.make.com/52oh1czfp9bgj6ru3npqc3r79920edak';
+
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+          document.getElementById('staffForm').style.display = 'none';
+          document.getElementById('successBox').style.display = 'block';
+        } else {
+          alert('There was an error submitting your application. Please try again later.');
+          submitBtn.textContent = "Submit Application";
+          submitBtn.disabled = false;
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Network error. Please check your connection and try again.');
+        submitBtn.textContent = "Submit Application";
+        submitBtn.disabled = false;
+      }
     }
   </script>
 </body>
