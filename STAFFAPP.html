@@ -136,39 +136,6 @@
       letter-spacing: 1px;
     }
 
-    /* Access Denied Fallback */
-    .access-denied {
-      text-align: center;
-      padding: 4rem 2rem;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      max-width: 500px;
-      margin: auto;
-    }
-
-    .access-denied h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      color: var(--accent-orange);
-    }
-
-    .access-denied p {
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-    }
-
-    .access-denied a {
-      display: inline-block;
-      padding: 0.9rem 2rem;
-      background: var(--accent-orange);
-      color: #fff;
-      border-radius: 12px;
-      text-decoration: none;
-      font-weight: 700;
-      box-shadow: 0 0 20px var(--accent-glow);
-    }
-
     /* Application Container */
     .container {
       width: 100%;
@@ -319,15 +286,8 @@
     </div>
   </div>
 
-  <!-- Access Denied Fallback -->
-  <div class="access-denied" id="accessDenied" style="display: none;">
-    <h2><i class="fa-solid fa-triangle-exclamation"></i> Access Restricted</h2>
-    <p>You must pass through the secret gateway first to view this page.</p>
-    <a href="gateway.html">Go to Gateway</a>
-  </div>
-
-  <!-- Main Application Container (No Navbar) -->
-  <div class="container" id="mainAppContent" style="display: none;">
+  <!-- Main Application Container (No Navbar & No Gateway Restrictions) -->
+  <div class="container" id="mainAppContent">
     <div class="page-header">
       <h1 class="page-title">Staff <span>Application</span></h1>
       <p class="page-subtitle">Fill out the form below to apply for the DreamyFPS moderation team.</p>
@@ -373,32 +333,9 @@
     </div>
   </div>
 
-  <!-- Gateway Verification & Single-Use Token Logic -->
+  <!-- Loading Animation Script -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
-      const mainAppContent = document.getElementById('mainAppContent');
-      const accessDenied = document.getElementById('accessDenied');
-
-      let isVerified = false;
-      try {
-        if (localStorage.getItem('gateway_verified') === 'true') {
-          isVerified = true;
-          // Consume token so refreshing requires passing the gateway again
-          localStorage.removeItem('gateway_verified');
-        }
-      } catch (e) {
-        isVerified = false;
-      }
-
-      if (isVerified) {
-        mainAppContent.style.display = 'flex';
-        accessDenied.style.display = 'none';
-      } else {
-        mainAppContent.style.display = 'none';
-        accessDenied.style.display = 'block';
-      }
-
-      // Simulate loading sequence
       let currentPercent = 0;
       const progressBarFill = document.getElementById('progressBarFill');
       const percentageText = document.getElementById('percentageText');
@@ -429,8 +366,6 @@
       // Hide form and show success message
       document.getElementById('staffForm').style.display = 'none';
       document.getElementById('successBox').style.display = 'block';
-
-      // (Optional) You can add your Discord Webhook fetch logic here to send responses directly to your staff channel!
     }
   </script>
 </body>
